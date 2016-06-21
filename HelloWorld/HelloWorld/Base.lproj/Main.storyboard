@@ -19,10 +19,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Example" translatesAutoresizingMaskIntoConstraints="NO" id="w8h-dN-m2K">
-                                <rect key="frame" x="60" y="172" width="480" height="256"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Example" translatesAutoresizingMaskIntoConstraints="NO" id="w8h-dN-m2K">
+                                <rect key="frame" x="60" y="60" width="480" height="480"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="w8h-dN-m2K" secondAttribute="height" multiplier="15:8" id="7vF-yX-IIb"/>
+                                    <constraint firstAttribute="width" secondItem="w8h-dN-m2K" secondAttribute="height" multiplier="1:1" id="7vF-yX-IIb"/>
                                 </constraints>
                             </imageView>
                         </subviews>
