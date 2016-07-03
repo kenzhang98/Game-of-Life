@@ -204,29 +204,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ipb-GH-QCQ">
-                                <rect key="frame" x="214" y="309" width="71" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ipb-GH-QCQ">
+                                <rect key="frame" x="264" y="285" width="71" height="30"/>
                                 <state key="normal" title="Problem 3"/>
                                 <connections>
                                     <segue destination="nSS-HA-t9h" kind="show" id="Ycc-dx-ij0"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6pW-F1-LIa">
-                                <rect key="frame" x="214" y="401" width="71" height="30"/>
-                                <state key="normal" title="Problem 4"/>
-                                <connections>
-                                    <segue destination="kDm-3i-5ye" kind="show" id="9oh-AH-Yhh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2HP-IM-oBC">
-                                <rect key="frame" x="215" y="233" width="70" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2HP-IM-oBC">
+                                <rect key="frame" x="265" y="155" width="70" height="30"/>
                                 <state key="normal" title="Problem 2"/>
                                 <connections>
                                     <segue destination="4Nv-bT-VTW" kind="show" id="9KL-iU-fvv"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6pW-F1-LIa">
+                                <rect key="frame" x="264" y="415" width="71" height="30"/>
+                                <state key="normal" title="Problem 4"/>
+                                <connections>
+                                    <segue destination="kDm-3i-5ye" kind="show" id="9oh-AH-Yhh"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ipb-GH-QCQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1hW-es-Axm"/>
+                            <constraint firstItem="ipb-GH-QCQ" firstAttribute="top" secondItem="2HP-IM-oBC" secondAttribute="bottom" constant="100" id="PDs-cp-FfW"/>
+                            <constraint firstItem="ipb-GH-QCQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Seg-4o-LiI"/>
+                            <constraint firstItem="6pW-F1-LIa" firstAttribute="centerX" secondItem="ipb-GH-QCQ" secondAttribute="centerX" id="jLp-Kz-B71"/>
+                            <constraint firstItem="2HP-IM-oBC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="p7W-Nx-YJC"/>
+                            <constraint firstItem="2HP-IM-oBC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="100" id="yMT-0L-MOj"/>
+                            <constraint firstItem="6pW-F1-LIa" firstAttribute="top" secondItem="ipb-GH-QCQ" secondAttribute="bottom" constant="100" id="zXQ-32-phz"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="yMT-0L-MOj"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="tKq-qx-5oA"/>
                 </viewController>
