@@ -37,86 +37,86 @@
                         <subviews>
                             <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PSX-tF-2Nr" userLabel="Inner">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2zs-c0-SoZ">
-                                        <rect key="frame" x="20" y="42" width="560" height="345"/>
-                                        <subviews>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FTG-g7-NBu">
-                                                <rect key="frame" x="0.0" y="0.0" width="560" height="315"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="FTG-g7-NBu" secondAttribute="height" multiplier="1:1" constant="16" id="JRL-Lb-nRr"/>
-                                                    <constraint firstAttribute="width" secondItem="FTG-g7-NBu" secondAttribute="height" multiplier="16:9" id="RhM-am-4YY"/>
-                                                    <constraint firstAttribute="width" secondItem="FTG-g7-NBu" secondAttribute="height" multiplier="172:105" id="hF7-U4-8iE"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="JRL-Lb-nRr"/>
-                                                        <exclude reference="RhM-am-4YY"/>
-                                                        <exclude reference="hF7-U4-8iE"/>
-                                                    </mask>
-                                                </variation>
-                                            </textView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ud-R9-tci">
-                                                <rect key="frame" x="265" y="315" width="30" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="8Ud-R9-tci" secondAttribute="height" multiplier="1:1" id="8k8-IH-QFq"/>
-                                                    <constraint firstAttribute="height" constant="30" id="A9w-BG-naX"/>
-                                                    <constraint firstAttribute="width" constant="30" id="HLm-6A-pve"/>
-                                                    <constraint firstAttribute="width" secondItem="8Ud-R9-tci" secondAttribute="height" multiplier="1:1" id="wBW-A7-9RM"/>
-                                                </constraints>
-                                                <state key="normal" title="Run"/>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="8k8-IH-QFq"/>
-                                                        <exclude reference="A9w-BG-naX"/>
-                                                        <exclude reference="HLm-6A-pve"/>
-                                                        <exclude reference="wBW-A7-9RM"/>
-                                                    </mask>
-                                                </variation>
-                                                <connections>
-                                                    <action selector="buttonClick:" destination="4Nv-bT-VTW" eventType="touchUpInside" id="SiH-TG-xDO"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="FTG-g7-NBu" firstAttribute="leading" secondItem="2zs-c0-SoZ" secondAttribute="leading" id="Loc-cA-4oG"/>
-                                        </constraints>
-                                    </stackView>
-                                </subviews>
                                 <color key="backgroundColor" red="0.044739867109999998" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="600" id="1hl-XJ-svI"/>
                                     <constraint firstAttribute="height" constant="536" id="EbF-Bq-567"/>
-                                    <constraint firstItem="2zs-c0-SoZ" firstAttribute="top" secondItem="PSX-tF-2Nr" secondAttribute="top" constant="42" id="MkG-gP-dPt"/>
-                                    <constraint firstItem="2zs-c0-SoZ" firstAttribute="centerX" secondItem="PSX-tF-2Nr" secondAttribute="centerX" id="TmH-d4-RgM"/>
                                     <constraint firstAttribute="width" secondItem="PSX-tF-2Nr" secondAttribute="height" multiplier="75:67" id="Xks-5G-tom"/>
-                                    <constraint firstItem="2zs-c0-SoZ" firstAttribute="leading" secondItem="PSX-tF-2Nr" secondAttribute="leading" id="bSC-Lc-o4B"/>
-                                    <constraint firstAttribute="trailing" secondItem="2zs-c0-SoZ" secondAttribute="trailing" id="jhH-xL-HwT"/>
-                                    <constraint firstAttribute="bottom" secondItem="2zs-c0-SoZ" secondAttribute="bottom" constant="149" id="xPf-dX-YvK"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="1hl-XJ-svI"/>
                                         <exclude reference="EbF-Bq-567"/>
                                         <exclude reference="Xks-5G-tom"/>
-                                        <exclude reference="bSC-Lc-o4B"/>
-                                        <exclude reference="jhH-xL-HwT"/>
                                     </mask>
                                 </variation>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="2zs-c0-SoZ">
+                                <rect key="frame" x="20" y="106" width="560" height="345"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FTG-g7-NBu">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="315"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="FTG-g7-NBu" secondAttribute="height" multiplier="1:1" constant="16" id="JRL-Lb-nRr"/>
+                                            <constraint firstAttribute="width" secondItem="FTG-g7-NBu" secondAttribute="height" multiplier="16:9" id="RhM-am-4YY"/>
+                                            <constraint firstAttribute="width" secondItem="FTG-g7-NBu" secondAttribute="height" multiplier="172:105" id="hF7-U4-8iE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="JRL-Lb-nRr"/>
+                                                <exclude reference="RhM-am-4YY"/>
+                                                <exclude reference="hF7-U4-8iE"/>
+                                            </mask>
+                                        </variation>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Ud-R9-tci">
+                                        <rect key="frame" x="265" y="315" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="8Ud-R9-tci" secondAttribute="height" multiplier="1:1" id="8k8-IH-QFq"/>
+                                            <constraint firstAttribute="height" constant="30" id="A9w-BG-naX"/>
+                                            <constraint firstAttribute="width" constant="30" id="HLm-6A-pve"/>
+                                            <constraint firstAttribute="width" secondItem="8Ud-R9-tci" secondAttribute="height" multiplier="1:1" id="wBW-A7-9RM"/>
+                                        </constraints>
+                                        <state key="normal" title="Run"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="8k8-IH-QFq"/>
+                                                <exclude reference="A9w-BG-naX"/>
+                                                <exclude reference="HLm-6A-pve"/>
+                                                <exclude reference="wBW-A7-9RM"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="buttonClick:" destination="4Nv-bT-VTW" eventType="touchUpInside" id="SiH-TG-xDO"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="FTG-g7-NBu" firstAttribute="leading" secondItem="2zs-c0-SoZ" secondAttribute="leading" id="Loc-cA-4oG"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="PSX-tF-2Nr" secondAttribute="trailing" constant="-20" id="7Rx-30-cxZ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="2zs-c0-SoZ" secondAttribute="trailing" id="G2q-RM-gPO"/>
+                            <constraint firstItem="2zs-c0-SoZ" firstAttribute="top" secondItem="0c5-ZS-3B1" secondAttribute="bottom" constant="42" id="EvN-XP-Ffe"/>
+                            <constraint firstItem="2zs-c0-SoZ" firstAttribute="centerX" secondItem="PSX-tF-2Nr" secondAttribute="centerX" id="GRW-b7-c6W"/>
                             <constraint firstItem="PSX-tF-2Nr" firstAttribute="top" secondItem="0c5-ZS-3B1" secondAttribute="bottom" id="LvF-X2-kUB"/>
+                            <constraint firstItem="2zs-c0-SoZ" firstAttribute="leading" secondItem="PSX-tF-2Nr" secondAttribute="trailing" constant="-580" id="NcU-Vl-C3w"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="2zs-c0-SoZ" secondAttribute="leading" id="STG-H7-pBs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2zs-c0-SoZ" secondAttribute="trailing" id="VPz-Ut-BDo"/>
                             <constraint firstItem="1I1-gX-Rdm" firstAttribute="top" secondItem="PSX-tF-2Nr" secondAttribute="bottom" id="ahU-ju-BGq"/>
                             <constraint firstItem="PSX-tF-2Nr" firstAttribute="leading" secondItem="JhT-0z-Dtv" secondAttribute="leadingMargin" constant="-20" id="cmi-tu-Moa"/>
-                            <constraint firstItem="2zs-c0-SoZ" firstAttribute="leading" secondItem="JhT-0z-Dtv" secondAttribute="leadingMargin" id="crd-Ea-kRl"/>
+                            <constraint firstItem="1I1-gX-Rdm" firstAttribute="top" secondItem="2zs-c0-SoZ" secondAttribute="bottom" constant="149" id="iU9-jD-qdQ"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="NcU-Vl-C3w"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="textView" destination="FTG-g7-NBu" id="UKa-wa-cdV"/>
