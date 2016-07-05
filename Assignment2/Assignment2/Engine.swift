@@ -9,7 +9,11 @@
 import Foundation
 
 let size = 4
+let counter = [-1,0,1]
+var xCo = 0
+var yCo = 0
 
+//problem 3 start
 func step(middle: [[Bool]]) -> [[Bool]]{
     var livingNeighbors = 0
     var after  = [[Bool]](count: size, repeatedValue: [Bool](count: size, repeatedValue: false))
@@ -22,34 +26,53 @@ func step(middle: [[Bool]]) -> [[Bool]]{
             //check how many of the neighbors are alive
             
             //left top
-            if middle[(x+size-1)%size][(y+size-1)%size] == true{
-                livingNeighbors += 1
-            }
-            //top
-            if middle[(x+size-1)%size][y] == true{
-                livingNeighbors += 1
-            }
-            //right top
-            if middle[(x+size-1)%size][(y+1)%size] == true{
-                livingNeighbors += 1
-            }
-            //left
-            if middle[x][(y+size-1)%size] == true{
-                livingNeighbors += 1
-            }
-            //right
-            if middle[x][(y+1)%size] == true{
-                livingNeighbors += 1
-            }
-            //left bottom
-            if middle[(x+1)%size][(y+size-1)%size] == true{
-                livingNeighbors += 1
-            }
-            if middle[(x+1)%size][y] == true{
-                livingNeighbors += 1
-            }
-            if middle[(x+1)%size][(y+1)%size] == true{
-                livingNeighbors += 1
+            for items in counter{
+                switch x+items{
+                case -1: xCo = size - 1
+                for items in counter{
+                    switch y+items{
+                    case -1: yCo = size - 1
+                    case size: yCo = 0
+                    default: yCo = y+items
+                    }
+                    if xCo != x || yCo != y{
+                        switch middle[xCo][yCo]{
+                        case true: livingNeighbors += 1
+                        default: livingNeighbors += 0
+                        }
+                    }
+                    
+                    
+                    }
+                case size: xCo = 0
+                for items in counter{
+                    switch y+items{
+                    case -1: yCo = size - 1
+                    case size: yCo = 0
+                    default: yCo = y+items
+                    }
+                    if xCo != x || yCo != y{
+                        switch middle[xCo][yCo]{
+                        case true: livingNeighbors += 1
+                        default: livingNeighbors += 0
+                        }
+                    }
+                    }
+                default: xCo = x+items
+                for items in counter{
+                    switch y+items{
+                    case -1: yCo = size - 1
+                    case size: yCo = 0
+                    default: yCo = y+items
+                    }
+                    if xCo != x || yCo != y{
+                        switch middle[xCo][yCo]{
+                        case true: livingNeighbors += 1
+                        default: livingNeighbors += 0
+                        }
+                    }
+                    }
+                }
             }
             
             //determine the statue of the cell
@@ -75,7 +98,9 @@ func step(middle: [[Bool]]) -> [[Bool]]{
     
     return after
 }
+//problem 3 finish
 
+//problem 4 start
 func neighbors(row: Int, column: Int) -> [(row:Int, column:Int)]{
     return [((row+size-1)%size,(column+size-1)%size), ((row+size-1)%size, column), ((row+size-1)%size, (column+1)%size), (row, (column+size-1)%size), (row, (column+1)%size), ((row+1)%size, (column+size-1)%size), ((row+1)%size, column), ((row+1)%size, (column+1)%size)]
 }
@@ -122,7 +147,4 @@ func step2(middle: [[Bool]]) -> [[Bool]] {
     
     return after
 }
-
-
-
-
+//problem 4 finish

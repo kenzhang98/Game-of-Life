@@ -13,11 +13,15 @@ class Problem2ViewController: UIViewController {
         print("Button in Problem2ViewController was clicked")
         
         let size = 10
+        let counter = [-1,0,1]
         var beforeLivingCellsCounter = 0
         var afterLivingCellsCounter = 0
         var livingNeighbors = 0
         var before  = [[Bool]](count: size, repeatedValue: [Bool](count: size, repeatedValue: false))
         var after  = [[Bool]](count: size, repeatedValue: [Bool](count: size, repeatedValue: false))
+        
+        var xCo = 0
+        var yCo = 0
         
         //create a random array
         for x in 0 ..< before.count {
@@ -33,40 +37,55 @@ class Problem2ViewController: UIViewController {
         for x in 0 ..< before.count {
             for y in 0 ..< before[x].count{
                 
-                //check how many of the neighbors are alive
-                
-                //left top
-                if before[(x+size-1)%size][(y+size-1)%size] == true{
-                    livingNeighbors += 1
+                for items in counter{
+                    
+                    switch x+items{
+                    case -1: xCo = size - 1
+                    for items in counter{
+                        switch y+items{
+                        case -1: yCo = size - 1
+                        case size: yCo = 0
+                        default: yCo = y+items
+                        }
+                        if xCo != x || yCo != y{
+                            switch before[xCo][yCo]{
+                            case true: livingNeighbors += 1
+                            default: livingNeighbors += 0
+                            }
+                        }
+                        
+                        
+                        }
+                    case size: xCo = 0
+                    for items in counter{
+                        switch y+items{
+                        case -1: yCo = size - 1
+                        case size: yCo = 0
+                        default: yCo = y+items
+                        }
+                        if xCo != x || yCo != y{
+                            switch before[xCo][yCo]{
+                            case true: livingNeighbors += 1
+                            default: livingNeighbors += 0
+                            }
+                        }
+                        }
+                    default: xCo = x+items
+                    for items in counter{
+                        switch y+items{
+                        case -1: yCo = size - 1
+                        case size: yCo = 0
+                        default: yCo = y+items
+                        }
+                        if xCo != x || yCo != y{
+                            switch before[xCo][yCo]{
+                            case true: livingNeighbors += 1
+                            default: livingNeighbors += 0
+                            }
+                        }
+                        }
+                    }
                 }
-                //top
-                if before[(x+size-1)%size][y] == true{
-                    livingNeighbors += 1
-                }
-                //right top
-                if before[(x+size-1)%size][(y+1)%size] == true{
-                    livingNeighbors += 1
-                }
-                //left
-                if before[x][(y+size-1)%size] == true{
-                    livingNeighbors += 1
-                }
-                //right
-                if before[x][(y+1)%size] == true{
-                    livingNeighbors += 1
-                }
-                //left bottom
-                if before[(x+1)%size][(y+size-1)%size] == true{
-                    livingNeighbors += 1
-                }
-                if before[(x+1)%size][y] == true{
-                    livingNeighbors += 1
-                }
-                if before[(x+1)%size][(y+1)%size] == true{
-                    livingNeighbors += 1
-                }
-                
-                //determine the statue of the cell
                 
                 if livingNeighbors < 2{
                     after[x][y] = false
@@ -80,14 +99,13 @@ class Problem2ViewController: UIViewController {
                 if before[x][y] == false && livingNeighbors == 3{
                     after[x][y] = true
                 }
-
+                
                 //clear the counter for the next cell
                 livingNeighbors = 0
-                
             }
         }
         
-        //get the number of livings in the next round
+        //get the number of living cells in the next round
         for x in 0 ..< after.count {
             for y in 0 ..< after[x].count{
                 if after[x][y] == true{
