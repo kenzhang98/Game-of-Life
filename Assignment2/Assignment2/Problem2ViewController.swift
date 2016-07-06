@@ -114,7 +114,7 @@ class Problem2ViewController: UIViewController {
             }
         }
 
-        textView.text = "The number of living cells in before is \(beforeLivingCellsCounter) and the number of living cells in after is \(afterLivingCellsCounter)"
+        textView.text = "Before living cells: \(beforeLivingCellsCounter) \nAfter living cells: \(afterLivingCellsCounter)"
 
 
     }

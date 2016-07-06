@@ -23,9 +23,7 @@ func step(middle: [[Bool]]) -> [[Bool]]{
     for x in 0 ..< middle.count {
         for y in 0 ..< middle[x].count{
             
-            //check how many of the neighbors are alive
-            
-            //left top
+            //check how many of the neighbors are 
             for items in counter{
                 switch x+items{
                 case -1: xCo = size - 1
