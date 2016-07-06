@@ -8,7 +8,7 @@
 
 import Foundation
 
-let size = 4
+let size = 10
 let counter = [-1,0,1]
 var xCo = 0
 var yCo = 0
@@ -110,17 +110,11 @@ func step2(middle: [[Bool]]) -> [[Bool]] {
     for x in 0 ..< middle.count {
         for y in 0 ..< middle[x].count{
             let arrOfTuplesOfCo = neighbors(x, column: y)
-            print(arrOfTuplesOfCo)
-            print(x,y)
             for items in arrOfTuplesOfCo{
                 
-                print(items)
-                print(middle[items.0][items.1])
                 if middle[items.0][items.1] == true{
                     livingNeighbors += 1
                 }
-                
-                print(livingNeighbors)
                 
                 if livingNeighbors < 2{
                     after[x][y] = false
@@ -135,8 +129,6 @@ func step2(middle: [[Bool]]) -> [[Bool]] {
                     after[x][y] = true
                 }
                 
-                print("this is middle \(middle[x][y])")
-                print("this is after \(after[x][y])")
             }
             livingNeighbors = 0
         }
