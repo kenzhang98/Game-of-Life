@@ -115,8 +115,6 @@ class Problem2ViewController: UIViewController {
         }
 
         textView.text = "Before living cells: \(beforeLivingCellsCounter) \nAfter living cells: \(afterLivingCellsCounter)"
-
-
     }
     
     @IBOutlet weak var textView: UITextView!
