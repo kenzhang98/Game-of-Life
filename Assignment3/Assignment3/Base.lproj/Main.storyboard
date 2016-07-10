@@ -63,19 +63,31 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tku-4l-kHs" customClass="Button" customModule="Assignment3" customModuleProvider="target">
+                                <rect key="frame" x="277" y="285" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Tku-4l-kHs" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="0N6-jn-M4Y"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yPe-01-Bea" secondAttribute="trailing" constant="-20" id="8Jd-ZF-U11"/>
+                            <constraint firstItem="Tku-4l-kHs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8dp-ni-YQd"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="D61-lp-xjp"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yPe-01-Bea" secondAttribute="trailing" constant="-20" id="F4l-T4-3QO"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ITt-Q6-dvJ"/>
+                            <constraint firstItem="yPe-01-Bea" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Lpr-tI-RsR"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yPe-01-Bea" secondAttribute="bottom" id="cHU-9M-nmz"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yPe-01-Bea" secondAttribute="bottom" id="i4M-bw-FFO"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="q25-HJ-FGM"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="8Jd-ZF-U11"/>
                                 <exclude reference="F4l-T4-3QO"/>
+                                <exclude reference="Lpr-tI-RsR"/>
                                 <exclude reference="q25-HJ-FGM"/>
+                                <exclude reference="cHU-9M-nmz"/>
                                 <exclude reference="i4M-bw-FFO"/>
                             </mask>
                         </variation>

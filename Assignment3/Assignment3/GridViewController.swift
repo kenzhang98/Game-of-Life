@@ -131,43 +131,36 @@ enum CellState: String{
             }
         }
         
-        print("boundsWidth: \(bounds.width)")
     }
     //drawRec function finishes here
     
+    //implement touch handling function of Problem 5
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
             self.processTouch(touch)
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        for touch in touches {
-            self.processTouch(touch)
-        }
-    }
-    
-//    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        for touch in touches {
+//    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        if let touch = touches.first {
 //            self.processTouch(touch)
+//            
 //        }
 //    }
     
     func processTouch(touch: UITouch) {
         let point = touch.locationInView(self)
-        let cellWidth = 600 / rows
-        let cellHeight = 600 / cols
+        let cellWidth = Int(bounds.width) / rows
+        let cellHeight = Int(bounds.height) / cols
         let xCo = Int(point.x) / cellWidth
         let yCo = Int(point.y) / cellHeight
         
-        grid[xCo][yCo] = CellState.toggle(grid[xCo][yCo])
-        
-        print("xCo: \(xCo) yCo: \(yCo) cellWidth: \(cellWidth) cellHeight: \(cellHeight) state: \(grid[xCo][yCo]) pointX: \(point.x) pointY: \(point.y)" )
+        if xCo <= rows-1 && yCo <= cols-1 && xCo >= 0 && yCo >= 0 {
+            grid[xCo][yCo] = CellState.toggle(grid[xCo][yCo])
+        }
         self.setNeedsDisplay()
     }
 }
-
-
 
 
 
