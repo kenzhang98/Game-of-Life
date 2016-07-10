@@ -60,8 +60,6 @@ enum CellState: String{
     }
     var grid = [[CellState]](count: 20, repeatedValue: [CellState](count: 20, repeatedValue: CellState.Empty))
     
-    //set up variables and funcs for toggle method
-    
     override func awakeFromNib() {
         self.multipleTouchEnabled = true
     }
@@ -69,11 +67,9 @@ enum CellState: String{
     //override drawRect function
     override func drawRect(rect: CGRect){
         
-        //set up the width and length variables for the horizontal strokes
-        
+        //set up the width and length variables for the vertical strokes
         let verHeight = gridWidth
-        let verLength = bounds.width
-        let space = bounds.width / CGFloat(rows)
+        let verLength = bounds.height
         
         //create the path
         let verPath = UIBezierPath()
@@ -83,15 +79,14 @@ enum CellState: String{
         
         //move the point of the path to the start of the vertical strokes with a for loop
         for x in 0...rows{
-            verPath.moveToPoint(CGPoint(x: CGFloat(x) * space, y: 0))
+            verPath.moveToPoint(CGPoint(x: CGFloat(x) * bounds.width / CGFloat(rows), y: 0))
             //add a point to the path at the end of vertical each stroke
-            verPath.addLineToPoint(CGPoint(x: CGFloat(x) * space, y: verLength))
+            verPath.addLineToPoint(CGPoint(x: CGFloat(x) * bounds.width / CGFloat(rows), y: verLength))
         }
         
-        //set up the width and length variables for the vertical strokes
+        //set up the width and length variables for the horizontal strokes
         let horHeight = gridWidth
         let horLength = bounds.width
-        let spaceHeight = bounds.height / CGFloat(cols)
         
         //create the path
         let horPath = UIBezierPath()
@@ -101,9 +96,9 @@ enum CellState: String{
         
         //move the point of the path to the start of the horizontal strokes with a for loop
         for y in 0...cols{
-            horPath.moveToPoint(CGPoint(x: 0, y: CGFloat(y) * spaceHeight))
+            horPath.moveToPoint(CGPoint(x: 0, y: CGFloat(y) * bounds.height / CGFloat(cols)))
             //add a point to the path at the end of each horizontal stroke
-            horPath.addLineToPoint(CGPoint(x: horLength, y: CGFloat(y) * spaceHeight))
+            horPath.addLineToPoint(CGPoint(x: horLength, y: CGFloat(y) * bounds.height / CGFloat(cols)))
         }
         
         //set the stroke color
@@ -130,6 +125,7 @@ enum CellState: String{
                 path.fill()
             }
         }
+
         
     }
     //drawRec function finishes here
@@ -150,14 +146,16 @@ enum CellState: String{
     
     func processTouch(touch: UITouch) {
         let point = touch.locationInView(self)
-        let cellWidth = Int(bounds.width) / rows
-        let cellHeight = Int(bounds.height) / cols
-        let xCo = Int(point.x) / cellWidth
-        let yCo = Int(point.y) / cellHeight
+        let cellWidth = Double(bounds.width) / Double(rows)
+        let cellHeight = Double(bounds.height) / Double(cols)
+        let xCo = Int(floor(Double(point.x) / cellWidth))
+        let yCo = Int(floor(Double(point.y) / cellHeight))
         
         if xCo <= rows-1 && yCo <= cols-1 && xCo >= 0 && yCo >= 0 {
             grid[xCo][yCo] = CellState.toggle(grid[xCo][yCo])
         }
+        print("xCo: \(xCo) yCo: \(yCo) boundsWidth: \(bounds.width) boundsHeight: \(bounds.height) cellWidth: \(cellWidth) cellHeight: \(cellHeight) pointX: \(point.x) pointY: \(point.y)")
+        
         self.setNeedsDisplay()
     }
 }
