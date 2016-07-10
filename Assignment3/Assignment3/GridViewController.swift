@@ -153,9 +153,7 @@ enum CellState: String{
         
         if xCo <= rows-1 && yCo <= cols-1 && xCo >= 0 && yCo >= 0 {
             grid[xCo][yCo] = CellState.toggle(grid[xCo][yCo])
-        }
-        print("xCo: \(xCo) yCo: \(yCo) boundsWidth: \(bounds.width) boundsHeight: \(bounds.height) cellWidth: \(cellWidth) cellHeight: \(cellHeight) pointX: \(point.x) pointY: \(point.y)")
-        
+        }        
         self.setNeedsDisplay()
     }
 }
