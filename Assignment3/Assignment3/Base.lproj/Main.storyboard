@@ -20,25 +20,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sU0-AF-bZj" customClass="Button" customModule="Assignment3" customModuleProvider="target">
+                                <rect key="frame" x="277" y="548" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yPe-01-Bea" customClass="GridView" customModule="Assignment3" customModuleProvider="target">
                                 <rect key="frame" x="60" y="60" width="480" height="480"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sU0-AF-bZj" customClass="Button" customModule="Assignment3" customModuleProvider="target">
-                                        <rect key="frame" x="217" y="225" width="46" height="30"/>
-                                        <state key="normal" title="Button"/>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yPe-01-Bea" secondAttribute="height" multiplier="30:29" id="1bu-kY-SnF"/>
                                     <constraint firstAttribute="width" secondItem="yPe-01-Bea" secondAttribute="height" multiplier="30:29" id="1eY-NM-6iV"/>
                                     <constraint firstAttribute="height" constant="580" id="Jfi-Bw-Hwj"/>
                                     <constraint firstAttribute="width" secondItem="yPe-01-Bea" secondAttribute="height" multiplier="1:1" id="RW8-5P-otH"/>
-                                    <constraint firstItem="sU0-AF-bZj" firstAttribute="centerX" secondItem="yPe-01-Bea" secondAttribute="centerX" id="ae4-Gl-d7g"/>
                                     <constraint firstAttribute="width" constant="600" id="fwe-Xm-eZa"/>
                                     <constraint firstAttribute="height" constant="580" id="ky4-u3-5C1"/>
                                     <constraint firstAttribute="width" constant="600" id="qvb-vr-pqb"/>
-                                    <constraint firstItem="sU0-AF-bZj" firstAttribute="centerY" secondItem="yPe-01-Bea" secondAttribute="centerY" id="uoF-qF-FA7"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="rows">
@@ -88,11 +84,13 @@
                             <constraint firstItem="yPe-01-Bea" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ITt-Q6-dvJ"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="Lpr-tI-RsR"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="width" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="NxK-dz-bRH"/>
+                            <constraint firstItem="sU0-AF-bZj" firstAttribute="centerX" secondItem="yPe-01-Bea" secondAttribute="centerX" id="XzV-Oy-pHi"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yPe-01-Bea" secondAttribute="bottom" id="cHU-9M-nmz"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.8" id="fsQ-Mr-4sd"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" priority="750" id="gWa-OG-ys3"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.8" id="i1I-wb-V9z"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="yPe-01-Bea" secondAttribute="bottom" id="i4M-bw-FFO"/>
+                            <constraint firstItem="sU0-AF-bZj" firstAttribute="top" secondItem="yPe-01-Bea" secondAttribute="bottom" constant="8" id="mEt-Bj-5K1"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="mgu-6C-7nh"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="q25-HJ-FGM"/>
                             <constraint firstItem="yPe-01-Bea" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.8" id="uQf-j5-LSu"/>
