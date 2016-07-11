@@ -153,8 +153,9 @@ enum CellState: String{
         
         if xCo <= rows-1 && yCo <= cols-1 && xCo >= 0 && yCo >= 0 {
             grid[xCo][yCo] = CellState.toggle(grid[xCo][yCo])
-        }        
-        self.setNeedsDisplay()
+        }
+        let gridToBeChanged = CGRect(x: CGFloat(Double(xCo) * cellWidth), y: CGFloat(Double(yCo) * cellHeight), width: CGFloat(cellWidth), height: CGFloat(cellHeight))
+        self.setNeedsDisplayInRect(gridToBeChanged)
     }
 }
 

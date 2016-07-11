@@ -10,6 +10,10 @@ import UIKit
 
 class Button: UIButton {
 
+    @IBAction func whatever(sender: AnyObject) {
+        print("test")
+    }
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -65,7 +69,6 @@ class Button: UIButton {
             }
             
         }
-        print(after)
         return after
     }
 }
