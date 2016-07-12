@@ -48,8 +48,8 @@ class Button: UIButton {
                     }
                 case 3:
                     switch middle[x][y]{
-                    case .Born, .Died, .Empty: after[x][y] = .Born
-                    case.Living: after[x][y] = .Living
+                    case .Died, .Empty: after[x][y] = .Born
+                    case.Living, .Born: after[x][y] = .Living
                     }
                 default:
                     switch middle[x][y]{

@@ -131,6 +131,14 @@ enum CellState: String{
             self.processTouch(touch)
         }
     }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let touch = touches.first {
+            self.processTouch(touch)
+            
+        }
+    }
+    
 
     func processTouch(touch: UITouch) {
         let point = touch.locationInView(self)
