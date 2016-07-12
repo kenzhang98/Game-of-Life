@@ -9,11 +9,13 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    @IBAction func whatever(sender: AnyObject) {
-        print("test")
+
+    @IBOutlet weak var Grid: GridView!
+    @IBAction func buttonClick(sender: AnyObject) {
+        let process = Button()
+        Grid.grid = process.step2(Grid.rows, vertical: Grid.cols, middle: Grid.grid)
+        Grid.setNeedsDisplay()
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
