@@ -40,7 +40,6 @@ class Button: UIButton {
                     }
                 }
                 
-                
                 switch livingNeighbors{
                 case 2:
                     switch middle[x][y]{
