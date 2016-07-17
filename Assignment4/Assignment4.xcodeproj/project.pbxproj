@@ -16,7 +16,8 @@
 		311F5FAE1D35A780006C4287 /* Assignment4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311F5FAD1D35A780006C4287 /* Assignment4Tests.swift */; };
 		311F5FB91D35A780006C4287 /* Assignment4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311F5FB81D35A780006C4287 /* Assignment4UITests.swift */; };
 		311F5FC71D35AB29006C4287 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311F5FC61D35AB29006C4287 /* StatisticsViewController.swift */; };
-		311F5FC91D35F0FC006C4287 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 311F5FC81D35F0FC006C4287 /* Model.swift */; };
+		316BCA601D3B306100A89E00 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316BCA5F1D3B306100A89E00 /* Engine.swift */; };
+		316BCA621D3B309800A89E00 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 316BCA611D3B309800A89E00 /* Grid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +53,8 @@
 		311F5FB81D35A780006C4287 /* Assignment4UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignment4UITests.swift; sourceTree = "<group>"; };
 		311F5FBA1D35A780006C4287 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		311F5FC61D35AB29006C4287 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
-		311F5FC81D35F0FC006C4287 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		316BCA5F1D3B306100A89E00 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
+		316BCA611D3B309800A89E00 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +107,8 @@
 			children = (
 				311F5F961D35A780006C4287 /* AppDelegate.swift */,
 				311F5F981D35A780006C4287 /* InstrumentationViewController.swift */,
-				311F5FC81D35F0FC006C4287 /* Model.swift */,
+				316BCA611D3B309800A89E00 /* Grid.swift */,
+				316BCA5F1D3B306100A89E00 /* Engine.swift */,
 				311F5F9A1D35A780006C4287 /* SimulationViewController.swift */,
 				311F5FC61D35AB29006C4287 /* StatisticsViewController.swift */,
 				311F5F9C1D35A780006C4287 /* Main.storyboard */,
@@ -265,10 +268,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				311F5FC91D35F0FC006C4287 /* Model.swift in Sources */,
+				316BCA601D3B306100A89E00 /* Engine.swift in Sources */,
 				311F5F9B1D35A780006C4287 /* SimulationViewController.swift in Sources */,
 				311F5F971D35A780006C4287 /* AppDelegate.swift in Sources */,
 				311F5F991D35A780006C4287 /* InstrumentationViewController.swift in Sources */,
+				316BCA621D3B309800A89E00 /* Grid.swift in Sources */,
 				311F5FC71D35AB29006C4287 /* StatisticsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -496,6 +500,7 @@
 				311F5FBF1D35A780006C4287 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		311F5FC01D35A780006C4287 /* Build configuration list for PBXNativeTarget "Assignment4Tests" */ = {
 			isa = XCConfigurationList;
@@ -504,6 +509,7 @@
 				311F5FC21D35A780006C4287 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		311F5FC31D35A780006C4287 /* Build configuration list for PBXNativeTarget "Assignment4UITests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +518,7 @@
 				311F5FC51D35A780006C4287 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
