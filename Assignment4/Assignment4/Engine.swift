@@ -44,18 +44,20 @@ class StandardEngine: EngineProtocol {
     
     var rows: Int {
         didSet {
+            
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: self, userInfo: ["value" : Grid.self])
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: self, userInfo: ["value" : grid])
         }
     }
     var cols: Int {
         didSet {
+            StandardEngine.sharedInstance.cols = cols
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
-//        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : Stan])
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : grid])
         }
     }
     
@@ -93,7 +95,7 @@ class StandardEngine: EngineProtocol {
     func step() -> GridProtocol {
         var livingNeighbors = 0
         
-        var after: GridProtocol = Grid(rows: rows, cols: cols)
+        let after: GridProtocol = Grid(rows: rows, cols: cols)
 
         for x in 0 ..< rows {
             for y in 0 ..< cols{
@@ -129,6 +131,9 @@ class StandardEngine: EngineProtocol {
         if let delegate = delegate {
             delegate.engineDidUpdate(grid)
         }
+        
+    NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : grid])
+        
         return after
         
     }

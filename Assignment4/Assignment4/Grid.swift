@@ -37,7 +37,7 @@ enum CellState: String{
     }
 }
 
-protocol GridProtocol {
+protocol GridProtocol: class {
     init(rows: Int, cols: Int)
     var rows: Int {get}
     var cols: Int {get}
