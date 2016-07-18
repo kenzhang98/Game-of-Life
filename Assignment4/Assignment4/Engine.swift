@@ -45,6 +45,8 @@ class StandardEngine: EngineProtocol {
     var delegate: EngineDelegateProtocol?
     var grid: GridProtocol
     
+   
+    
     var rows: Int {
         didSet {
 
@@ -128,14 +130,13 @@ class StandardEngine: EngineProtocol {
                 }
                 livingNeighbors = 0
             }
+            
         }
         
         //call the delegate method to update 
         if let delegate = delegate {
             delegate.engineDidUpdate(grid)
         }
-        
-    NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : grid])
         
         return after
         

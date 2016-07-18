@@ -27,6 +27,11 @@ class StatisticsViewController: UIViewController {
         let c = NSNotificationCenter.defaultCenter()
         c.addObserver(self, selector: s, name: "setEngineStaticsNotification", object: nil)
         
+        //set the texts to the modified numbers as the view loads
+        diedCells.text = String(diedCellCounter)
+        livingCells.text = String(livingCellCounter)
+        bornCells.text = String(bornCellCounter)
+        emptyCells.text = String(emptyCellCounter)
 
     }
 

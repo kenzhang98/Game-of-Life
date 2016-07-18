@@ -54,6 +54,10 @@ class InstrumentationViewController: UIViewController {
         colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
         rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
 
+        if let delegate = StandardEngine.sharedInstance.delegate {
+            delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : StandardEngine.sharedInstance.grid])
     }
 
     override func didReceiveMemoryWarning() {
