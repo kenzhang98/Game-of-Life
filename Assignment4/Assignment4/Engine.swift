@@ -49,7 +49,7 @@ class StandardEngine: EngineProtocol {
     
     var rows: Int {
         didSet {
-
+            StandardEngine.sharedInstance.cols = cols
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }

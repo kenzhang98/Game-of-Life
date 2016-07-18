@@ -14,6 +14,9 @@ class StatisticsViewController: UIViewController {
     var diedCellCounter = 0
     var bornCellCounter = 0
     var emptyCellCounter = 0
+    var grid: GridProtocol!
+    var cols = 0
+    var rows = 0
     
     @IBOutlet weak var diedCells: UITextField!
     @IBOutlet weak var livingCells: UITextField!
@@ -22,14 +25,18 @@ class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        statisticsDataCalculation()
+
         let s = #selector(StatisticsViewController.watchForNotifications(_:))
         let c = NSNotificationCenter.defaultCenter()
         c.addObserver(self, selector: s, name: "setEngineStaticsNotification", object: nil)
         diedCells.text = String(diedCellCounter)
         livingCells.text = String(livingCellCounter)
         bornCells.text = String(bornCellCounter)
-        emptyCells.text = String(emptyCellCounter)
+        emptyCells.text = String(StandardEngine.sharedInstance.rows * StandardEngine.sharedInstance.cols)
+
+        
+
 
     }
 
@@ -39,25 +46,14 @@ class StatisticsViewController: UIViewController {
     }
     
     func watchForNotifications(notification:NSNotification){
-        
-        let grid = notification.userInfo!["value"] as! GridProtocol
-        let cols = grid.cols
-        let rows = grid.rows
-        
+        grid = notification.userInfo!["value"] as! GridProtocol
+        rows = grid.rows
+        cols = grid.cols
         
         
-        for x in 0..<rows{
-            for y in 0..<cols{
-                switch grid[x, y]{
-                case .Living?: livingCellCounter += 1
-                case .Died?: diedCellCounter += 1
-                case .Born?: bornCellCounter += 1
-                case .Empty?: emptyCellCounter += 1
-                default: break
-                }
-            }
-        }
+        statisticsDataCalculation()
         
+        print("notified")
         //change the texts to the modified numbers
         diedCells.text = String(diedCellCounter)
         livingCells.text = String(livingCellCounter)
@@ -69,5 +65,21 @@ class StatisticsViewController: UIViewController {
         livingCellCounter = 0
         emptyCellCounter = 0
         bornCellCounter = 0
+    }
+    
+    func statisticsDataCalculation(){
+        for x in 0..<rows{
+            for y in 0..<cols{
+                switch grid[x, y]{
+                case .Living?: livingCellCounter += 1
+                case .Died?: diedCellCounter += 1
+                case .Born?: bornCellCounter += 1
+                case .Empty?: emptyCellCounter += 1
+                default: break
+                }
+            }
+        }
+        print("statistics calculated")
+        print("rows: \(rows) cols: \(cols)")
     }
 }
