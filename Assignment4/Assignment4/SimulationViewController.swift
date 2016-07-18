@@ -8,8 +8,12 @@
 
 import UIKit
 
-class SimulationViewController: UIViewController {
+class SimulationViewController: UIViewController, EngineDelegateProtocol {
 
+    func engineDidUpdate(withGrid: GridProtocol) {
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

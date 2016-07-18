@@ -23,6 +23,7 @@ protocol EngineProtocol{
     func step() -> GridProtocol
 }
 
+//use the extension 
 extension EngineProtocol{
     var refreshRate: Double{
         return 0.0
@@ -58,6 +59,7 @@ class StandardEngine: EngineProtocol {
         }
     }
     
+    //set the default of variable refreshRate to 0.0
     var refreshRate: Double = 0.0
     var refreshTimer: NSTimer?
     
@@ -71,9 +73,7 @@ class StandardEngine: EngineProtocol {
         var livingNeighbors = 0
         
         var after: GridProtocol = Grid(rows: rows, cols: cols)
-        
-        after.cols
-        
+
         for x in 0 ..< rows {
             for y in 0 ..< cols{
                 let arrOfTuplesOfCo = grid.neighbors(x, column: y)
