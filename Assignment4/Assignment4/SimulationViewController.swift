@@ -14,14 +14,12 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     
     @IBAction func run(sender: AnyObject) {
         StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
-        
-        grid.setNeedsDisplay()
     }
     
     
     
     func engineDidUpdate(withGrid: GridProtocol) {
-        
+        grid.setNeedsDisplay()
     }
     
     override func viewDidLoad() {

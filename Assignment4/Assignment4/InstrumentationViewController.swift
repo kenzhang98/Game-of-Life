@@ -11,9 +11,12 @@ import UIKit
 class InstrumentationViewController: UIViewController {
 
     //declare the UI elements and actions
+
     @IBAction func refreshTimer(sender: AnyObject) {
-//        StandardEngine.refreshInterval
+        StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
+        print("\(refreshRateSlider.value)")
     }
+    
     @IBOutlet weak var rowsTextField: UITextField!
     @IBOutlet weak var rowsStepper: UIStepper!
     @IBOutlet weak var colsTextField: UITextField!
@@ -47,6 +50,16 @@ class InstrumentationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func swtich(sender: UISwitch) {
+        if sender.on{
+            StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
+            print("switch is on")
+        }
+        else{
+            StandardEngine.sharedInstance.refreshTimer?.invalidate()
+            print("switch is off")
+        }
+    }
 
 }
 

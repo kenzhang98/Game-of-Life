@@ -16,7 +16,7 @@ protocol EngineProtocol{
     var delegate: EngineDelegateProtocol? { get set }
     var grid: GridProtocol { get }
     var refreshRate: Double { get set }
-//    var refreshTimer: NSTimer { get set }
+    var refreshTimer: NSTimer? { get set }
     var rows: Int { get set }
     var cols: Int { get set }
     init(rows: Int, cols: Int)
@@ -55,35 +55,29 @@ class StandardEngine: EngineProtocol {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: self, userInfo: ["value" : Grid.self])
+//        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : Stan])
         }
     }
     
     //set the default of variable refreshRate to 0.0
     var refreshRate: Double = 0.0
-//    var refreshTimer = NSTimer()
-    
-//    #selector(StandardEngine.timerDidFire(_:))
-    
-//    refreshTimer = NSTimer.scheduledTimerWithTimeInterval(1,target: StandardEngine.self,selector: Selector("callByTimer"),userInfo: nil, repeats: true)
-//    
 
-    private var timer:NSTimer?
+    var refreshTimer:NSTimer?
     
     var refreshInterval: NSTimeInterval = 0 {
         didSet {
             if refreshInterval != 0 {
-                if let timer = timer { timer.invalidate() }
+                if let timer = refreshTimer { timer.invalidate() }
                 let sel = #selector(StandardEngine.timerDidFire(_:))
-                timer = NSTimer.scheduledTimerWithTimeInterval(refreshInterval,
+                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(refreshInterval,
                                                                target: self,
                                                                selector: sel,
-                                                               userInfo: ["name": "fred"],
+                                                               userInfo: nil,
                                                                repeats: true)
             }
-            else if let timer = timer {
+            else if let timer = refreshTimer {
                 timer.invalidate()
-                self.timer = nil
+                self.refreshTimer = nil
             }
         }
     }
@@ -130,15 +124,17 @@ class StandardEngine: EngineProtocol {
                 livingNeighbors = 0
             }
         }
+        
+        //call the delegate method to update the display
+        if let delegate = delegate {
+            delegate.engineDidUpdate(grid)
+        }
         return after
-    }
-    
-    func callByTimer(){
-        print("Called")
+        
     }
     
     @objc func timerDidFire(timer:NSTimer) {
-        print("test")
+        StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
     }
 }
 

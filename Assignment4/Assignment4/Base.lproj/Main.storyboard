@@ -52,11 +52,14 @@
                                     </mask>
                                 </variation>
                                 <connections>
-                                    <action selector="refreshTimer:" destination="9pv-A4-QxB" eventType="editingDidEnd" id="hoj-3G-Ty0"/>
+                                    <action selector="refreshTimer:" destination="9pv-A4-QxB" eventType="valueChanged" id="kso-5n-3ho"/>
                                 </connections>
                             </slider>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B5S-z7-e9d">
                                 <rect key="frame" x="276" y="399" width="51" height="31"/>
+                                <connections>
+                                    <action selector="swtich:" destination="9pv-A4-QxB" eventType="valueChanged" id="opZ-wu-aez"/>
+                                </connections>
                             </switch>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="aH3-Zy-WVH">
                                 <rect key="frame" x="331" y="104" width="94" height="29"/>
