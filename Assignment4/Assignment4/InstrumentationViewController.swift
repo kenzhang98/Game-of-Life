@@ -11,6 +11,9 @@ import UIKit
 class InstrumentationViewController: UIViewController {
 
     //declare the UI elements and actions
+    @IBAction func refreshTimer(sender: AnyObject) {
+//        StandardEngine.refreshInterval
+    }
     @IBOutlet weak var rowsTextField: UITextField!
     @IBOutlet weak var rowsStepper: UIStepper!
     @IBOutlet weak var colsTextField: UITextField!
@@ -24,7 +27,6 @@ class InstrumentationViewController: UIViewController {
         colsTextField.text = String(Int(colsStepper.value))
     }
     
-    var engine: EngineProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()

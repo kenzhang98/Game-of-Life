@@ -16,7 +16,7 @@ protocol EngineProtocol{
     var delegate: EngineDelegateProtocol? { get set }
     var grid: GridProtocol { get }
     var refreshRate: Double { get set }
-    var refreshTimer: NSTimer { get set }
+//    var refreshTimer: NSTimer { get set }
     var rows: Int { get set }
     var cols: Int { get set }
     init(rows: Int, cols: Int)
@@ -61,12 +61,33 @@ class StandardEngine: EngineProtocol {
     
     //set the default of variable refreshRate to 0.0
     var refreshRate: Double = 0.0
+//    var refreshTimer = NSTimer()
+    
 //    #selector(StandardEngine.timerDidFire(_:))
     
-    var refreshTimer: NSTimer = NSTimer.scheduledTimerWithTimeInterval(1,target: StandardEngine.self,selector: Selector("callByTimer"),userInfo: nil, repeats: true)
+//    refreshTimer = NSTimer.scheduledTimerWithTimeInterval(1,target: StandardEngine.self,selector: Selector("callByTimer"),userInfo: nil, repeats: true)
+//    
+
+    private var timer:NSTimer?
     
-    
-    
+    var refreshInterval: NSTimeInterval = 0 {
+        didSet {
+            if refreshInterval != 0 {
+                if let timer = timer { timer.invalidate() }
+                let sel = #selector(StandardEngine.timerDidFire(_:))
+                timer = NSTimer.scheduledTimerWithTimeInterval(refreshInterval,
+                                                               target: self,
+                                                               selector: sel,
+                                                               userInfo: ["name": "fred"],
+                                                               repeats: true)
+            }
+            else if let timer = timer {
+                timer.invalidate()
+                self.timer = nil
+            }
+        }
+    }
+
 
     
     required init(rows: Int, cols: Int) {
