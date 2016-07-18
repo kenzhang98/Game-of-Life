@@ -23,11 +23,14 @@ class InstrumentationViewController: UIViewController {
     @IBOutlet weak var colsStepper: UIStepper!
     @IBOutlet weak var refreshRateSlider: UISlider!
     @IBOutlet weak var timedRefreshSwitch: UISwitch!
+    
     @IBAction func rowsCalculation(sender: AnyObject) {
-        rowsTextField.text = String(Int(rowsStepper.value))
+        StandardEngine.sharedInstance.rows = Int(rowsStepper.value)
+        rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
     }
     @IBAction func colsCalculation(sender: AnyObject) {
-        colsTextField.text = String(Int(colsStepper.value))
+        StandardEngine.sharedInstance.cols = Int(colsStepper.value)
+        colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
     }
     
     
@@ -36,12 +39,14 @@ class InstrumentationViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         //take care of the steppers and textfields
+        rowsStepper.value = Double(StandardEngine.sharedInstance.rows)
+        colsStepper.value = Double(StandardEngine.sharedInstance.cols)
         rowsStepper.stepValue = 10
         rowsStepper.minimumValue = 0
         colsStepper.stepValue = 10
         colsStepper.minimumValue = 0
-        colsTextField.text = String(Int(colsStepper.value))
-        rowsTextField.text = String(Int(rowsStepper.value))
+        colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
+        rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
 
     }
 
