@@ -10,6 +10,16 @@ import UIKit
 
 class SimulationViewController: UIViewController, EngineDelegateProtocol {
 
+    @IBOutlet weak var grid: GridView!
+    
+    @IBAction func run(sender: AnyObject) {
+        StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
+        
+        grid.setNeedsDisplay()
+    }
+    
+    
+    
     func engineDidUpdate(withGrid: GridProtocol) {
         
     }
@@ -17,6 +27,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        StandardEngine.sharedInstance.delegate = self
     }
 
     override func didReceiveMemoryWarning() {

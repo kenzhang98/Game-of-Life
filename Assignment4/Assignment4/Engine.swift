@@ -16,7 +16,7 @@ protocol EngineProtocol{
     var delegate: EngineDelegateProtocol? { get set }
     var grid: GridProtocol { get }
     var refreshRate: Double { get set }
-    var refreshTimer: NSTimer? { get set }
+    var refreshTimer: NSTimer { get set }
     var rows: Int { get set }
     var cols: Int { get set }
     init(rows: Int, cols: Int)
@@ -61,7 +61,13 @@ class StandardEngine: EngineProtocol {
     
     //set the default of variable refreshRate to 0.0
     var refreshRate: Double = 0.0
-    var refreshTimer: NSTimer?
+//    #selector(StandardEngine.timerDidFire(_:))
+    
+    var refreshTimer: NSTimer = NSTimer.scheduledTimerWithTimeInterval(1,target: StandardEngine.self,selector: Selector("callByTimer"),userInfo: nil, repeats: true)
+    
+    
+    
+
     
     required init(rows: Int, cols: Int) {
         self.rows = rows
@@ -104,6 +110,14 @@ class StandardEngine: EngineProtocol {
             }
         }
         return after
+    }
+    
+    func callByTimer(){
+        print("Called")
+    }
+    
+    @objc func timerDidFire(timer:NSTimer) {
+        print("test")
     }
 }
 
