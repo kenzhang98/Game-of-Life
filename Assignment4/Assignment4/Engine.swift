@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol EngineDelegate {
+protocol EngineDelegateProtocol {
     func engineDidUpdate(withGrid: GridProtocol)
 }
 
 protocol EngineProtocol{
-    var delegate: EngineDelegate? { get set }
+    var delegate: EngineDelegateProtocol? { get set }
     var grid: GridProtocol { get }
     var refreshRate: Double { get set }
     var refreshTimer: NSTimer? { get set }
@@ -38,23 +38,23 @@ class StandardEngine: EngineProtocol {
         }
     }
     
-    var delegate: EngineDelegate?
+    var delegate: EngineDelegateProtocol?
     var grid: GridProtocol
     
     var rows: Int {
         didSet {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
-                NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: self)
             }
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: self, userInfo: ["value" : Grid.self])
         }
     }
     var cols: Int {
         didSet {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
-                NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: self)
             }
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: self, userInfo: ["value" : Grid.self])
         }
     }
     
@@ -70,8 +70,12 @@ class StandardEngine: EngineProtocol {
     func step() -> GridProtocol {
         var livingNeighbors = 0
         
-        for x in 0 ..< grid.rows {
-            for y in 0 ..< grid.cols{
+        var after: GridProtocol = Grid(rows: rows, cols: cols)
+        
+        after.cols
+        
+        for x in 0 ..< rows {
+            for y in 0 ..< cols{
                 let arrOfTuplesOfCo = grid.neighbors(x, column: y)
                 for items in arrOfTuplesOfCo{
                     if grid[items.0, items.1] == .Living || grid[items.0, items.1] == .Born{
@@ -82,24 +86,24 @@ class StandardEngine: EngineProtocol {
                 switch livingNeighbors{
                 case 2:
                     switch grid[x, y]!{
-                    case .Born, .Living: grid[x,y] = .Living
-                    case .Died, .Empty: grid[x,y] = .Empty
+                    case .Born, .Living: after[x,y] = .Living
+                    case .Died, .Empty: after[x,y] = .Empty
                     }
                 case 3:
                     switch grid[x, y]!{
-                    case .Died, .Empty: grid[x,y] = .Born
-                    case.Living, .Born: grid[x,y] = .Living
+                    case .Died, .Empty: after[x,y] = .Born
+                    case.Living, .Born: after[x,y] = .Living
                     }
                 default:
                     switch grid[x, y]!{
-                    case .Born, .Living: grid[x,y] = .Died
-                    case .Empty, .Died: grid[x,y] = .Empty
+                    case .Born, .Living: after[x,y] = .Died
+                    case .Empty, .Died: after[x,y] = .Empty
                     }
                 }
                 livingNeighbors = 0
             }
         }
-        return grid
+        return after
     }
 }
 
