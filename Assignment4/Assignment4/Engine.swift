@@ -16,7 +16,7 @@ protocol EngineProtocol{
     var delegate: EngineDelegateProtocol? { get set }
     var grid: GridProtocol { get }
     
-    //because I use the timer int
+    //the reason why I don't use the var refreshRate is that I choose to use time interval to set the timer instead of refreshRate
 //    var refreshRate: Double { get set }
     
     var refreshTimer: NSTimer? { get set }

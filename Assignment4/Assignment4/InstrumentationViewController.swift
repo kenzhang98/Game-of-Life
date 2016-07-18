@@ -57,7 +57,9 @@ class InstrumentationViewController: UIViewController {
         if let delegate = StandardEngine.sharedInstance.delegate {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
+        
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : StandardEngine.sharedInstance.grid])
+        
     }
 
     override func didReceiveMemoryWarning() {
