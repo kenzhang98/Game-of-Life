@@ -14,7 +14,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     
     @IBAction func run(sender: AnyObject) {
         StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : StandardEngine.sharedInstance.grid])
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
     }
     
     

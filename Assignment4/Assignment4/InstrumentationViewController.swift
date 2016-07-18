@@ -58,7 +58,7 @@ class InstrumentationViewController: UIViewController {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : StandardEngine.sharedInstance.grid])
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
         
     }
 
