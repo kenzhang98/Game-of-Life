@@ -53,7 +53,7 @@ class StatisticsViewController: UIViewController {
         
         statisticsDataCalculation()
         
-        print("notified")
+    
         //change the texts to the modified numbers
         diedCells.text = String(diedCellCounter)
         livingCells.text = String(livingCellCounter)
@@ -79,7 +79,5 @@ class StatisticsViewController: UIViewController {
                 }
             }
         }
-        print("statistics calculated")
-        print("rows: \(rows) cols: \(cols)")
     }
 }

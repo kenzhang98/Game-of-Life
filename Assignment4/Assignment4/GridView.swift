@@ -18,8 +18,8 @@ import UIKit
     //set up variables
     var livingColor: UIColor = UIColor.greenColor()
     var emptyColor: UIColor = UIColor.grayColor()
-    var bornColor: UIColor = UIColor.greenColor().colorWithAlphaComponent(0.6)
-    var diedColor: UIColor = UIColor.grayColor().colorWithAlphaComponent(0.6)
+    var bornColor: UIColor = UIColor.greenColor().colorWithAlphaComponent(0.3)
+    var diedColor: UIColor = UIColor.grayColor().colorWithAlphaComponent(0.3)
     var gridColor: UIColor = UIColor.blackColor()
     var gridWidth: CGFloat = 2.0
     //instead of taking rows and cols as variables, replace them with StandardEngine.sharedInstance.rows and StandardEngine.sharedInstance.cols
