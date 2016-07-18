@@ -10,6 +10,11 @@ import UIKit
 
 class StatisticsViewController: UIViewController {
 
+    var livingCellCounter = 0
+    var diedCellCounter = 0
+    var bornCellCounter = 0
+    var emptyCellCounter = 0
+    
     @IBOutlet weak var diedCells: UITextField!
     @IBOutlet weak var livingCells: UITextField!
     @IBOutlet weak var bornCells: UITextField!
@@ -23,7 +28,6 @@ class StatisticsViewController: UIViewController {
         c.addObserver(self, selector: s, name: "setEngineStaticsNotification", object: nil)
         
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,10 +40,7 @@ class StatisticsViewController: UIViewController {
         let grid = notification.userInfo!["value"] as! GridProtocol
         let cols = grid.cols
         let rows = grid.rows
-        var livingCellCounter = 0
-        var diedCellCounter = 0
-        var bornCellCounter = 0
-        var emptyCellCounter = 0
+        
         
         
         for x in 0..<rows{
@@ -54,9 +55,16 @@ class StatisticsViewController: UIViewController {
             }
         }
         
+        //change the texts to the modified numbers
         diedCells.text = String(diedCellCounter)
         livingCells.text = String(livingCellCounter)
         bornCells.text = String(bornCellCounter)
         emptyCells.text = String(emptyCellCounter)
+        
+        //clear date after one round
+        diedCellCounter = 0
+        livingCellCounter = 0
+        emptyCellCounter = 0
+        bornCellCounter = 0
     }
 }

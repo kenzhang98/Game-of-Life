@@ -118,6 +118,7 @@ import UIKit
             StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo]!)
         }
         let gridToBeChanged = CGRect(x: CGFloat(Double(xCo) * cellWidth), y: CGFloat(Double(yCo) * cellHeight), width: CGFloat(cellWidth), height: CGFloat(cellHeight))
+        
         self.setNeedsDisplayInRect(gridToBeChanged)
     }
 }

@@ -127,7 +127,7 @@ class StandardEngine: EngineProtocol {
             }
         }
         
-        //call the delegate method to update the display
+        //call the delegate method to update 
         if let delegate = delegate {
             delegate.engineDidUpdate(grid)
         }
