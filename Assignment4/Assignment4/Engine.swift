@@ -15,7 +15,10 @@ protocol EngineDelegateProtocol {
 protocol EngineProtocol{
     var delegate: EngineDelegateProtocol? { get set }
     var grid: GridProtocol { get }
-    var refreshRate: Double { get set }
+    
+    //because I use the timer int
+//    var refreshRate: Double { get set }
+    
     var refreshTimer: NSTimer? { get set }
     var rows: Int { get set }
     var cols: Int { get set }
@@ -61,8 +64,8 @@ class StandardEngine: EngineProtocol {
         }
     }
     
-    //set the default of variable refreshRate to 0.0
-    var refreshRate: Double = 0.0
+    
+    
 
     var refreshTimer:NSTimer?
     
