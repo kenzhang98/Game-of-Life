@@ -103,18 +103,34 @@
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.1 Hz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rY2-ey-Q3a">
+                                        <rect key="frame" x="74" y="236" width="47" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 Hz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXe-PO-pyZ">
+                                        <rect key="frame" x="311" y="236" width="44" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="MXe-PO-pyZ" firstAttribute="centerY" secondItem="aaC-Hh-uTL" secondAttribute="centerY" id="3zB-RP-kPU"/>
+                                    <constraint firstItem="MXe-PO-pyZ" firstAttribute="leading" secondItem="aaC-Hh-uTL" secondAttribute="trailing" constant="49" id="4Nn-ij-Mg0"/>
                                     <constraint firstItem="S3A-XD-YqD" firstAttribute="centerY" secondItem="eWj-9A-hAZ" secondAttribute="centerY" id="5ql-Vk-Jfp"/>
                                     <constraint firstItem="lIy-P1-9vq" firstAttribute="leading" secondItem="S3A-XD-YqD" secondAttribute="leading" id="7xY-Gh-Q3N"/>
                                     <constraint firstItem="aaC-Hh-uTL" firstAttribute="leading" secondItem="S3A-XD-YqD" secondAttribute="trailing" constant="-174" id="F64-hs-GpO"/>
                                     <constraint firstItem="LYF-3p-h2S" firstAttribute="leading" secondItem="lIy-P1-9vq" secondAttribute="trailing" constant="8" id="Fha-eQ-87l"/>
                                     <constraint firstItem="CF6-zl-DCg" firstAttribute="top" secondItem="B5S-z7-e9d" secondAttribute="bottom" constant="8" id="Gfc-fJ-0qd"/>
+                                    <constraint firstItem="aaC-Hh-uTL" firstAttribute="leading" secondItem="rY2-ey-Q3a" secondAttribute="trailing" constant="42" id="Itp-rn-U1M"/>
                                     <constraint firstItem="LYF-3p-h2S" firstAttribute="centerY" secondItem="lIy-P1-9vq" secondAttribute="centerY" id="PaQ-W3-gnF"/>
                                     <constraint firstItem="S3A-XD-YqD" firstAttribute="top" secondItem="S1O-rJ-nog" secondAttribute="bottom" constant="73" id="RPU-k1-Lmh"/>
                                     <constraint firstItem="CF6-zl-DCg" firstAttribute="centerX" secondItem="B5S-z7-e9d" secondAttribute="centerX" id="Rni-aP-rbF"/>
                                     <constraint firstItem="S3A-XD-YqD" firstAttribute="centerX" secondItem="eWj-9A-hAZ" secondAttribute="centerX" id="def-ke-xki"/>
                                     <constraint firstItem="S3A-XD-YqD" firstAttribute="top" secondItem="lIy-P1-9vq" secondAttribute="bottom" constant="17" id="eBV-Wm-OJn"/>
+                                    <constraint firstItem="rY2-ey-Q3a" firstAttribute="centerY" secondItem="aaC-Hh-uTL" secondAttribute="centerY" id="eaf-Lb-Wy1"/>
                                     <constraint firstItem="aH3-Zy-WVH" firstAttribute="centerY" secondItem="lIy-P1-9vq" secondAttribute="centerY" constant="-55.5" id="eg0-lR-XAq"/>
                                     <constraint firstItem="aH3-Zy-WVH" firstAttribute="leading" secondItem="lIy-P1-9vq" secondAttribute="trailing" constant="59" id="eni-UO-3S2"/>
                                     <constraint firstItem="aaC-Hh-uTL" firstAttribute="top" secondItem="S3A-XD-YqD" secondAttribute="bottom" constant="8" id="fYf-F7-9fd"/>
