@@ -24,12 +24,19 @@ class InstrumentationViewController: UIViewController {
     @IBOutlet weak var timedRefreshSwitch: UISwitch!
     
     @IBAction func rowsCalculation(sender: AnyObject) {
+        
         StandardEngine.sharedInstance.rows = Int(rowsStepper.value)
         rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
+        
+        //create a new grid when row changes
+        StandardEngine.sharedInstance.grid = Grid(rows: StandardEngine.sharedInstance.rows, cols: StandardEngine.sharedInstance.cols)
     }
     @IBAction func colsCalculation(sender: AnyObject) {
         StandardEngine.sharedInstance.cols = Int(colsStepper.value)
         colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
+        
+        //create a new grid when col changes
+        StandardEngine.sharedInstance.grid = Grid(rows: StandardEngine.sharedInstance.rows, cols: StandardEngine.sharedInstance.cols)
     }
     
     

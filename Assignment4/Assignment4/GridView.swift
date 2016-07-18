@@ -119,6 +119,7 @@ import UIKit
         }
         let gridToBeChanged = CGRect(x: CGFloat(Double(xCo) * cellWidth), y: CGFloat(Double(yCo) * cellHeight), width: CGFloat(cellWidth), height: CGFloat(cellHeight))
         
+        
         self.setNeedsDisplayInRect(gridToBeChanged)
     }
 }

@@ -44,7 +44,7 @@ class StandardEngine: EngineProtocol {
     
     var rows: Int {
         didSet {
-            
+
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
