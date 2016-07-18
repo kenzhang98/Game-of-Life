@@ -33,7 +33,7 @@ class StatisticsViewController: UIViewController {
         diedCells.text = String(diedCellCounter)
         livingCells.text = String(livingCellCounter)
         bornCells.text = String(bornCellCounter)
-        emptyCells.text = String(StandardEngine.sharedInstance.rows * StandardEngine.sharedInstance.cols)
+        emptyCells.text = String(emptyCellCounter)
 
         
 
@@ -46,14 +46,8 @@ class StatisticsViewController: UIViewController {
     }
     
     func watchForNotifications(notification:NSNotification){
-        grid = notification.userInfo!["value"] as! GridProtocol
-        rows = grid.rows
-        cols = grid.cols
-        
-        
         statisticsDataCalculation()
         
-    
         //change the texts to the modified numbers
         diedCells.text = String(diedCellCounter)
         livingCells.text = String(livingCellCounter)
@@ -68,6 +62,9 @@ class StatisticsViewController: UIViewController {
     }
     
     func statisticsDataCalculation(){
+        grid = StandardEngine.sharedInstance.grid
+        rows = grid.rows
+        cols = grid.cols
         for x in 0..<rows{
             for y in 0..<cols{
                 switch grid[x, y]{
@@ -79,5 +76,6 @@ class StatisticsViewController: UIViewController {
                 }
             }
         }
+        
     }
 }
