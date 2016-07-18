@@ -10,13 +10,18 @@ import UIKit
 
 class StatisticsViewController: UIViewController {
 
+    @IBOutlet weak var diedCells: UITextField!
+    @IBOutlet weak var livingCells: UITextField!
+    @IBOutlet weak var bornCells: UITextField!
+    @IBOutlet weak var emptyCells: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let s = #selector(StatisticsViewController.watchForNotifications(_:))
         let c = NSNotificationCenter.defaultCenter()
         c.addObserver(self, selector: s, name: "setEngineStaticsNotification", object: nil)
-
+        
 
         // Do any additional setup after loading the view.
     }
@@ -48,5 +53,10 @@ class StatisticsViewController: UIViewController {
                 }
             }
         }
+        
+        diedCells.text = String(diedCellCounter)
+        livingCells.text = String(livingCellCounter)
+        bornCells.text = String(bornCellCounter)
+        emptyCells.text = String(emptyCellCounter)
     }
 }
