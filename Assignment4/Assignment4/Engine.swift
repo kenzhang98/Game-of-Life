@@ -137,6 +137,7 @@ class StandardEngine: EngineProtocol {
         if let delegate = delegate {
             delegate.engineDidUpdate(grid)
         }
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: ["value" : StandardEngine.sharedInstance.grid])
         
         return after
         
