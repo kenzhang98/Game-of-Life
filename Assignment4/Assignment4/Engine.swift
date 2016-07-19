@@ -49,7 +49,7 @@ class StandardEngine: EngineProtocol {
     
     var rows: Int {
         didSet {
-            StandardEngine.sharedInstance.cols = cols
+            StandardEngine.sharedInstance.cols = rows
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
@@ -137,7 +137,6 @@ class StandardEngine: EngineProtocol {
         if let delegate = delegate {
             delegate.engineDidUpdate(grid)
         }
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
         
         return after
         
@@ -145,6 +144,7 @@ class StandardEngine: EngineProtocol {
     
     @objc func timerDidFire(timer:NSTimer) {
         StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
     }
 }
 

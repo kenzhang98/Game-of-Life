@@ -48,9 +48,10 @@ class InstrumentationViewController: UIViewController {
         rowsStepper.value = Double(StandardEngine.sharedInstance.rows)
         colsStepper.value = Double(StandardEngine.sharedInstance.cols)
         rowsStepper.stepValue = 10
-        rowsStepper.minimumValue = 0
         colsStepper.stepValue = 10
-        colsStepper.minimumValue = 0
+        //set the rows and cols' minimum values to 10 to avoid the problem of not showing the grid and presenting error message
+        rowsStepper.minimumValue = 10
+        colsStepper.minimumValue = 10
         colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
         rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
 

@@ -25,11 +25,20 @@ class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        statisticsDataCalculation()
+        
+        //clear the counters before the calculation
+        diedCellCounter = 0
+        livingCellCounter = 0
+        emptyCellCounter = 0
+        bornCellCounter = 0
 
+        //call the calculation to show the data
+        statisticsDataCalculation()
+        
         let s = #selector(StatisticsViewController.watchForNotifications(_:))
         let c = NSNotificationCenter.defaultCenter()
         c.addObserver(self, selector: s, name: "setEngineStaticsNotification", object: nil)
+        
         diedCells.text = String(diedCellCounter)
         livingCells.text = String(livingCellCounter)
         bornCells.text = String(bornCellCounter)
@@ -46,6 +55,13 @@ class StatisticsViewController: UIViewController {
     }
     
     func watchForNotifications(notification:NSNotification){
+        
+        //clear date after one round
+        diedCellCounter = 0
+        livingCellCounter = 0
+        emptyCellCounter = 0
+        bornCellCounter = 0
+        
         statisticsDataCalculation()
         
         //change the texts to the modified numbers
@@ -54,11 +70,7 @@ class StatisticsViewController: UIViewController {
         bornCells.text = String(bornCellCounter)
         emptyCells.text = String(emptyCellCounter)
         
-        //clear date after one round
-        diedCellCounter = 0
-        livingCellCounter = 0
-        emptyCellCounter = 0
-        bornCellCounter = 0
+        
     }
     
     func statisticsDataCalculation(){
@@ -76,6 +88,12 @@ class StatisticsViewController: UIViewController {
                 }
             }
         }
+        
+        //change the texts to the modified numbers
+        diedCells.text = String(diedCellCounter)
+        livingCells.text = String(livingCellCounter)
+        bornCells.text = String(bornCellCounter)
+        emptyCells.text = String(emptyCellCounter)
         
     }
 }
