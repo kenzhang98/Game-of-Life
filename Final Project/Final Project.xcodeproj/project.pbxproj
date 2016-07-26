@@ -15,7 +15,6 @@
 		31B4B6771D47FED4006B0A33 /* Final_ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B6761D47FED4006B0A33 /* Final_ProjectTests.swift */; };
 		31B4B6821D47FED4006B0A33 /* Final_ProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B6811D47FED4006B0A33 /* Final_ProjectUITests.swift */; };
 		31B4B6901D480023006B0A33 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B68F1D480023006B0A33 /* Engine.swift */; };
-		31B4B6921D480048006B0A33 /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B6911D480048006B0A33 /* Grid.swift */; };
 		31B4B6941D480069006B0A33 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B6931D480069006B0A33 /* GridView.swift */; };
 		31B4B6961D480092006B0A33 /* InstrumentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B6951D480092006B0A33 /* InstrumentationViewController.swift */; };
 		31B4B6981D4800E3006B0A33 /* SimulationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B6971D4800E3006B0A33 /* SimulationViewController.swift */; };
@@ -54,7 +53,6 @@
 		31B4B6811D47FED4006B0A33 /* Final_ProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Final_ProjectUITests.swift; sourceTree = "<group>"; };
 		31B4B6831D47FED4006B0A33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31B4B68F1D480023006B0A33 /* Engine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
-		31B4B6911D480048006B0A33 /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		31B4B6931D480069006B0A33 /* GridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GridView.swift; path = ../GridView.swift; sourceTree = "<group>"; };
 		31B4B6951D480092006B0A33 /* InstrumentationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InstrumentationViewController.swift; path = ../InstrumentationViewController.swift; sourceTree = "<group>"; };
 		31B4B6971D4800E3006B0A33 /* SimulationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SimulationViewController.swift; path = ../SimulationViewController.swift; sourceTree = "<group>"; };
@@ -111,7 +109,6 @@
 			children = (
 				31B4B65E1D47FED4006B0A33 /* AppDelegate.swift */,
 				31B4B68F1D480023006B0A33 /* Engine.swift */,
-				31B4B6911D480048006B0A33 /* Grid.swift */,
 				31B4B6931D480069006B0A33 /* GridView.swift */,
 				31B4B6621D47FED4006B0A33 /* Main.storyboard */,
 				31B4B6951D480092006B0A33 /* InstrumentationViewController.swift */,
@@ -276,7 +273,6 @@
 			files = (
 				31B4B6671D47FED4006B0A33 /* Final_Project.xcdatamodeld in Sources */,
 				31B4B6901D480023006B0A33 /* Engine.swift in Sources */,
-				31B4B6921D480048006B0A33 /* Grid.swift in Sources */,
 				31B4B69A1D4800FA006B0A33 /* StatisticsViewController.swift in Sources */,
 				31B4B6961D480092006B0A33 /* InstrumentationViewController.swift in Sources */,
 				31B4B6981D4800E3006B0A33 /* SimulationViewController.swift in Sources */,

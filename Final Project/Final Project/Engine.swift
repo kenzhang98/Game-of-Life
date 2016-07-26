@@ -6,71 +6,94 @@
 //  Copyright © 2016 Ken Zhang. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-protocol EngineDelegateProtocol {
+typealias Position = (row:Int, col: Int)
+
+enum CellState {
+    case Living
+    case Empty
+    case Born
+    case Died
+    
+    func isLiving() -> Bool {
+        switch self {
+        case .Living, .Born: return true
+        case .Died, .Empty: return false
+        }
+    }
+    
+    static func toggle(value: CellState) -> CellState{
+        switch value {
+        case .Empty, .Died:
+            return(.Living)
+        case .Living, .Born:
+            return(.Empty)
+        }
+    }
+}
+
+typealias Cell = (position: Position, state: CellState)
+
+protocol GridProtocol {
+    var rows: Int { get }
+    var cols: Int { get }
+    var cells: [Cell] { get set }
+    
+    var living: Int { get }
+    var dead:   Int { get }
+    var alive:  Int { get }
+    var born:   Int { get }
+    var died:   Int { get }
+    var empty:  Int { get }
+    
+    subscript (i:Int, j:Int) -> CellState { get set }
+    
+    func neighbors(pos: Position) -> [Position]
+    func livingNeighbors(position: Position) -> Int
+}
+
+protocol  EngineDelegateProtocol: class {
     func engineDidUpdate(withGrid: GridProtocol)
 }
 
-protocol EngineProtocol{
-    var delegate: EngineDelegateProtocol? { get set }
-    var grid: GridProtocol { get }
-    
-    //the reason why I don't use the var refreshRate is that I choose to use time interval to set the timer instead of refreshRate
-    //    var refreshRate: Double { get set }
-    
-    var refreshTimer: NSTimer? { get set }
+protocol EngineProtocol {
     var rows: Int { get set }
     var cols: Int { get set }
-    init(rows: Int, cols: Int)
+    var grid: GridProtocol { get }
+    weak var delegate: EngineDelegateProtocol? { get set }
+    
+    var refreshTimer: NSTimer? { get set }
+    
     func step() -> GridProtocol
 }
 
-//use the extension
-extension EngineProtocol{
-    var refreshRate: Double{
-        return 0.0
-    }
-}
+typealias CellInitializer = (Position) -> CellState
 
 class StandardEngine: EngineProtocol {
     
-    private static var _sharedInstance = StandardEngine(rows:10, cols: 10)
-    static var sharedInstance: StandardEngine {
-        get {
-            return _sharedInstance
-        }
-    }
+    static var _sharedInstance: StandardEngine = StandardEngine(20,20)
+    static var sharedInstance: StandardEngine { get { return _sharedInstance } }
     
-    var delegate: EngineDelegateProtocol?
     var grid: GridProtocol
     
-    
-    
-    var rows: Int {
+    var rows: Int = 20 {
         didSet {
-            StandardEngine.sharedInstance.cols = rows
-            if let delegate = delegate {
-                delegate.engineDidUpdate(grid)
-            }
-            NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
-        }
-    }
-    var cols: Int {
-        didSet {
-            StandardEngine.sharedInstance.cols = cols
-            if let delegate = delegate {
-                delegate.engineDidUpdate(grid)
-            }
-            NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+            grid = Grid(self.rows, self.cols) { _,_ in .Empty }
+            if let delegate = delegate { delegate.engineDidUpdate(grid) }
         }
     }
     
+    var cols: Int = 20 {
+        didSet {
+            grid = Grid(self.rows, self.cols) { _,_ in .Empty }
+            if let delegate = delegate { delegate.engineDidUpdate(grid) }
+        }
+    }
     
+    weak var delegate: EngineDelegateProtocol?
     
-    
-    var refreshTimer:NSTimer?
-    
+    //set up refreshInterval
     var refreshInterval: NSTimeInterval = 0 {
         didSet {
             if refreshInterval != 0 {
@@ -88,65 +111,99 @@ class StandardEngine: EngineProtocol {
             }
         }
     }
+
     
-    
-    
-    required init(rows: Int, cols: Int) {
-        self.rows = rows
-        self.cols = cols
-        grid = Grid(rows: rows, cols: cols)
-    }
-    
-    func step() -> GridProtocol {
-        var livingNeighbors = 0
-        
-        let after: GridProtocol = Grid(rows: rows, cols: cols)
-        
-        for x in 0 ..< rows {
-            for y in 0 ..< cols{
-                let arrOfTuplesOfCo = grid.neighbors(x, column: y)
-                for items in arrOfTuplesOfCo{
-                    if grid[items.0, items.1] == .Living || grid[items.0, items.1] == .Born{
-                        livingNeighbors += 1
-                    }
-                }
-                
-                switch livingNeighbors{
-                case 2:
-                    switch grid[x, y]!{
-                    case .Born, .Living: after[x,y] = .Living
-                    case .Died, .Empty: after[x,y] = .Empty
-                    }
-                case 3:
-                    switch grid[x, y]!{
-                    case .Died, .Empty: after[x,y] = .Born
-                    case.Living, .Born: after[x,y] = .Living
-                    }
-                default:
-                    switch grid[x, y]!{
-                    case .Born, .Living: after[x,y] = .Died
-                    case .Empty, .Died: after[x,y] = .Empty
-                    }
-                }
-                livingNeighbors = 0
-            }
-            
-        }
-        
-        //call the delegate method to update
-        if let delegate = delegate {
-            delegate.engineDidUpdate(grid)
-        }
-        
-        return after
-        
-    }
+    var refreshTimer: NSTimer?
     
     @objc func timerDidFire(timer:NSTimer) {
         StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
     }
+    
+    subscript (i:Int, j:Int) -> CellState {
+        get {
+            return grid.cells[i*cols+j].state
+        }
+        set {
+            grid.cells[i*cols+j].state = newValue
+        }
+    }
+    
+    
+    
+    init(_ rows: Int, _ cols: Int, cellInitializer: CellInitializer = {_ in .Empty }) {
+        self.rows = rows
+        self.cols = cols
+        self.grid = Grid(rows,cols, cellInitializer: cellInitializer)
+    }
+    
+    func step() -> GridProtocol {
+        var newGrid = Grid(self.rows, self.cols)
+        newGrid.cells = grid.cells.map {
+            switch grid.livingNeighbors($0.position) {
+            case 2 where $0.state.isLiving(),
+            3 where $0.state.isLiving():  return Cell($0.position, .Living)
+            case 3 where !$0.state.isLiving(): return Cell($0.position, .Born)
+            case _ where $0.state.isLiving():  return Cell($0.position, .Died)
+            default:                           return Cell($0.position, .Empty)
+            }
+        }
+        grid = newGrid
+        if let delegate = delegate { delegate.engineDidUpdate(grid) }
+        return grid
+    }
 }
+
+struct Grid: GridProtocol {
+    private(set) var rows: Int
+    private(set) var cols: Int
+    var cells: [Cell]
+    
+    var living: Int { return cells.reduce(0) { return  $1.state.isLiving() ?  $0 + 1 : $0 } }
+    var dead:   Int { return cells.reduce(0) { return !$1.state.isLiving() ?  $0 + 1 : $0 } }
+    var alive:  Int { return cells.reduce(0) { return  $1.state == .Living  ?  $0 + 1 : $0 } }
+    var born:   Int { return cells.reduce(0) { return  $1.state == .Born   ?  $0 + 1 : $0 } }
+    var died:   Int { return cells.reduce(0) { return  $1.state == .Died   ?  $0 + 1 : $0 } }
+    var empty:  Int { return cells.reduce(0) { return  $1.state == .Empty  ?  $0 + 1 : $0 } }
+    
+    init (_ rows: Int, _ cols: Int, cellInitializer: CellInitializer = {_ in .Empty }) {
+        self.rows = rows
+        self.cols = cols
+        self.cells = (0..<rows*cols).map {
+            let pos = Position($0/cols, $0%cols)
+            return Cell(pos, cellInitializer(pos))
+        }
+    }
+    
+    subscript (i:Int, j:Int) -> CellState {
+        get {
+            return cells[i*cols+j].state
+        }
+        set {
+            cells[i*cols+j].state = newValue
+        }
+    }
+    
+    private static let offsets:[Position] = [
+        (-1, -1), (-1, 0), (-1, 1),
+        ( 0, -1),          ( 0, 1),
+        ( 1, -1), ( 1, 0), ( 1, 1)
+    ]
+    func neighbors(pos: Position) -> [Position] {
+        return Grid.offsets.map { Position((pos.row + rows + $0.row) % rows,
+            (pos.col + cols + $0.col) % cols) }
+    }
+    
+    func livingNeighbors(position: Position) -> Int {
+        return neighbors(position)
+            .reduce(0) {
+                self[$1.row,$1.col].isLiving() ? $0 + 1 : $0
+        }
+    }
+}
+
+
+
 
 
 

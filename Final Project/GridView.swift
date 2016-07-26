@@ -75,12 +75,11 @@ class GridView: UIView{
                 
                 let path = UIBezierPath(ovalInRect: rectangle)
                 
-                switch StandardEngine.sharedInstance.grid[x, y]{
-                case .Living?: livingColor.setFill()
-                case .Born?: bornColor.setFill()
-                case .Died?: diedColor.setFill()
-                case .Empty?: emptyColor.setFill()
-                default: emptyColor.setFill()
+                switch StandardEngine.sharedInstance.grid[(x,y)]{
+                case .Living: livingColor.setFill()
+                case .Born: bornColor.setFill()
+                case .Died: diedColor.setFill()
+                case .Empty: emptyColor.setFill()
                 }
                 
                 path.fill()
@@ -115,7 +114,7 @@ class GridView: UIView{
         let yCo = Int(floor(Double(point.y) / cellHeight))
         
         if xCo <= StandardEngine.sharedInstance.rows-1 && yCo <= StandardEngine.sharedInstance.cols-1 && xCo >= 0 && yCo >= 0 {
-            StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo]!)
+            StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo])
         }
         let gridToBeChanged = CGRect(x: CGFloat(Double(xCo) * cellWidth), y: CGFloat(Double(yCo) * cellHeight), width: CGFloat(cellWidth), height: CGFloat(cellHeight))
         

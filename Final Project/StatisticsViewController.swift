@@ -79,12 +79,11 @@ class StatisticsViewController: UIViewController {
         cols = grid.cols
         for x in 0..<rows{
             for y in 0..<cols{
-                switch grid[x, y]{
-                case .Living?: livingCellCounter += 1
-                case .Died?: diedCellCounter += 1
-                case .Born?: bornCellCounter += 1
-                case .Empty?: emptyCellCounter += 1
-                default: break
+                switch grid[(x,y)]{
+                case .Living: livingCellCounter += 1
+                case .Died: diedCellCounter += 1
+                case .Born: bornCellCounter += 1
+                case .Empty: emptyCellCounter += 1
                 }
             }
         }
