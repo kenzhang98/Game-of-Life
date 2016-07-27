@@ -16,6 +16,32 @@ class GridView: UIView{
     //@IBinspectable is not mandatory in this assignment
     
     //set up variables
+    
+    var points:[(Int,Int)]? {
+        get{
+            var newValue: [(Int,Int)] = []
+            _ = StandardEngine.sharedInstance.grid.cells.map{
+                switch $0.state{
+                case .Alive: newValue.append($0.position)
+                case .Born: newValue.append($0.position)
+                default: break
+                }
+            }
+            return newValue
+        }
+        set(newValue){
+            let rows = StandardEngine.sharedInstance.grid.rows
+            let cols = StandardEngine.sharedInstance.grid.cols
+            StandardEngine.sharedInstance.grid = Grid(rows,cols, cellInitializer: {_ in .Empty})
+            if let points = newValue {
+                _ = points.map{
+                    StandardEngine.sharedInstance.grid[$0.0, $0.1] = .Alive
+                }
+            }
+        }
+        
+    }
+    
     var livingColor: UIColor = UIColor.greenColor()
     var emptyColor: UIColor = UIColor.grayColor()
     var bornColor: UIColor = UIColor.greenColor().colorWithAlphaComponent(0.3)
@@ -76,7 +102,7 @@ class GridView: UIView{
                 let path = UIBezierPath(ovalInRect: rectangle)
                 
                 switch StandardEngine.sharedInstance.grid[(x,y)]{
-                case .Living: livingColor.setFill()
+                case .Alive: livingColor.setFill()
                 case .Born: bornColor.setFill()
                 case .Died: diedColor.setFill()
                 case .Empty: emptyColor.setFill()
@@ -113,6 +139,7 @@ class GridView: UIView{
         let xCo = Int(floor(Double(point.x) / cellWidth))
         let yCo = Int(floor(Double(point.y) / cellHeight))
         
+        // if the point is not out of boundaries, then toggle the cell that user picks
         if xCo <= StandardEngine.sharedInstance.rows-1 && yCo <= StandardEngine.sharedInstance.cols-1 && xCo >= 0 && yCo >= 0 {
             StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo])
         }

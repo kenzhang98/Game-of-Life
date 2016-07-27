@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		31B4B65F1D47FED4006B0A33 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B65E1D47FED4006B0A33 /* AppDelegate.swift */; };
 		31B4B6641D47FED4006B0A33 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31B4B6621D47FED4006B0A33 /* Main.storyboard */; };
-		31B4B6671D47FED4006B0A33 /* Final_Project.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B6651D47FED4006B0A33 /* Final_Project.xcdatamodeld */; };
 		31B4B6691D47FED4006B0A33 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31B4B6681D47FED4006B0A33 /* Assets.xcassets */; };
 		31B4B66C1D47FED4006B0A33 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31B4B66A1D47FED4006B0A33 /* LaunchScreen.storyboard */; };
 		31B4B6771D47FED4006B0A33 /* Final_ProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31B4B6761D47FED4006B0A33 /* Final_ProjectTests.swift */; };
@@ -42,7 +41,6 @@
 		31B4B65B1D47FED4006B0A33 /* Final Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Final Project.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31B4B65E1D47FED4006B0A33 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		31B4B6631D47FED4006B0A33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		31B4B6661D47FED4006B0A33 /* Final_Project.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Final_Project.xcdatamodel; sourceTree = "<group>"; };
 		31B4B6681D47FED4006B0A33 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31B4B66B1D47FED4006B0A33 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		31B4B66D1D47FED4006B0A33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -117,7 +115,6 @@
 				31B4B6681D47FED4006B0A33 /* Assets.xcassets */,
 				31B4B66A1D47FED4006B0A33 /* LaunchScreen.storyboard */,
 				31B4B66D1D47FED4006B0A33 /* Info.plist */,
-				31B4B6651D47FED4006B0A33 /* Final_Project.xcdatamodeld */,
 			);
 			path = "Final Project";
 			sourceTree = "<group>";
@@ -271,7 +268,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31B4B6671D47FED4006B0A33 /* Final_Project.xcdatamodeld in Sources */,
 				31B4B6901D480023006B0A33 /* Engine.swift in Sources */,
 				31B4B69A1D4800FA006B0A33 /* StatisticsViewController.swift in Sources */,
 				31B4B6961D480092006B0A33 /* InstrumentationViewController.swift in Sources */,
@@ -421,10 +417,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Final Project/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "KenZhang.Final-Project";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -432,6 +430,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = "Final Project/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "KenZhang.Final-Project";
@@ -504,6 +503,7 @@
 				31B4B6881D47FED4006B0A33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		31B4B6891D47FED4006B0A33 /* Build configuration list for PBXNativeTarget "Final ProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +512,7 @@
 				31B4B68B1D47FED4006B0A33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		31B4B68C1D47FED4006B0A33 /* Build configuration list for PBXNativeTarget "Final ProjectUITests" */ = {
 			isa = XCConfigurationList;
@@ -520,21 +521,9 @@
 				31B4B68E1D47FED4006B0A33 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		31B4B6651D47FED4006B0A33 /* Final_Project.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				31B4B6661D47FED4006B0A33 /* Final_Project.xcdatamodel */,
-			);
-			currentVersion = 31B4B6661D47FED4006B0A33 /* Final_Project.xcdatamodel */;
-			path = Final_Project.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 31B4B6531D47FED4006B0A33 /* Project object */;
 }

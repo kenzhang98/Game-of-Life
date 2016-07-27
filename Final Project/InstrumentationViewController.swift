@@ -12,10 +12,13 @@ class InstrumentationViewController: UIViewController {
     
     //declare the UI elements and actions
     
+    
     @IBAction func refreshTimer(sender: AnyObject) {
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
+        hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
     }
     
+    @IBOutlet weak var hzLabel: UILabel!
     @IBOutlet weak var rowsTextField: UITextField!
     @IBOutlet weak var rowsStepper: UIStepper!
     @IBOutlet weak var colsTextField: UITextField!
@@ -42,7 +45,9 @@ class InstrumentationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //set up hzLabel as the view loads
+        hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
         
         //take care of the steppers and textfields
         rowsStepper.value = Double(StandardEngine.sharedInstance.rows)
@@ -75,6 +80,7 @@ class InstrumentationViewController: UIViewController {
         else{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
         }
+
     }
     
 }

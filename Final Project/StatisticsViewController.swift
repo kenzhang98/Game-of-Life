@@ -80,7 +80,7 @@ class StatisticsViewController: UIViewController {
         for x in 0..<rows{
             for y in 0..<cols{
                 switch grid[(x,y)]{
-                case .Living: livingCellCounter += 1
+                case .Alive: livingCellCounter += 1
                 case .Died: diedCellCounter += 1
                 case .Born: bornCellCounter += 1
                 case .Empty: emptyCellCounter += 1

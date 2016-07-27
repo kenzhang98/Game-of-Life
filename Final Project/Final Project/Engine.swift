@@ -11,14 +11,14 @@ import UIKit
 typealias Position = (row:Int, col: Int)
 
 enum CellState {
-    case Living
+    case Alive
     case Empty
     case Born
     case Died
     
     func isLiving() -> Bool {
         switch self {
-        case .Living, .Born: return true
+        case .Alive, .Born: return true
         case .Died, .Empty: return false
         }
     }
@@ -26,8 +26,8 @@ enum CellState {
     static func toggle(value: CellState) -> CellState{
         switch value {
         case .Empty, .Died:
-            return(.Living)
-        case .Living, .Born:
+            return(.Alive)
+        case .Alive, .Born:
             return(.Empty)
         }
     }
@@ -97,9 +97,10 @@ class StandardEngine: EngineProtocol {
     var refreshInterval: NSTimeInterval = 0 {
         didSet {
             if refreshInterval != 0 {
+                let interval = 1 / refreshInterval
                 if let timer = refreshTimer { timer.invalidate() }
                 let sel = #selector(StandardEngine.timerDidFire(_:))
-                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(refreshInterval,
+                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(interval,
                                                                       target: self,
                                                                       selector: sel,
                                                                       userInfo: nil,
@@ -142,7 +143,7 @@ class StandardEngine: EngineProtocol {
         newGrid.cells = grid.cells.map {
             switch grid.livingNeighbors($0.position) {
             case 2 where $0.state.isLiving(),
-            3 where $0.state.isLiving():  return Cell($0.position, .Living)
+            3 where $0.state.isLiving():  return Cell($0.position, .Alive)
             case 3 where !$0.state.isLiving(): return Cell($0.position, .Born)
             case _ where $0.state.isLiving():  return Cell($0.position, .Died)
             default:                           return Cell($0.position, .Empty)
@@ -161,7 +162,7 @@ struct Grid: GridProtocol {
     
     var living: Int { return cells.reduce(0) { return  $1.state.isLiving() ?  $0 + 1 : $0 } }
     var dead:   Int { return cells.reduce(0) { return !$1.state.isLiving() ?  $0 + 1 : $0 } }
-    var alive:  Int { return cells.reduce(0) { return  $1.state == .Living  ?  $0 + 1 : $0 } }
+    var alive:  Int { return cells.reduce(0) { return  $1.state == .Alive  ?  $0 + 1 : $0 } }
     var born:   Int { return cells.reduce(0) { return  $1.state == .Born   ?  $0 + 1 : $0 } }
     var died:   Int { return cells.reduce(0) { return  $1.state == .Died   ?  $0 + 1 : $0 } }
     var empty:  Int { return cells.reduce(0) { return  $1.state == .Empty  ?  $0 + 1 : $0 } }
