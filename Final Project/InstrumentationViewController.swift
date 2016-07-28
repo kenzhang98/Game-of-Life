@@ -13,6 +13,46 @@ class InstrumentationViewController: UIViewController {
     //declare the UI elements and actions
     
     
+    @IBOutlet weak var urlTextField: UITextField!
+    
+    @IBAction func reloadButton(sender: AnyObject) {
+        TableViewController.sharedTable.names = []
+        TableViewController.sharedTable.gridContent = []
+        
+        if let url = urlTextField.text{
+            let requestURL: NSURL = NSURL(string: url)!
+            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+            let session = NSURLSession.sharedSession()
+            let task = session.dataTaskWithRequest(urlRequest) {
+                (data, response, error) -> Void in
+                
+                let httpResponse = response as?NSHTTPURLResponse
+                let statusCode = httpResponse?.statusCode
+                
+                if (statusCode == 200) {
+                    do{
+                        
+                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as? [AnyObject]
+                        for i in 0...json!.count-1 {
+                            let pattern = json![i]
+                            let collection = pattern as! Dictionary<String, AnyObject>
+                            TableViewController.sharedTable.names.append(collection["title"]! as! String)
+                            let arr = collection["contents"].map{return $0 as! [[Int]]}
+                            TableViewController.sharedTable.gridContent.append(arr!)
+                            
+                        }
+                    }catch {
+                        print("Error with Json: \(error)")
+                    }
+                    NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
+                    
+                }
+            }
+            task.resume()
+            
+        }
+    }
+    
     @IBAction func refreshTimer(sender: AnyObject) {
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
@@ -45,6 +85,7 @@ class InstrumentationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         //set up hzLabel as the view loads
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"

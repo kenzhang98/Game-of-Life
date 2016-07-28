@@ -5,6 +5,12 @@
 //  Created by Ken Zhang on 7/26/16.
 //  Copyright © 2016 Ken Zhang. All rights reserved.
 //
+//Icons Credit:
+//App icon: "Conways Game Of Life" By Pablo Andrés Dorado Suárez, CO, from https://thenounproject.com.
+//Statistics icon: by icons8 at https://icons8.com
+//Instrumentation icon: by icons8 at https://icons8.com
+//Simulation icon: by icons8 at https://icons8.com
+//Reload icon: by icons8 at https://icons8.com
 
 import UIKit
 import CoreData

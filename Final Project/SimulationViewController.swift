@@ -44,6 +44,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         StandardEngine.sharedInstance.delegate = self
+        
     }
     
     override func didReceiveMemoryWarning() {

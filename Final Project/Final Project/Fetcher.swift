@@ -16,6 +16,14 @@ class Fetcher: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
         return NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
     
+    //MARK: NSURLSessionTaskDelegate
+    func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+        
+    }
+    
+    func URLSession(session: NSURLSession, task: NSURLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+        
+    }
     
     typealias RequestCompletionHandler = (data: NSData?, message: String?) -> Void
     func request(url: NSURL, completion: RequestCompletionHandler) {
@@ -30,11 +38,19 @@ class Fetcher: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
     typealias JSONRequestCompletionHandler = (json:NSObject?, message: String?) -> Void
     func requestJSON(url: NSURL, completion: JSONRequestCompletionHandler) {
         request(url) { (data, message) in
-            var json: NSObject?
+            var json: [AnyObject]?
             if let data = data {
                 json = try? NSJSONSerialization
                     .JSONObjectWithData(data,
-                                        options: NSJSONReadingOptions.AllowFragments) as! NSObject
+                                        options: NSJSONReadingOptions.AllowFragments) as! [AnyObject]
+                
+                for i in 0...json!.count-1 {
+                    let pattern = json![i]
+                    
+                    let collection = pattern as! Dictionary<String, AnyObject>
+                    print(collection["contents"])
+                }
+                
             }
             completion(json: json, message: message)
         }
@@ -58,21 +74,5 @@ class Fetcher: NSObject, NSURLSessionDelegate, NSURLSessionTaskDelegate {
                 return "OS Error: network error was empty"
             }
         }
-    }
-}
-
-//MARK: NSURLSessionDelegate
-extension Fetcher {
-    
-    func URLSession(session: NSURLSession, didBecomeInvalidWithError error: NSError?) {
-        NSLog("\(#function): Session became invalid: \(error?.localizedDescription)")
-    }
-    
-    func URLSessionDidFinishEventsForBackgroundURLSession(session: NSURLSession) {
-        
-    }
-    
-    func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
-        
     }
 }
