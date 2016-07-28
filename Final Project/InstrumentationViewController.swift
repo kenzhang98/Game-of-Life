@@ -73,6 +73,9 @@ class InstrumentationViewController: UIViewController {
         
         //create a new grid when row changes
         StandardEngine.sharedInstance.grid = Grid(StandardEngine.sharedInstance.rows, StandardEngine.sharedInstance.cols)
+        
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
     }
     @IBAction func colsCalculation(sender: AnyObject) {
         StandardEngine.sharedInstance.cols = Int(colsStepper.value)
@@ -80,11 +83,19 @@ class InstrumentationViewController: UIViewController {
         
         //create a new grid when col changes
         StandardEngine.sharedInstance.grid = Grid(StandardEngine.sharedInstance.rows, StandardEngine.sharedInstance.cols)
+        
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //set up observer so that when the row and col get changed the numbers in the textfields will get updated
+        let s = #selector(InstrumentationViewController.watchForNotifications(_:))
+        let c = NSNotificationCenter.defaultCenter()
+        c.addObserver(self, selector: s, name: "updateRowAndColText", object: nil)
         
         
         //set up hzLabel as the view loads
@@ -107,6 +118,13 @@ class InstrumentationViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
         
+    }
+    
+    func watchForNotifications(notification:NSNotification){
+        rowsStepper.value = Double(StandardEngine.sharedInstance.rows)
+        colsStepper.value = Double(StandardEngine.sharedInstance.cols)
+        colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
+        rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
     }
     
     override func didReceiveMemoryWarning() {

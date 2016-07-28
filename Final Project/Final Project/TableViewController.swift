@@ -12,44 +12,13 @@ class TableViewController: UITableViewController {
     var names:[String] = ["test1", "test2", "test3"]
     var gridContent: [[[Int]]] = [[],[],[]]
     
+ 
     static var _sharedTable = TableViewController()
     static var sharedTable: TableViewController { get { return _sharedTable } }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        // Do any additional setup after loading the view, typically from a nib.
-        
-//        let requestURL: NSURL = NSURL(string: "https://dl.dropboxusercontent.com/u/7544475/S65g.json")!
-//        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-//        let session = NSURLSession.sharedSession()
-//        let task = session.dataTaskWithRequest(urlRequest) {
-//            (data, response, error) -> Void in
-//            
-//            let httpResponse = response as! NSHTTPURLResponse
-//            let statusCode = httpResponse.statusCode
-//            
-//            if (statusCode == 200) {
-//                do{
-//                    
-//                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as? [AnyObject]
-//                    for i in 0...json!.count-1 {
-//                        let pattern = json![i]
-//                        let collection = pattern as! Dictionary<String, AnyObject>
-//                        self.names.append(collection["title"]! as! String)
-//                        let arr = collection["contents"].map{return $0 as! [[Int]]}
-//                        self.gridContent.append(arr!)
-//                    }
-//                }catch {
-//                    print("Error with Json: \(error)")
-//                }
-//            }
-//        }
-//        task.resume()
-        
         
         // set up observer to reload the data of the table view
         let s = #selector(TableViewController.dataReload(_:))
@@ -75,10 +44,14 @@ class TableViewController: UITableViewController {
         let itemRow = TableViewController.sharedTable.names.count - 1
         let itemPath = NSIndexPath(forRow:itemRow, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([itemPath], withRowAnimation: .Automatic)
-        
+
+        self.tableView.reloadData()
         
     }
     
+    @IBAction func refresh(sender: AnyObject) {
+        self.tableView.reloadData()
+    }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return TableViewController.sharedTable.names.count
     }
@@ -110,9 +83,8 @@ class TableViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {        
         let editingRow = (sender as! UITableViewCell).tag
-        print(TableViewController.sharedTable.gridContent[editingRow])
         let editingString = TableViewController.sharedTable.names[editingRow]
         guard let editingVC = segue.destinationViewController as? GridEditterViewController
             else {
@@ -125,6 +97,32 @@ class TableViewController: UITableViewController {
             self.tableView.reloadRowsAtIndexPaths([indexPath],
                                                   withRowAnimation: .Automatic)
         }
+        editingVC.anotherCommit = {
+            TableViewController.sharedTable.gridContent[editingRow] = $0
+            let indexPath = NSIndexPath(forRow: editingRow, inSection: 0)
+            self.tableView.reloadRowsAtIndexPaths([indexPath],
+                                                  withRowAnimation: .Automatic)
+        }
+        
+        //set up the size of the grid according to the content of the row selected
+        let max = TableViewController.sharedTable.gridContent[editingRow].flatMap{$0}.maxElement()
+        if let safeMax = max {
+            StandardEngine.sharedInstance.rows = (safeMax % 10 != 0) ? (safeMax/10+1)*10 : safeMax
+            StandardEngine.sharedInstance.cols = (safeMax % 10 != 0) ? (safeMax/10+1)*10 : safeMax
+        }
+        
+        //set the cells on
+        let medium:[(Int,Int)] = TableViewController.sharedTable.gridContent[editingRow].map{return ($0[0], $0[1])}
+        GridView().points = medium
+        
+        //update grid in simulation tab
+        if let delegate = StandardEngine.sharedInstance.delegate {
+            delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        }
+        
+        //update the text fields of row and col in the instrumentation tab
+        NSNotificationCenter.defaultCenter().postNotificationName("updateRowAndColText", object: nil, userInfo: nil)
+        
     }
 
 }
