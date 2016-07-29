@@ -6,7 +6,6 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
-        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -314,18 +313,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Configurations" id="IBR-UR-tAg">
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="oey-1E-xdL" userLabel="Add">
-                                <connections>
-                                    <action selector="addName:" destination="2hF-8P-2dh" id="GVy-UC-WKZ"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="TU3-mR-aVS">
-                                <connections>
-                                    <action selector="refresh:" destination="2hF-8P-2dh" id="y31-5U-1bb"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="oey-1E-xdL" userLabel="Add">
+                            <connections>
+                                <action selector="addName:" destination="2hF-8P-2dh" id="GVy-UC-WKZ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DtY-Tk-iqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -353,22 +345,61 @@
                                 <rect key="frame" x="0.0" y="90" width="600" height="144.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQ0-tN-O1i" customClass="GridView" customModule="Final_Project" customModuleProvider="target">
-                                        <rect key="frame" x="242" y="14.5" width="116" height="115.5"/>
+                                        <rect key="frame" x="242" y="14" width="116" height="115.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="UQ0-tN-O1i" secondAttribute="height" multiplier="1:1" id="ci3-hy-MuD"/>
                                         </constraints>
                                     </view>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Put your comment here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FAv-Yl-gSO">
+                                        <rect key="frame" x="150" y="138" width="300" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XuQ-YK-Ymg">
+                                        <rect key="frame" x="62" y="142" width="80" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XoW-mu-6wR">
+                                        <rect key="frame" x="458" y="138" width="104" height="30"/>
+                                        <state key="normal" title="Save Comment"/>
+                                        <connections>
+                                            <action selector="saveComment:" destination="5Ua-yn-Hcs" eventType="touchUpInside" id="VZq-1j-d50"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="XuQ-YK-Ymg" firstAttribute="leading" secondItem="FAv-Yl-gSO" secondAttribute="leading" id="0DM-yP-8rR"/>
+                                    <constraint firstItem="FAv-Yl-gSO" firstAttribute="top" secondItem="UQ0-tN-O1i" secondAttribute="bottom" constant="8" id="6Ar-Lz-OUl"/>
                                     <constraint firstItem="UQ0-tN-O1i" firstAttribute="centerX" secondItem="Z7G-JC-LPk" secondAttribute="centerX" id="7Kx-l5-zob"/>
+                                    <constraint firstItem="XoW-mu-6wR" firstAttribute="centerY" secondItem="FAv-Yl-gSO" secondAttribute="centerY" id="Dte-pr-Uv6"/>
+                                    <constraint firstItem="FAv-Yl-gSO" firstAttribute="centerX" secondItem="UQ0-tN-O1i" secondAttribute="centerX" id="FqN-jx-wwh"/>
+                                    <constraint firstItem="XuQ-YK-Ymg" firstAttribute="trailing" secondItem="FAv-Yl-gSO" secondAttribute="trailing" id="Ghb-Og-JEQ"/>
                                     <constraint firstItem="UQ0-tN-O1i" firstAttribute="height" relation="lessThanOrEqual" secondItem="Z7G-JC-LPk" secondAttribute="height" multiplier="0.8" id="HgJ-w7-LTh"/>
                                     <constraint firstItem="UQ0-tN-O1i" firstAttribute="width" relation="lessThanOrEqual" secondItem="Z7G-JC-LPk" secondAttribute="width" multiplier="0.8" id="HsV-sP-iLp"/>
                                     <constraint firstItem="UQ0-tN-O1i" firstAttribute="width" secondItem="Z7G-JC-LPk" secondAttribute="width" multiplier="0.8" priority="750" id="J1u-bI-ydA"/>
+                                    <constraint firstItem="FAv-Yl-gSO" firstAttribute="top" secondItem="XuQ-YK-Ymg" secondAttribute="bottom" constant="8" id="T8M-jF-0WR"/>
+                                    <constraint firstItem="FAv-Yl-gSO" firstAttribute="leading" secondItem="XuQ-YK-Ymg" secondAttribute="trailing" constant="8" id="Wcu-vo-j65"/>
+                                    <constraint firstItem="XoW-mu-6wR" firstAttribute="leading" secondItem="FAv-Yl-gSO" secondAttribute="trailing" constant="8" id="aw9-5K-bkc"/>
                                     <constraint firstItem="UQ0-tN-O1i" firstAttribute="centerY" secondItem="Z7G-JC-LPk" secondAttribute="centerY" id="bbf-Zi-R0O"/>
+                                    <constraint firstItem="XuQ-YK-Ymg" firstAttribute="leading" secondItem="FAv-Yl-gSO" secondAttribute="leading" id="nLh-pU-5S0"/>
+                                    <constraint firstItem="FAv-Yl-gSO" firstAttribute="width" secondItem="Z7G-JC-LPk" secondAttribute="width" multiplier="0.5" id="nOk-oe-IFG"/>
+                                    <constraint firstItem="XuQ-YK-Ymg" firstAttribute="centerX" secondItem="FAv-Yl-gSO" secondAttribute="centerX" id="qbp-5k-jyt"/>
                                     <constraint firstItem="UQ0-tN-O1i" firstAttribute="height" secondItem="Z7G-JC-LPk" secondAttribute="height" multiplier="0.8" priority="750" id="u1p-53-ZCq"/>
+                                    <constraint firstItem="XuQ-YK-Ymg" firstAttribute="centerY" secondItem="FAv-Yl-gSO" secondAttribute="centerY" id="vv0-a1-lbd"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="0DM-yP-8rR"/>
+                                        <exclude reference="Ghb-Og-JEQ"/>
+                                        <exclude reference="nLh-pU-5S0"/>
+                                        <exclude reference="qbp-5k-jyt"/>
+                                        <exclude reference="T8M-jF-0WR"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -397,8 +428,10 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="commentTextField" destination="FAv-Yl-gSO" id="gXg-TZ-deJ"/>
                         <outlet property="editterGrid" destination="UQ0-tN-O1i" id="F98-2U-FzF"/>
                         <outlet property="nameTextField" destination="Wjs-V2-Ttp" id="BDf-C1-HAj"/>
+                        <outlet property="saveComment" destination="XoW-mu-6wR" id="PAI-fI-ssm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OoL-4F-1Ue" userLabel="First Responder" sceneMemberID="firstResponder"/>

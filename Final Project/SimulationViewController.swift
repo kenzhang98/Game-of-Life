@@ -29,12 +29,11 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
             if let text = self.inputTextField!.text{
                 TableViewController.sharedTable.names.append(text)
+                TableViewController.sharedTable.comments.append("")
                 
                 if let point = GridView().points{
                     var medium:[[Int]] = []
-                    _ = point.map{
-                        medium.append([$0.0, $0.1])
-                    }
+                    _ = point.map{ medium.append([$0.0, $0.1]) }
                     TableViewController.sharedTable.gridContent.append(medium)
                 }
                 
@@ -44,6 +43,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
                 NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
             }
             removeTextFieldObserver()
+            print(TableViewController.sharedTable.gridContent)
         })
         
         //disable the save button initially unless the user enters any text

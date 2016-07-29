@@ -11,11 +11,11 @@ import UIKit
 class InstrumentationViewController: UIViewController {
     
     //declare the UI elements and actions
-    
-    
     @IBOutlet weak var urlTextField: UITextField!
     
     @IBAction func reloadButton(sender: AnyObject) {
+        
+        //download and parse the JSON file and then update the table view
         TableViewController.sharedTable.names = []
         TableViewController.sharedTable.gridContent = []
         
@@ -39,8 +39,8 @@ class InstrumentationViewController: UIViewController {
                                 TableViewController.sharedTable.names.append(collection["title"]! as! String)
                                 let arr = collection["contents"].map{return $0 as! [[Int]]}
                                 TableViewController.sharedTable.gridContent.append(arr!)
-                                
                             }
+                            TableViewController.sharedTable.comments = TableViewController.sharedTable.names.map{_ in return ""}
                         }catch {
                             print("Error with Json: \(error)")
                         }
@@ -56,7 +56,7 @@ class InstrumentationViewController: UIViewController {
                         //put the pop up window in the main thread for HTTP errors and then pop it up
                         let op = NSBlockOperation {
                             let alertController = UIAlertController(title: "Error", message:
-                                "HTTP Error \(safeStatusCode): \(NSHTTPURLResponse.localizedStringForStatusCode(safeStatusCode))", preferredStyle: UIAlertControllerStyle.Alert)
+                                "HTTP Error \(safeStatusCode): \(NSHTTPURLResponse.localizedStringForStatusCode(safeStatusCode))           Please enter a valid url", preferredStyle: UIAlertControllerStyle.Alert)
                             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
                             
                             self.presentViewController(alertController, animated: true, completion: nil)
@@ -126,6 +126,10 @@ class InstrumentationViewController: UIViewController {
         let c = NSNotificationCenter.defaultCenter()
         c.addObserver(self, selector: s, name: "updateRowAndColText", object: nil)
         
+        //set up observer which will turn off the timed refresh when user segues out to the editter grid view
+        let sel = #selector(InstrumentationViewController.turnOffTimedRefresh(_:))
+        c.addObserver(self, selector: sel, name: "turnOffTimedRefresh", object: nil)
+        
         
         //set up hzLabel as the view loads
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
@@ -171,4 +175,10 @@ class InstrumentationViewController: UIViewController {
 
     }
     
+    func turnOffTimedRefresh(notification:NSNotification){
+        if timedRefreshSwitch.on == true{
+            StandardEngine.sharedInstance.refreshTimer?.invalidate()
+            timedRefreshSwitch.setOn(false, animated: true)
+        }
+    }
 }

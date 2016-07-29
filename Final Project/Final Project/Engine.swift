@@ -24,6 +24,7 @@ enum CellState {
     }
     
     static func toggle(value: CellState) -> CellState{
+        StandardEngine.sharedInstance.changesDetect = true
         switch value {
         case .Empty, .Died:
             return(.Alive)
@@ -77,6 +78,9 @@ class StandardEngine: EngineProtocol {
     
     var grid: GridProtocol
     
+    //used to detect the changes made by user at the embed grid view
+    var changesDetect: Bool = false
+
     var rows: Int = 20 {
         didSet {
             grid = Grid(self.rows, self.cols) { _,_ in .Empty }
