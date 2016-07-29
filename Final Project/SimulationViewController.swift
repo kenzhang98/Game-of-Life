@@ -10,8 +10,73 @@ import UIKit
 
 class SimulationViewController: UIViewController, EngineDelegateProtocol {
     
+    private var inputTextField: UITextField?
+    weak var AddAlertSaveAction: UIAlertAction?
+    
     @IBAction func Save(sender: AnyObject) {
+        
+        let alert = UIAlertController(title: "Save", message: "Please enter a name to save the current grid", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        //set up the function to remove the observer
+        func removeTextFieldObserver() {
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: alert.textFields![0])
+        }
+        
+        //add cancel button action
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action) -> Void in removeTextFieldObserver()}))
+        
+        //set up save button actino to use later
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
+            if let text = self.inputTextField!.text{
+                TableViewController.sharedTable.names.append(text)
+                
+                if let point = GridView().points{
+                    var medium:[[Int]] = []
+                    _ = point.map{
+                        medium.append([$0.0, $0.1])
+                    }
+                    TableViewController.sharedTable.gridContent.append(medium)
+                }
+                
+                let itemRow = TableViewController.sharedTable.names.count - 1
+                let itemPath = NSIndexPath(forRow:itemRow, inSection: 0)
+                TableViewController().tableView.insertRowsAtIndexPaths([itemPath], withRowAnimation: .Automatic)
+                NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
+            }
+            removeTextFieldObserver()
+        })
+        
+        //disable the save button initially unless the user enters any text
+        saveAction.enabled = false
+        
+        AddAlertSaveAction = saveAction
+        
+        //add save button
+        alert.addAction(saveAction)
+        
+        //add a text field for user to enter name for the row
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "Enter name:"
+            self.inputTextField = textField
+            //add observer
+            let sel = #selector(self.handleTextFieldTextDidChangeNotification(_:))
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: sel, name: UITextFieldTextDidChangeNotification, object: textField)
+        })
+        
+        //pop up the alert view
+        self.presentViewController(alert, animated: true, completion: nil)
     }
+    
+    //set up the handler to enable the save button when the user enters any text for the name
+    func handleTextFieldTextDidChangeNotification(notification: NSNotification) {
+        let textField = notification.object as! UITextField
+        
+        // Enforce a minimum length of >= 1 for secure text alerts.
+        if let text = textField.text{
+            AddAlertSaveAction!.enabled = text.characters.count >= 1
+        }
+    }
+    
     @IBAction func Reset(sender: AnyObject) {
         let rows = StandardEngine.sharedInstance.grid.rows
         let cols = StandardEngine.sharedInstance.grid.cols
@@ -28,7 +93,6 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
   
     }
-    
     
     
     func engineDidUpdate(withGrid: GridProtocol) {

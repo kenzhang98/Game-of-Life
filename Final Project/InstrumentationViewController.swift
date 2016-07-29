@@ -44,10 +44,16 @@ class InstrumentationViewController: UIViewController {
                         }catch {
                             print("Error with Json: \(error)")
                         }
-                        NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
+                        
+                        //put the table reload process into the main thread to reload it right away
+                        let op = NSBlockOperation {
+                            NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
+                        }
+                        NSOperationQueue.mainQueue().addOperation(op)
                         
                     }
                     else{
+                        //put the pop up window in the main thread for HTTP errors and then pop it up
                         let op = NSBlockOperation {
                             let alertController = UIAlertController(title: "Error", message:
                                 "HTTP Error \(safeStatusCode): \(NSHTTPURLResponse.localizedStringForStatusCode(safeStatusCode))", preferredStyle: UIAlertControllerStyle.Alert)
@@ -58,10 +64,10 @@ class InstrumentationViewController: UIViewController {
                         NSOperationQueue.mainQueue().addOperation(op)
                     }
                 }else{
-                    //put the pop up window in the main thread and then pop it up
+                    //put the pop up window in the main thread for url errors and then pop it up
                     let op = NSBlockOperation {
                         let alertController = UIAlertController(title: "Error", message:
-                            "Please put in a correct url", preferredStyle: UIAlertControllerStyle.Alert)
+                            "Please enter a correct url", preferredStyle: UIAlertControllerStyle.Alert)
                         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
                         
                         self.presentViewController(alertController, animated: true, completion: nil)
@@ -70,9 +76,7 @@ class InstrumentationViewController: UIViewController {
                 }
             }
             task.resume()
-            
         }
-        
     }
     
     @IBAction func refreshTimer(sender: AnyObject) {
