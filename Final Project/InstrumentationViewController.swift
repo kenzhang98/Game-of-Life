@@ -28,36 +28,60 @@ class InstrumentationViewController: UIViewController {
                 
                 let httpResponse = response as?NSHTTPURLResponse
                 let statusCode = httpResponse?.statusCode
-                
-                if (statusCode == 200) {
-                    do{
-                        
-                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as? [AnyObject]
-                        for i in 0...json!.count-1 {
-                            let pattern = json![i]
-                            let collection = pattern as! Dictionary<String, AnyObject>
-                            TableViewController.sharedTable.names.append(collection["title"]! as! String)
-                            let arr = collection["contents"].map{return $0 as! [[Int]]}
-                            TableViewController.sharedTable.gridContent.append(arr!)
+                if let safeStatusCode = statusCode{
+                    if (safeStatusCode == 200) {
+                        do{
                             
+                            let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as? [AnyObject]
+                            for i in 0...json!.count-1 {
+                                let pattern = json![i]
+                                let collection = pattern as! Dictionary<String, AnyObject>
+                                TableViewController.sharedTable.names.append(collection["title"]! as! String)
+                                let arr = collection["contents"].map{return $0 as! [[Int]]}
+                                TableViewController.sharedTable.gridContent.append(arr!)
+                                
+                            }
+                        }catch {
+                            print("Error with Json: \(error)")
                         }
-                    }catch {
-                        print("Error with Json: \(error)")
+                        NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
+                        
                     }
-                    NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
-                    
+                    else{
+                        let op = NSBlockOperation {
+                            let alertController = UIAlertController(title: "Error", message:
+                                "HTTP Error \(safeStatusCode): \(NSHTTPURLResponse.localizedStringForStatusCode(safeStatusCode))", preferredStyle: UIAlertControllerStyle.Alert)
+                            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+                            
+                            self.presentViewController(alertController, animated: true, completion: nil)
+                        }
+                        NSOperationQueue.mainQueue().addOperation(op)
+                    }
+                }else{
+                    //put the pop up window in the main thread and then pop it up
+                    let op = NSBlockOperation {
+                        let alertController = UIAlertController(title: "Error", message:
+                            "Please put in a correct url", preferredStyle: UIAlertControllerStyle.Alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+                        
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                    NSOperationQueue.mainQueue().addOperation(op)
                 }
             }
             task.resume()
             
         }
+        
     }
     
     @IBAction func refreshTimer(sender: AnyObject) {
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
+        timedRefreshSwitch.setOn(true, animated: true)
     }
     
+
     @IBOutlet weak var hzLabel: UILabel!
     @IBOutlet weak var rowsTextField: UITextField!
     @IBOutlet weak var rowsStepper: UIStepper!
@@ -91,6 +115,7 @@ class InstrumentationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        timedRefreshSwitch.setOn(false, animated: true)
         
         //set up observer so that when the row and col get changed the numbers in the textfields will get updated
         let s = #selector(InstrumentationViewController.watchForNotifications(_:))
