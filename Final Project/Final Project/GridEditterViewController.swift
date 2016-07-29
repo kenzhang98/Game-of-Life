@@ -68,7 +68,7 @@ class GridEditterViewController: UIViewController{
         anothercommit(savedCells)
         
         navigationController!.popViewControllerAnimated(true)
-        print(TableViewController.sharedTable.gridContent)
+
     }
     
     override func viewDidLoad() {

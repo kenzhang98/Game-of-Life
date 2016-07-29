@@ -43,7 +43,6 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
                 NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
             }
             removeTextFieldObserver()
-            print(TableViewController.sharedTable.gridContent)
         })
         
         //disable the save button initially unless the user enters any text

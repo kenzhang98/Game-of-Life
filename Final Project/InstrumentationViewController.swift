@@ -67,7 +67,7 @@ class InstrumentationViewController: UIViewController {
                     //put the pop up window in the main thread for url errors and then pop it up
                     let op = NSBlockOperation {
                         let alertController = UIAlertController(title: "Error", message:
-                            "Please enter a correct url", preferredStyle: UIAlertControllerStyle.Alert)
+                            "Please check your url or your Internet connection", preferredStyle: UIAlertControllerStyle.Alert)
                         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
                         
                         self.presentViewController(alertController, animated: true, completion: nil)
@@ -181,4 +181,11 @@ class InstrumentationViewController: UIViewController {
             timedRefreshSwitch.setOn(false, animated: true)
         }
     }
+    
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
+    }
+
 }
