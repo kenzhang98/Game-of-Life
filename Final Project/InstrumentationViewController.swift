@@ -19,8 +19,16 @@ class InstrumentationViewController: UIViewController {
         TableViewController.sharedTable.names = []
         TableViewController.sharedTable.gridContent = []
         
+        //if the user enters an invalid url, pop up an alert view
         if let url = urlTextField.text{
-            let requestURL: NSURL = NSURL(string: url)!
+            guard let requestURL: NSURL = NSURL(string: url) else {
+                let alertController = UIAlertController(title: "URL Error", message:
+                    "Please enter a valid url!", preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                return
+            }
             let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
             let session = NSURLSession.sharedSession()
             let task = session.dataTaskWithRequest(urlRequest) {
