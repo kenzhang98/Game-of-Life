@@ -83,6 +83,8 @@ class InstrumentationViewController: UIViewController {
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
         timedRefreshSwitch.setOn(true, animated: true)
+        StandardEngine.sharedInstance.refreshRate = refreshRateSlider.value
+        StandardEngine.sharedInstance.isPaused = false
     }
     
 
@@ -119,6 +121,7 @@ class InstrumentationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         timedRefreshSwitch.setOn(false, animated: true)
         
         //set up observer so that when the row and col get changed the numbers in the textfields will get updated
@@ -129,7 +132,6 @@ class InstrumentationViewController: UIViewController {
         //set up observer which will turn off the timed refresh when user segues out to the editter grid view
         let sel = #selector(InstrumentationViewController.turnOffTimedRefresh(_:))
         c.addObserver(self, selector: sel, name: "turnOffTimedRefresh", object: nil)
-        
         
         //set up hzLabel as the view loads
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
@@ -168,17 +170,20 @@ class InstrumentationViewController: UIViewController {
     @IBAction func swtich(sender: UISwitch) {
         if sender.on{
             StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
+            StandardEngine.sharedInstance.refreshRate = refreshRateSlider.value
+            StandardEngine.sharedInstance.isPaused = false
         }
         else{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
+            StandardEngine.sharedInstance.isPaused = true
         }
-
     }
     
     func turnOffTimedRefresh(notification:NSNotification){
-        if timedRefreshSwitch.on == true{
+        if timedRefreshSwitch.on{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
             timedRefreshSwitch.setOn(false, animated: true)
+            StandardEngine.sharedInstance.isPaused = true
         }
     }
     

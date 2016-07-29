@@ -104,9 +104,6 @@ class TableViewController: UITableViewController {
         }
         editingVC.anotherCommit = {
             TableViewController.sharedTable.gridContent[editingRow] = $0
-//            let indexPath = NSIndexPath(forRow: editingRow, inSection: 0)
-//            self.tableView.reloadRowsAtIndexPaths([indexPath],
-//                                                  withRowAnimation: .Automatic)
         }
         editingVC.commitForComment = {
             TableViewController.sharedTable.comments[editingRow] = $0
@@ -131,9 +128,7 @@ class TableViewController: UITableViewController {
         //update the text fields of row and col in the instrumentation tab
         NSNotificationCenter.defaultCenter().postNotificationName("updateRowAndColText", object: nil, userInfo: nil)
         
-        //turn off the timed refresh so that users can save the current grid
         NSNotificationCenter.defaultCenter().postNotificationName("turnOffTimedRefresh", object: nil, userInfo: nil)
-        
         
     }
 

@@ -498,6 +498,16 @@
                                     <action selector="Reset:" destination="1iT-AI-waU" eventType="touchUpInside" id="4VW-MN-F3g"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Li-Tm-5am" userLabel="Pause">
+                                <rect key="frame" x="279" y="536" width="42" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Pause">
+                                    <color key="titleColor" red="0.21523028050000001" green="0.35336230229999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pauseAndContinue:" destination="1iT-AI-waU" eventType="touchUpInside" id="C8s-N6-LHa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -513,6 +523,8 @@
                             <constraint firstItem="1MS-77-3Sr" firstAttribute="leading" secondItem="1dU-Gb-pxS" secondAttribute="leadingMargin" constant="-20" id="IFP-L8-L4T"/>
                             <constraint firstItem="Z1Z-LF-1mn" firstAttribute="top" secondItem="1MS-77-3Sr" secondAttribute="bottom" id="IhO-pV-ba1"/>
                             <constraint firstItem="o48-xd-UkZ" firstAttribute="leading" secondItem="fgK-2t-t3z" secondAttribute="trailing" constant="70" id="IvQ-kw-08c"/>
+                            <constraint firstItem="8Li-Tm-5am" firstAttribute="centerX" secondItem="o48-xd-UkZ" secondAttribute="centerX" id="Off-GI-UPj"/>
+                            <constraint firstItem="8Li-Tm-5am" firstAttribute="top" secondItem="o48-xd-UkZ" secondAttribute="bottom" constant="8" id="Qt7-hz-0vX"/>
                             <constraint firstItem="o48-xd-UkZ" firstAttribute="centerX" secondItem="598-aG-Yvl" secondAttribute="centerX" id="aci-db-RSv"/>
                             <constraint firstItem="598-aG-Yvl" firstAttribute="width" relation="lessThanOrEqual" secondItem="1MS-77-3Sr" secondAttribute="width" multiplier="0.8" id="gnK-0o-a1i"/>
                             <constraint firstItem="598-aG-Yvl" firstAttribute="width" secondItem="1MS-77-3Sr" secondAttribute="width" multiplier="0.8" priority="750" id="hqD-0u-XvY"/>
@@ -522,6 +534,7 @@
                     <tabBarItem key="tabBarItem" title="Simulation" image="Simulation" id="5XU-z6-ncX" userLabel="Simulation"/>
                     <connections>
                         <outlet property="grid" destination="598-aG-Yvl" id="WsA-gV-EiQ"/>
+                        <outlet property="pauseAndContinueButoon" destination="8Li-Tm-5am" id="NGz-Q1-SGu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="U54-fX-Ogq" sceneMemberID="firstResponder"/>

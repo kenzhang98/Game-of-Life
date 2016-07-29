@@ -54,7 +54,6 @@ class GridEditterViewController: UIViewController{
     @IBOutlet weak var nameTextField: UITextField!
     
     @IBAction func save(sender: AnyObject) {
-        
         let filteredArray = StandardEngine.sharedInstance.grid.cells.filter{$0.state.isLiving()}.map{return $0.position}
         
         for i in filteredArray{

@@ -12,8 +12,36 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     
     private var inputTextField: UITextField?
     weak var AddAlertSaveAction: UIAlertAction?
+    @IBOutlet weak var pauseAndContinueButoon: UIButton!
+    
+    @IBAction func pauseAndContinue(sender: AnyObject) {
+        StandardEngine.sharedInstance.isPaused = !StandardEngine.sharedInstance.isPaused
+        if StandardEngine.sharedInstance.isPaused{
+            StandardEngine.sharedInstance.refreshTimer?.invalidate()
+            pauseAndContinueButoon.setTitle("Continue", forState: .Normal)
+            NSNotificationCenter.defaultCenter().postNotificationName("turnOffTimedRefresh", object: nil, userInfo: nil)
+        }else{
+            StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            pauseAndContinueButoon.setTitle("Pause", forState: .Normal)
+            NSNotificationCenter.defaultCenter().postNotificationName("turnOffTimedRefresh", object: nil, userInfo: nil)
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        if StandardEngine.sharedInstance.isPaused{
+            pauseAndContinueButoon.setTitle("Continue", forState: .Normal)
+        }else{
+            pauseAndContinueButoon.setTitle("Pause", forState: .Normal)
+        }
+    }
     
     @IBAction func Save(sender: AnyObject) {
+        
+        //stop the grid from changing while still in the save view
+        StandardEngine.sharedInstance.refreshTimer?.invalidate()
         
         let alert = UIAlertController(title: "Save", message: "Please enter a name to save the current grid", preferredStyle: UIAlertControllerStyle.Alert)
         
@@ -23,7 +51,16 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         }
         
         //add cancel button action
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action) -> Void in removeTextFieldObserver()}))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
+            removeTextFieldObserver()
+            if !StandardEngine.sharedInstance.isPaused{
+                StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
+            }
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            
+        }))
         
         //set up save button actino to use later
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
@@ -43,6 +80,14 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
                 NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
             }
             removeTextFieldObserver()
+            
+            if !StandardEngine.sharedInstance.isPaused{
+                StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
+            }
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            
         })
         
         //disable the save button initially unless the user enters any text
@@ -103,7 +148,9 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         // Do any additional setup after loading the view, typically from a nib.
         StandardEngine.sharedInstance.delegate = self
         
+        
     }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
