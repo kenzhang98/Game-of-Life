@@ -17,19 +17,6 @@ class GridEditterViewController: UIViewController{
     var savedCells: [[Int]] = []
     @IBOutlet weak var commentTextField: UITextField!
     
-    @IBOutlet weak var saveComment: UIButton!
-    
-    @IBAction func saveComment(sender: AnyObject) {
-        guard let comment = commentTextField.text, commitForComment = commitForComment
-            else { return }
-        commitForComment(comment)
-        if commentTextField.text == ""{
-            saveComment.setTitle("Empty", forState: .Normal)
-        }else{
-            saveComment.setTitle("Saved", forState: .Normal)
-        }
-    }
-    
     @IBAction func cancelButton(sender: AnyObject) {
         //if the user changes the grid and hits cancel button, an alert will pop up to confirm the action
         if StandardEngine.sharedInstance.changesDetect{
@@ -53,6 +40,10 @@ class GridEditterViewController: UIViewController{
     
     @IBOutlet weak var nameTextField: UITextField!
     
+    @IBAction func commentAction(sender: AnyObject) {
+        StandardEngine.sharedInstance.changesDetect = true
+    }
+    
     @IBAction func save(sender: AnyObject) {
         let filteredArray = StandardEngine.sharedInstance.grid.cells.filter{$0.state.isLiving()}.map{return $0.position}
         
@@ -67,7 +58,11 @@ class GridEditterViewController: UIViewController{
         anothercommit(savedCells)
         
         navigationController!.popViewControllerAnimated(true)
-
+        
+        //save the comment if there is any
+        guard let comment = commentTextField.text, commitForComment = commitForComment
+            else { return }
+        commitForComment(comment)
     }
     
     override func viewDidLoad() {
