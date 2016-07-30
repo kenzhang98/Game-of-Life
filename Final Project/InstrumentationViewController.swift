@@ -51,6 +51,10 @@ class InstrumentationViewController: UIViewController {
                             TableViewController.sharedTable.comments = TableViewController.sharedTable.names.map{_ in return ""}
                         }catch {
                             print("Error with Json: \(error)")
+                            TableViewController.sharedTable.names = []
+                            TableViewController.sharedTable.gridContent = []
+                            TableViewController.sharedTable.comments = []
+                            NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                         }
                         
                         //put the table reload process into the main thread to reload it right away
@@ -68,6 +72,10 @@ class InstrumentationViewController: UIViewController {
                             alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
                             
                             self.presentViewController(alertController, animated: true, completion: nil)
+                            TableViewController.sharedTable.names = []
+                            TableViewController.sharedTable.gridContent = []
+                            TableViewController.sharedTable.comments = []
+                            NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                         }
                         NSOperationQueue.mainQueue().addOperation(op)
                     }
@@ -79,6 +87,12 @@ class InstrumentationViewController: UIViewController {
                         alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
                         
                         self.presentViewController(alertController, animated: true, completion: nil)
+                        
+                        //clear the embed table view so that the app will not crash
+                        TableViewController.sharedTable.names = []
+                        TableViewController.sharedTable.gridContent = []
+                        TableViewController.sharedTable.comments = []
+                        NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                     }
                     NSOperationQueue.mainQueue().addOperation(op)
                 }
