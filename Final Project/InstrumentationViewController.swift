@@ -151,9 +151,13 @@ class InstrumentationViewController: UIViewController {
         let c = NSNotificationCenter.defaultCenter()
         c.addObserver(self, selector: s, name: "updateRowAndColText", object: nil)
         
+        //set up observer which will switch the timed refresh
+        let sel = #selector(InstrumentationViewController.switchTimedRefresh(_:))
+        c.addObserver(self, selector: sel, name: "switchTimedRefresh", object: nil)
+        
         //set up observer which will turn off the timed refresh when user segues out to the editter grid view
-        let sel = #selector(InstrumentationViewController.turnOffTimedRefresh(_:))
-        c.addObserver(self, selector: sel, name: "turnOffTimedRefresh", object: nil)
+        let selc = #selector(InstrumentationViewController.turnOffTimedRefresh(_:))
+        c.addObserver(self, selector: selc, name: "turnOffTimedRefresh", object: nil)
         
         //set up hzLabel as the view loads
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
@@ -198,6 +202,18 @@ class InstrumentationViewController: UIViewController {
         else{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
             StandardEngine.sharedInstance.isPaused = true
+        }
+    }
+    
+    func switchTimedRefresh(notification:NSNotification){
+        if timedRefreshSwitch.on{
+            StandardEngine.sharedInstance.refreshTimer?.invalidate()
+            timedRefreshSwitch.setOn(false, animated: true)
+            StandardEngine.sharedInstance.isPaused = true
+        }
+        else{
+            timedRefreshSwitch.setOn(true, animated: true)
+            StandardEngine.sharedInstance.isPaused = false
         }
     }
     

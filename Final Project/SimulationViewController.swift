@@ -19,14 +19,14 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         if StandardEngine.sharedInstance.isPaused{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
             pauseAndContinueButoon.setTitle("Continue", forState: .Normal)
-            NSNotificationCenter.defaultCenter().postNotificationName("turnOffTimedRefresh", object: nil, userInfo: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("switchTimedRefresh", object: nil, userInfo: nil)
         }else{
             StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             if let delegate = StandardEngine.sharedInstance.delegate {
                 delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
             }
             pauseAndContinueButoon.setTitle("Pause", forState: .Normal)
-            NSNotificationCenter.defaultCenter().postNotificationName("turnOffTimedRefresh", object: nil, userInfo: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("switchTimedRefresh", object: nil, userInfo: nil)
         }
     }
     
