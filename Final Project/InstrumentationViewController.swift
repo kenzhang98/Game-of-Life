@@ -24,7 +24,7 @@ class InstrumentationViewController: UIViewController {
             guard let requestURL: NSURL = NSURL(string: url) else {
                 let alertController = UIAlertController(title: "URL Error", message:
                     "Please enter a valid url!", preferredStyle: UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default,handler: nil))
                 
                 self.presentViewController(alertController, animated: true, completion: nil)
                 return
@@ -69,7 +69,7 @@ class InstrumentationViewController: UIViewController {
                         let op = NSBlockOperation {
                             let alertController = UIAlertController(title: "Error", message:
                                 "HTTP Error \(safeStatusCode): \(NSHTTPURLResponse.localizedStringForStatusCode(safeStatusCode))           Please enter a valid url", preferredStyle: UIAlertControllerStyle.Alert)
-                            alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+                            alertController.addAction(UIAlertAction(title: "OK", style: .Default,handler: nil))
                             
                             self.presentViewController(alertController, animated: true, completion: nil)
                             TableViewController.sharedTable.names = []
@@ -84,7 +84,7 @@ class InstrumentationViewController: UIViewController {
                     let op = NSBlockOperation {
                         let alertController = UIAlertController(title: "Error", message:
                             "Please check your url or your Internet connection", preferredStyle: UIAlertControllerStyle.Alert)
-                        alertController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default,handler: nil))
+                        alertController.addAction(UIAlertAction(title: "OK", style: .Default,handler: nil))
                         
                         self.presentViewController(alertController, animated: true, completion: nil)
                         
@@ -117,6 +117,66 @@ class InstrumentationViewController: UIViewController {
     @IBOutlet weak var colsStepper: UIStepper!
     @IBOutlet weak var refreshRateSlider: UISlider!
     @IBOutlet weak var timedRefreshSwitch: UISwitch!
+    
+    @IBAction func rowsTextFieldAction(sender: AnyObject) {
+        if let changeToRow = Int(rowsTextField.text!){
+            if changeToRow > 0{
+                StandardEngine.sharedInstance.rows = changeToRow
+                rowsStepper.value = Double(changeToRow)
+            }
+            else {
+                //if user enters a number smaller than 0, pop up an alert
+                let alertControllerRow = UIAlertController(title: "Row Error", message:
+                    "Please enter a number greater than 0 !", preferredStyle: UIAlertControllerStyle.Alert)
+                alertControllerRow.addAction(UIAlertAction(title: "OK", style: .Default,handler: {(alert: UIAlertAction!) in
+                    //let the row text field show the current number of row
+                    self.rowsTextField.text = String(StandardEngine.sharedInstance.rows)
+                }))
+                
+                self.presentViewController(alertControllerRow, animated: true, completion: nil)
+            }
+        }else {
+            //if user enters a double, pop up an alert
+            let alertControllerRow = UIAlertController(title: "Row Error", message:
+                "Please enter an interger !", preferredStyle: UIAlertControllerStyle.Alert)
+            alertControllerRow.addAction(UIAlertAction(title: "OK", style: .Default,handler: {(alert: UIAlertAction!) in
+                //let the row text field show the current number of row
+                self.rowsTextField.text = String(StandardEngine.sharedInstance.rows)
+            }))
+            
+            self.presentViewController(alertControllerRow, animated: true, completion: nil)
+        }
+    }
+
+    @IBAction func colsTextFieldAction(sender: AnyObject) {
+        if let changeToCol = Int(colsTextField.text!){
+            if changeToCol > 0{
+                StandardEngine.sharedInstance.cols = changeToCol
+                colsStepper.value = Double(changeToCol)
+            }
+            else {
+                //if user enters a number smaller than 0, pop up an alert
+                let alertControllerCol = UIAlertController(title: "Column Error", message:
+                    "Please enter a number greater than 0 !", preferredStyle: UIAlertControllerStyle.Alert)
+                alertControllerCol.addAction(UIAlertAction(title: "OK", style: .Default,handler: {(alert: UIAlertAction!) in
+                    //let the col text field show the current number of col
+                    self.colsTextField.text = String(StandardEngine.sharedInstance.cols)
+                }))
+                
+                self.presentViewController(alertControllerCol, animated: true, completion: nil)
+            }
+        }else {
+            //if user enters a double, pop up an alert
+            let alertControllerCol = UIAlertController(title: "Column Error", message:
+                "Please enter an interger !", preferredStyle: UIAlertControllerStyle.Alert)
+            alertControllerCol.addAction(UIAlertAction(title: "OK", style: .Default,handler: {(alert: UIAlertAction!) in
+                //let the col text field show the current number of col
+                self.colsTextField.text = String(StandardEngine.sharedInstance.cols)
+            }))
+            
+            self.presentViewController(alertControllerCol, animated: true, completion: nil)
+        }
+    }
     
     @IBAction func rowsCalculation(sender: AnyObject) {
         

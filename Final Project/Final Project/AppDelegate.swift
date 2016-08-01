@@ -11,6 +11,8 @@
 //Instrumentation icon: by icons8 at https://icons8.com
 //Simulation icon: by icons8 at https://icons8.com
 //Reload icon: by icons8 at https://icons8.com
+//Play icon: by icons8 at https://icons8.com
+//Pause icon: by icons8 at https://icons8.com
 
 import UIKit
 import CoreData

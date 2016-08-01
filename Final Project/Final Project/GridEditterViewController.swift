@@ -16,7 +16,7 @@ class GridEditterViewController: UIViewController{
     var commitForComment: (String -> Void)?
     var savedCells: [[Int]] = []
     @IBOutlet weak var commentTextField: UITextField!
-    
+
     @IBAction func cancelButton(sender: AnyObject) {
         //if the user changes the grid and hits cancel button, an alert will pop up to confirm the action
         if StandardEngine.sharedInstance.changesDetect{
@@ -83,6 +83,11 @@ class GridEditterViewController: UIViewController{
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
     }
 
     

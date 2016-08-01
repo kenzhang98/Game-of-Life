@@ -18,23 +18,23 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         StandardEngine.sharedInstance.isPaused = !StandardEngine.sharedInstance.isPaused
         if StandardEngine.sharedInstance.isPaused{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
-            pauseAndContinueButoon.setTitle("Continue", forState: .Normal)
+            pauseAndContinueButoon.setImage(UIImage(named: "Play.png"), forState: UIControlState.Normal)
             NSNotificationCenter.defaultCenter().postNotificationName("switchTimedRefresh", object: nil, userInfo: nil)
         }else{
             StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             if let delegate = StandardEngine.sharedInstance.delegate {
                 delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
             }
-            pauseAndContinueButoon.setTitle("Pause", forState: .Normal)
+            pauseAndContinueButoon.setImage(UIImage(named: "Pause.png"), forState: UIControlState.Normal)
             NSNotificationCenter.defaultCenter().postNotificationName("switchTimedRefresh", object: nil, userInfo: nil)
         }
     }
     
     override func viewDidAppear(animated: Bool) {
         if StandardEngine.sharedInstance.isPaused{
-            pauseAndContinueButoon.setTitle("Continue", forState: .Normal)
+            pauseAndContinueButoon.setImage(UIImage(named: "Play.png"), forState: UIControlState.Normal)
         }else{
-            pauseAndContinueButoon.setTitle("Pause", forState: .Normal)
+            pauseAndContinueButoon.setImage(UIImage(named: "Pause.png"), forState: UIControlState.Normal)
         }
     }
     
