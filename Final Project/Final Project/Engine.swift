@@ -82,7 +82,7 @@ class StandardEngine: EngineProtocol {
     var changesDetect: Bool = false
     
     
-    var isPaused: Bool = false
+    var isPaused: Bool = true
     var refreshRate: Float = 0.0
 
     var rows: Int = 20 {

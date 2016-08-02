@@ -27,6 +27,14 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
             }
             pauseAndContinueButoon.setImage(UIImage(named: "Pause.png"), forState: UIControlState.Normal)
             NSNotificationCenter.defaultCenter().postNotificationName("switchTimedRefresh", object: nil, userInfo: nil)
+            
+            if StandardEngine.sharedInstance.refreshInterval == 0{
+                NSNotificationCenter.defaultCenter().postNotificationName("changeRefreshRateSliderValue", object: nil, userInfo: nil)
+                
+                
+                
+
+            }
         }
     }
     
@@ -147,8 +155,6 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         StandardEngine.sharedInstance.delegate = self
-        
-        
     }
 
     

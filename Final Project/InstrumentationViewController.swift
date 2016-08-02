@@ -103,10 +103,16 @@ class InstrumentationViewController: UIViewController {
     
     @IBAction func refreshTimer(sender: AnyObject) {
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
-        hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
-        timedRefreshSwitch.setOn(true, animated: true)
-        StandardEngine.sharedInstance.refreshRate = refreshRateSlider.value
-        StandardEngine.sharedInstance.isPaused = false
+        if refreshRateSlider.value == 0{
+            timedRefreshSwitch.setOn(false, animated: true)
+            StandardEngine.sharedInstance.isPaused = true
+            hzLabel.text = "0 Hz"
+        }else {
+            timedRefreshSwitch.setOn(true, animated: true)
+            StandardEngine.sharedInstance.refreshRate = refreshRateSlider.value
+            StandardEngine.sharedInstance.isPaused = false
+            hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
+        }
     }
     
 
@@ -219,8 +225,11 @@ class InstrumentationViewController: UIViewController {
         let selc = #selector(InstrumentationViewController.turnOffTimedRefresh(_:))
         c.addObserver(self, selector: selc, name: "turnOffTimedRefresh", object: nil)
         
+        let selct = #selector(InstrumentationViewController.changeRreshRateSliderValue(_:))
+        c.addObserver(self, selector: selct, name: "changeRefreshRateSliderValue", object: nil)
+        
         //set up hzLabel as the view loads
-        hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
+        hzLabel.text = "0 Hz"
         
         //take care of the steppers and textfields
         rowsStepper.value = Double(StandardEngine.sharedInstance.rows)
@@ -255,6 +264,10 @@ class InstrumentationViewController: UIViewController {
     
     @IBAction func swtich(sender: UISwitch) {
         if sender.on{
+            if refreshRateSlider.value == 0{
+                refreshRateSlider.value = 5.0
+            }
+            hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
             StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
             StandardEngine.sharedInstance.refreshRate = refreshRateSlider.value
             StandardEngine.sharedInstance.isPaused = false
@@ -289,6 +302,14 @@ class InstrumentationViewController: UIViewController {
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
         view.endEditing(true)
         super.touchesBegan(touches, withEvent: event)
+    }
+    
+    func changeRreshRateSliderValue(notification:NSNotification) {
+        refreshRateSlider.value =  5.0
+        StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
+        StandardEngine.sharedInstance.isPaused = false
+        hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
     }
 
 }
