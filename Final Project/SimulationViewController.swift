@@ -305,7 +305,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         switch(StandardEngine.sharedInstance.shape){
             case "Triangle":
                 shapeLabel.text = "Triangle"
-                shapeValue.value = 0.5
+                shapeValue.value = 0.0
         case "Square":
             shapeLabel.text = "Square"
             shapeValue.value = 1.5
@@ -329,10 +329,10 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
             shapeValue.value = 7.5
         case "Circle":
             shapeLabel.text = "Circle"
-            shapeValue.value = 8.5
+            shapeValue.value = 9.0
         default:
             shapeLabel.text = "Circle"
-            shapeValue.value = 8.5
+            shapeValue.value = 9.0
         }
     }
     
