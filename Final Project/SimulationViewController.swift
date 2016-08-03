@@ -39,8 +39,8 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xCyan.hidden = true
         xBlue.hidden = true
         
-        StandardEngine.sharedInstance.color = "red"
-        StandardEngine.sharedInstance.changesDetect = true
+        StandardEngine.sharedInstance.colorSelected = "red"
+        changesDetect = true
         
     }
     @IBAction func orange(sender: AnyObject)
@@ -60,8 +60,8 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xCyan.hidden = true
         xBlue.hidden = true
         
-        StandardEngine.sharedInstance.color = "orange"
-        StandardEngine.sharedInstance.changesDetect = true
+        StandardEngine.sharedInstance.colorSelected = "orange"
+        changesDetect = true
     }
     @IBAction func green(sender: AnyObject)
     {
@@ -81,8 +81,8 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xCyan.hidden = true
         xBlue.hidden = true
         
-        StandardEngine.sharedInstance.color = "green"
-        StandardEngine.sharedInstance.changesDetect = true
+        StandardEngine.sharedInstance.colorSelected = "green"
+        changesDetect = true
     }
     @IBAction func cyan(sender: AnyObject)
     {
@@ -102,8 +102,8 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xCyan.hidden = false
         xBlue.hidden = true
         
-        StandardEngine.sharedInstance.color = "cyan"
-        StandardEngine.sharedInstance.changesDetect = true
+        StandardEngine.sharedInstance.colorSelected = "cyan"
+        changesDetect = true
     }
     @IBAction func blue(sender: AnyObject)
     {
@@ -122,14 +122,14 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xCyan.hidden = true
         xBlue.hidden = false
         
-        StandardEngine.sharedInstance.color = "blue"
-        StandardEngine.sharedInstance.changesDetect = true
+        StandardEngine.sharedInstance.colorSelected = "blue"
+        changesDetect = true
     }
     
     @IBOutlet weak var pauseAndContinueButoon: UIButton!
     @IBAction func pauseAndContinue(sender: AnyObject) {
-        StandardEngine.sharedInstance.isPaused = !StandardEngine.sharedInstance.isPaused
-        if StandardEngine.sharedInstance.isPaused{
+        isPaused = !isPaused
+        if isPaused{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
             pauseAndContinueButoon.setImage(UIImage(named: "Play.png"), forState: UIControlState.Normal)
             NSNotificationCenter.defaultCenter().postNotificationName("switchTimedRefresh", object: nil, userInfo: nil)
@@ -166,7 +166,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         //add cancel button action
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
             
-            if !StandardEngine.sharedInstance.isPaused{
+            if !isPaused{
                 StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             }
             if let delegate = StandardEngine.sharedInstance.delegate {
@@ -204,7 +204,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
                 }
             }
             NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
-            if !StandardEngine.sharedInstance.isPaused{
+            if !isPaused{
                 StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             }
             if let delegate = StandardEngine.sharedInstance.delegate {
@@ -251,7 +251,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     }
     
     override func viewDidAppear(animated: Bool) {
-        if StandardEngine.sharedInstance.isPaused{
+        if isPaused{
             pauseAndContinueButoon.setImage(UIImage(named: "Play.png"), forState: UIControlState.Normal)
         }else{
             pauseAndContinueButoon.setImage(UIImage(named: "Pause.png"), forState: UIControlState.Normal)
@@ -353,7 +353,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
             removeTextFieldObserver()
             
-            if !StandardEngine.sharedInstance.isPaused{
+            if !isPaused{
                 StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             }
             if let delegate = StandardEngine.sharedInstance.delegate {
@@ -367,7 +367,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
             if let text = self.inputTextField!.text{
                 TableViewController.sharedTable.names.append(text)
                 TableViewController.sharedTable.comments.append("")
-                TableViewController.sharedTable.color.append(StandardEngine.sharedInstance.color)
+                TableViewController.sharedTable.color.append(StandardEngine.sharedInstance.colorSelected)
                 TableViewController.sharedTable.shape.append(StandardEngine.sharedInstance.shape)
                 
                 
@@ -384,7 +384,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
             }
             removeTextFieldObserver()
             
-            if !StandardEngine.sharedInstance.isPaused{
+            if !isPaused{
                 StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             }
             if let delegate = StandardEngine.sharedInstance.delegate {
@@ -528,7 +528,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     @IBOutlet weak var shapeLabel: UILabel!
     @IBOutlet weak var shapeValue: UISlider!
     @IBAction func shapeAction(sender: AnyObject) {
-        StandardEngine.sharedInstance.changesDetect = true
+        changesDetect = true
         switch (Int(floor(shapeValue.value))){
         case 0:
             shapeLabel.text = "Triangle"

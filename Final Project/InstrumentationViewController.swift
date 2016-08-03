@@ -14,6 +14,10 @@ class InstrumentationViewController: UIViewController {
     @IBOutlet weak var urlTextField: UITextField!
     
     @IBAction func reloadButton(sender: AnyObject) {
+        if popCheck{
+            NSNotificationCenter.defaultCenter().postNotificationName("popGridEditter", object: nil, userInfo: nil)
+        }
+        popCheck = false
         
         //download and parse the JSON file and then update the table view
         //clear date
@@ -127,12 +131,12 @@ class InstrumentationViewController: UIViewController {
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
         if refreshRateSlider.value == 0{
             timedRefreshSwitch.setOn(false, animated: true)
-            StandardEngine.sharedInstance.isPaused = true
+            isPaused = true
             hzLabel.text = "0 Hz"
         }else {
             timedRefreshSwitch.setOn(true, animated: true)
             StandardEngine.sharedInstance.refreshRate = refreshRateSlider.value
-            StandardEngine.sharedInstance.isPaused = false
+            isPaused = false
             hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
         }
     }
@@ -147,7 +151,7 @@ class InstrumentationViewController: UIViewController {
     @IBOutlet weak var timedRefreshSwitch: UISwitch!
     
     @IBAction func rowsTextFieldAction(sender: AnyObject) {
-        StandardEngine.sharedInstance.changesDetect = true
+        changesDetect = true
         if let changeToRow = Int(rowsTextField.text!){
             if changeToRow > 0{
                 StandardEngine.sharedInstance.rows = changeToRow
@@ -180,7 +184,7 @@ class InstrumentationViewController: UIViewController {
     }
 
     @IBAction func colsTextFieldAction(sender: AnyObject) {
-        StandardEngine.sharedInstance.changesDetect = true
+        changesDetect = true
         if let changeToCol = Int(colsTextField.text!){
             if changeToCol > 0{
                 StandardEngine.sharedInstance.cols = changeToCol
@@ -213,7 +217,7 @@ class InstrumentationViewController: UIViewController {
     }
     
     @IBAction func rowsCalculation(sender: AnyObject) {
-        StandardEngine.sharedInstance.changesDetect = true
+        changesDetect = true
         StandardEngine.sharedInstance.rows = Int(rowsStepper.value)
         rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
         
@@ -226,7 +230,7 @@ class InstrumentationViewController: UIViewController {
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
     }
     @IBAction func colsCalculation(sender: AnyObject) {
-        StandardEngine.sharedInstance.changesDetect = true
+        changesDetect = true
         StandardEngine.sharedInstance.cols = Int(colsStepper.value)
         colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
         
@@ -303,11 +307,11 @@ class InstrumentationViewController: UIViewController {
             hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
             StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
             StandardEngine.sharedInstance.refreshRate = refreshRateSlider.value
-            StandardEngine.sharedInstance.isPaused = false
+            isPaused = false
         }
         else{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
-            StandardEngine.sharedInstance.isPaused = true
+            isPaused = true
         }
     }
     
@@ -315,11 +319,11 @@ class InstrumentationViewController: UIViewController {
         if timedRefreshSwitch.on{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
             timedRefreshSwitch.setOn(false, animated: true)
-            StandardEngine.sharedInstance.isPaused = true
+            isPaused = true
         }
         else{
             timedRefreshSwitch.setOn(true, animated: true)
-            StandardEngine.sharedInstance.isPaused = false
+            isPaused = false
         }
     }
     
@@ -327,7 +331,7 @@ class InstrumentationViewController: UIViewController {
         if timedRefreshSwitch.on{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
             timedRefreshSwitch.setOn(false, animated: true)
-            StandardEngine.sharedInstance.isPaused = true
+            isPaused = true
         }
     }
     
@@ -341,7 +345,7 @@ class InstrumentationViewController: UIViewController {
         refreshRateSlider.value =  5.0
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
         StandardEngine.sharedInstance.refreshRate = 5.0
-        StandardEngine.sharedInstance.isPaused = false
+        isPaused = false
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
     }

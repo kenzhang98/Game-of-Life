@@ -22,7 +22,7 @@ class GridEditterViewController: UIViewController{
 
     @IBAction func cancelButton(sender: AnyObject) {
         //if the user changes the grid and hits cancel button, an alert will pop up to confirm the action
-        if StandardEngine.sharedInstance.changesDetect{
+        if changesDetect{
             let alert = UIAlertController(title: "Quit Without Saving", message: "Are you sure you want to quit without saving?", preferredStyle: UIAlertControllerStyle.Alert)
             //add cancel button action
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
@@ -35,7 +35,7 @@ class GridEditterViewController: UIViewController{
         }else{
             navigationController!.popViewControllerAnimated(true)
             //clear the changes detecter
-            StandardEngine.sharedInstance.changesDetect = false
+            changesDetect = false
         }
     }
     @IBOutlet weak var editterGrid: GridView!
@@ -43,7 +43,7 @@ class GridEditterViewController: UIViewController{
     @IBOutlet weak var nameTextField: UITextField!
     
     @IBAction func commentAction(sender: AnyObject) {
-        StandardEngine.sharedInstance.changesDetect = true
+        changesDetect = true
     }
     
     @IBAction func save(sender: AnyObject) {
@@ -68,7 +68,7 @@ class GridEditterViewController: UIViewController{
         
         //save the color
         guard let commitForColor = commitForColor else { return }
-        commitForColor(StandardEngine.sharedInstance.color)
+        commitForColor(StandardEngine.sharedInstance.colorSelected)
     }
     
     @IBAction func undoAction(sender: AnyObject) {
@@ -161,9 +161,12 @@ class GridEditterViewController: UIViewController{
         commentTextField.text = comment
         
         //set up the observer which updates the grid in the embed view when gets called
-        let s = #selector(GridEditterViewController.watchForNotifications(_:))
         let c = NSNotificationCenter.defaultCenter()
+        let s = #selector(GridEditterViewController.watchForNotifications(_:))
         c.addObserver(self, selector: s, name: "updateGridInEmbedView", object: nil)
+        
+        let sel = #selector(GridEditterViewController.watchForPop(_:))
+        c.addObserver(self, selector: sel, name: "popGridEditter", object: nil)
         
         let red = #selector(GridEditterViewController.red(_:))
         c.addObserver(self, selector: red, name: "red", object: nil)
@@ -198,6 +201,10 @@ class GridEditterViewController: UIViewController{
     
     func watchForNotifications(notification:NSNotification){
         editterGrid.setNeedsDisplay()
+    }
+    
+    func watchForPop(notification:NSNotification){
+        navigationController!.popViewControllerAnimated(true)
     }
     
     func red(notification:NSNotification){

@@ -8,6 +8,11 @@
 
 import UIKit
 
+//used to detect the changes made by user at the embed grid view
+var changesDetect: Bool = false
+
+var isPaused: Bool = true
+var popCheck: Bool = false
 typealias Position = (row:Int, col: Int)
 
 enum CellState {
@@ -24,7 +29,7 @@ enum CellState {
     }
     
     static func toggle(value: CellState) -> CellState{
-        StandardEngine.sharedInstance.changesDetect = true
+        changesDetect = true
         switch value {
         case .Empty, .Died:
             return(.Alive)
@@ -83,15 +88,10 @@ class StandardEngine: EngineProtocol {
     
     var generation: Int = 0
     
-    //used to detect the changes made by user at the embed grid view
-    var changesDetect: Bool = false
-    
     //used to save and display the color the saved grids
-    var color: String = ""
     var colorSelected: String = ""
     var shape: String = "circle"
     
-    var isPaused: Bool = true
     var refreshRate: Float = 0.0
 
     var rows: Int = 20 {

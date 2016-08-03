@@ -90,9 +90,10 @@ class TableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        popCheck = true
         StandardEngine.sharedInstance.generation = 0
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
-        StandardEngine.sharedInstance.changesDetect = false
+        changesDetect = false
         let editingRow = (sender as! UITableViewCell).tag
         let editingString = TableViewController.sharedTable.names[editingRow]
         let editingComment = TableViewController.sharedTable.comments[editingRow]
