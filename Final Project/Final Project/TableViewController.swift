@@ -33,7 +33,6 @@ class TableViewController: UITableViewController {
     }
     
     func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
-        print(names)
         let longPress = gestureRecognizer as! UILongPressGestureRecognizer
         let locationInView = longPress.locationInView(tableView)
         let indexPath = tableView.indexPathForRowAtPoint(locationInView)

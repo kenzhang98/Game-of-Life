@@ -90,7 +90,7 @@ class StandardEngine: EngineProtocol {
     
     //used to save and display the color the saved grids
     var colorSelected: String = ""
-    var shape: String = "circle"
+    var shape: String = ""
     
     var refreshRate: Float = 0.0
 
