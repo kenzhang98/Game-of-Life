@@ -11,7 +11,7 @@ import UIKit
 class SimulationViewController: UIViewController, EngineDelegateProtocol {
     private var inputTextField: UITextField?
     weak var AddAlertSaveAction: UIAlertAction?
-    
+    @IBOutlet weak var warning: UILabel!
     //set up the labels to show which style is selected
     @IBOutlet weak var xRed: UILabel!
     @IBOutlet weak var xOrange: UILabel!
@@ -36,6 +36,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xBlue.hidden = true
         
         StandardEngine.sharedInstance.color = "red"
+        StandardEngine.sharedInstance.changesDetect = true
         
     }
     @IBAction func orange(sender: AnyObject)
@@ -56,6 +57,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xBlue.hidden = true
         
         StandardEngine.sharedInstance.color = "orange"
+        StandardEngine.sharedInstance.changesDetect = true
     }
     @IBAction func green(sender: AnyObject)
     {
@@ -76,6 +78,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xBlue.hidden = true
         
         StandardEngine.sharedInstance.color = "green"
+        StandardEngine.sharedInstance.changesDetect = true
     }
     @IBAction func cyan(sender: AnyObject)
     {
@@ -96,6 +99,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xBlue.hidden = true
         
         StandardEngine.sharedInstance.color = "cyan"
+        StandardEngine.sharedInstance.changesDetect = true
     }
     @IBAction func blue(sender: AnyObject)
     {
@@ -115,6 +119,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         xBlue.hidden = false
         
         StandardEngine.sharedInstance.color = "blue"
+        StandardEngine.sharedInstance.changesDetect = true
     }
     
     @IBOutlet weak var pauseAndContinueButoon: UIButton!
@@ -148,16 +153,46 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         switch StandardEngine.sharedInstance.colorSelected{
         case "red":
             redChangeColor()
+            xRed.hidden = false
+            xOrange.hidden = true
+            xGreen.hidden = true
+            xCyan.hidden = true
+            xBlue.hidden = true
         case "orange":
             orangeChangeColor()
+            xRed.hidden = true
+            xOrange.hidden = false
+            xGreen.hidden = true
+            xCyan.hidden = true
+            xBlue.hidden = true
         case "green":
             greenChangeColor()
+            xRed.hidden = true
+            xOrange.hidden = true
+            xGreen.hidden = false
+            xCyan.hidden = true
+            xBlue.hidden = true
         case "cyan":
             cyanChangeColor()
+            xRed.hidden = true
+            xOrange.hidden = true
+            xGreen.hidden = true
+            xCyan.hidden = false
+            xBlue.hidden = true
         case "blue":
             blueChangeColor()
+            xRed.hidden = true
+            xOrange.hidden = true
+            xGreen.hidden = true
+            xCyan.hidden = true
+            xBlue.hidden = false
         default:
             greenChangeColor()
+            xRed.hidden = true
+            xOrange.hidden = true
+            xGreen.hidden = false
+            xCyan.hidden = true
+            xBlue.hidden = true
         }
     }
     
@@ -264,6 +299,86 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
   
     }
     
+    @IBAction func undoAction(sender: AnyObject) {
+        if StandardEngine.sharedInstance.undoCells.count > 0{
+            //get the cell that needs to be undo in the list of undo cells, which is the last one
+            let index = StandardEngine.sharedInstance.undoCells.count
+            let cellToBeUndo = StandardEngine.sharedInstance.undoCells[index - 1]
+            
+            //set up X and Y coordinates and then toggle it
+            let xCo = cellToBeUndo.row
+            let yCo = cellToBeUndo.col
+            StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo])
+            
+            //update grid in Simulation tab
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            //update editter grid
+            grid.setNeedsDisplay()
+            
+            //remove the cell from the list and then put it into redo cell in case user wants to go back
+            StandardEngine.sharedInstance.undoCells.removeLast()
+            StandardEngine.sharedInstance.redoCells.append(cellToBeUndo)
+        }else{
+            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                
+                //set the text of the label to undo and fade it in
+                self.warning.text = "No more steps to undo"
+                
+                //Fade in
+                self.warning.alpha = 1.0
+                }, completion: {
+                    (finished: Bool) -> Void in
+                    
+                    // Fade out
+                    UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        self.warning.alpha = 0.0
+                        }, completion: nil)
+            })
+        }
+    }
+    
+    @IBAction func redoAction(sender: AnyObject) {
+        if StandardEngine.sharedInstance.redoCells.count > 0{
+            //get the cell that needs to be redo in the list of redo cells, which is the last one
+            let index = StandardEngine.sharedInstance.redoCells.count
+            let cellToBeRedo = StandardEngine.sharedInstance.redoCells[index - 1]
+            
+            //set up X and Y coordinates and then toggle it
+            let xCo = cellToBeRedo.row
+            let yCo = cellToBeRedo.col
+            StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo])
+            
+            //update grid in Simulation tab
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            //update editter grid
+            grid.setNeedsDisplay()
+            
+            //remove the cell from the list and then put it into redo cell in case user wants to go back
+            StandardEngine.sharedInstance.redoCells.removeLast()
+            StandardEngine.sharedInstance.undoCells.append(cellToBeRedo)
+        }else{
+            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                
+                //set the text of the label to redo and fade it in
+                self.warning.text = "No more steps to redo"
+                
+                //Fade in
+                self.warning.alpha = 1.0
+                }, completion: {
+                    (finished: Bool) -> Void in
+                    
+                    // Fade out
+                    UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        self.warning.alpha = 0.0
+                        }, completion: nil)
+            })
+        }
+    }
+    
     
     func engineDidUpdate(withGrid: GridProtocol) {
         grid.setNeedsDisplay()
@@ -273,7 +388,6 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         StandardEngine.sharedInstance.delegate = self
-        xGreen.hidden = false
     }
     
 

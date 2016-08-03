@@ -78,9 +78,13 @@ class StandardEngine: EngineProtocol {
     
     var grid: GridProtocol
     
+    var undoCells: [Position] = []
+    var redoCells: [Position] = []
+    
     //used to detect the changes made by user at the embed grid view
     var changesDetect: Bool = false
     
+    //used to save and display the color the saved grids
     var color: String = ""
     var colorSelected: String = ""
     

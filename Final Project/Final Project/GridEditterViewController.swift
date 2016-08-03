@@ -9,12 +9,14 @@
 import UIKit
 
 class GridEditterViewController: UIViewController{
+    @IBOutlet weak var warning: UILabel!
     var name:String?
     var comment:String?
     var color:String?
     var commit: (String -> Void)?
     var anotherCommit: ([[Int]] -> Void)?
     var commitForComment: (String -> Void)?
+    var commitForColor: (String -> Void)?
     var savedCells: [[Int]] = []
     @IBOutlet weak var commentTextField: UITextField!
 
@@ -63,6 +65,94 @@ class GridEditterViewController: UIViewController{
         guard let comment = commentTextField.text, commitForComment = commitForComment
             else { return }
         commitForComment(comment)
+        
+        //save the color
+        guard let commitForColor = commitForColor else { return }
+        commitForColor(StandardEngine.sharedInstance.color)
+    }
+    
+    @IBAction func undoAction(sender: AnyObject) {
+        if StandardEngine.sharedInstance.undoCells.count > 0{
+            //get the cell that needs to be undo in the list of undo cells, which is the last one
+            let index = StandardEngine.sharedInstance.undoCells.count
+            let cellToBeUndo = StandardEngine.sharedInstance.undoCells[index - 1]
+            
+            //set up X and Y coordinates and then toggle it
+            let xCo = cellToBeUndo.row
+            let yCo = cellToBeUndo.col
+            StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo])
+            
+            //update grid in Simulation tab
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            //update editter grid
+            editterGrid.setNeedsDisplay()
+            
+            //remove the cell from the list and then put it into redo cell in case user wants to go back
+            StandardEngine.sharedInstance.undoCells.removeLast()
+            StandardEngine.sharedInstance.redoCells.append(cellToBeUndo)
+        }else{
+            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                
+                //set the text of the label to undo and fade it in
+                self.warning.text = "No more steps to undo"
+                
+                //Fade in
+                self.warning.alpha = 1.0
+                }, completion: {
+                    (finished: Bool) -> Void in
+                    
+                    // Fade out
+                    UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        self.warning.alpha = 0.0
+                        }, completion: nil)
+            })
+        }
+    }
+    
+    @IBAction func redoAction(sender: AnyObject) {
+        if StandardEngine.sharedInstance.redoCells.count > 0{
+            //get the cell that needs to be redo in the list of redo cells, which is the last one
+            let index = StandardEngine.sharedInstance.redoCells.count
+            let cellToBeRedo = StandardEngine.sharedInstance.redoCells[index - 1]
+            
+            //set up X and Y coordinates and then toggle it
+            let xCo = cellToBeRedo.row
+            let yCo = cellToBeRedo.col
+            StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo])
+            
+            //update grid in Simulation tab
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            //update editter grid
+            editterGrid.setNeedsDisplay()
+            
+            //remove the cell from the list and then put it into redo cell in case user wants to go back
+            StandardEngine.sharedInstance.redoCells.removeLast()
+            StandardEngine.sharedInstance.undoCells.append(cellToBeRedo)
+        }else{
+            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                
+                //set the text of the label to redo and fade it in
+                self.warning.text = "No more steps to redo"
+                
+                //Fade in
+                self.warning.alpha = 1.0
+                }, completion: {
+                    (finished: Bool) -> Void in
+                    
+                    // Fade out
+                    UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseIn, animations: {
+                        self.warning.alpha = 0.0
+                        }, completion: nil)
+            })
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        editterGrid.setNeedsDisplay()
     }
     
     override func viewDidLoad() {

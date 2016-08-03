@@ -150,7 +150,11 @@ class GridView: UIView{
         // if the point is not out of boundaries, then toggle the cell that user picks
         if xCo <= StandardEngine.sharedInstance.rows-1 && yCo <= StandardEngine.sharedInstance.cols-1 && xCo >= 0 && yCo >= 0 {
             StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo])
-
+            
+            //save the cells that user just editted so that user can undo and redo later
+            let col = StandardEngine.sharedInstance.cols
+            let cellToBeChanged = StandardEngine.sharedInstance.grid.cells[xCo * col + yCo]
+            StandardEngine.sharedInstance.undoCells.append(cellToBeChanged.position)
         }
         let gridToBeChanged = CGRect(x: CGFloat(Double(xCo) * cellWidth), y: CGFloat(Double(yCo) * cellHeight), width: CGFloat(cellWidth), height: CGFloat(cellHeight))
         

@@ -115,6 +115,9 @@ class TableViewController: UITableViewController {
         editingVC.commitForComment = {
             TableViewController.sharedTable.comments[editingRow] = $0
         }
+        editingVC.commitForColor = {
+            TableViewController.sharedTable.color[editingRow] = $0
+        }
         
         //set up the size of the grid according to the content of the row selected
         let max = TableViewController.sharedTable.gridContent[editingRow].flatMap{$0}.maxElement()
@@ -137,6 +140,10 @@ class TableViewController: UITableViewController {
         
         //turn off refresh
         NSNotificationCenter.defaultCenter().postNotificationName("turnOffTimedRefresh", object: nil, userInfo: nil)
+        
+        //clear the undo and redo list
+        StandardEngine.sharedInstance.undoCells = []
+        StandardEngine.sharedInstance.redoCells = []
         
     }
 
