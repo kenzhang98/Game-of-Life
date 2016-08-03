@@ -15,6 +15,7 @@
 //Pause icon: by icons8 at https://icons8.com
 //Undo icon: by icons8 at https://icons8.com
 //Redo icon: by icons8 at https://icons8.com
+//Randomize icon: by icons8 at https://icons8.com
 
 import UIKit
 import CoreData

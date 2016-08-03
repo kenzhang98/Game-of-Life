@@ -252,9 +252,6 @@ class InstrumentationViewController: UIViewController {
         let selct = #selector(InstrumentationViewController.changeRreshRateSliderValue(_:))
         c.addObserver(self, selector: selct, name: "changeRefreshRateSliderValue", object: nil)
         
-        
-        
-        
         //set up hzLabel as the view loads
         hzLabel.text = "0 Hz"
         
@@ -334,6 +331,7 @@ class InstrumentationViewController: UIViewController {
     func changeRreshRateSliderValue(notification:NSNotification) {
         refreshRateSlider.value =  5.0
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateSlider.value)
+        StandardEngine.sharedInstance.refreshRate = 5.0
         StandardEngine.sharedInstance.isPaused = false
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)

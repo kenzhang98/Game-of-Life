@@ -7,10 +7,14 @@
 //
 
 import UIKit
+//import GameplayKit to use its shuffle function
+import GameplayKit
+
 
 class SimulationViewController: UIViewController, EngineDelegateProtocol {
     private var inputTextField: UITextField?
     weak var AddAlertSaveAction: UIAlertAction?
+    weak var AddAlertOkAction: UIAlertAction?
     @IBOutlet weak var warning: UILabel!
     //set up the labels to show which style is selected
     @IBOutlet weak var xRed: UILabel!
@@ -143,6 +147,106 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         }
     }
     
+    @IBAction func randomizeAction(sender: AnyObject) {
+        //stop the grid from changing while still in the randomize view
+        StandardEngine.sharedInstance.refreshTimer?.invalidate()
+        
+        let rows = StandardEngine.sharedInstance.grid.rows
+        let cols = StandardEngine.sharedInstance.grid.cols
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+        
+        //pop up an uialertview
+        let alert = UIAlertController(title: "Randomization", message: "Please enter the numer of living cells to randomize the grid", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        //set up the function to remove the observer
+        func removeTextFieldObserver() {
+            NSNotificationCenter.defaultCenter().removeObserver(self, name: UITextFieldTextDidChangeNotification, object: alert.textFields![0])
+        }
+        
+        //add cancel button action
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
+            
+            if !StandardEngine.sharedInstance.isPaused{
+                StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
+            }
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            
+        }))
+        
+        //set up save button actino to use later
+        let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
+            
+            //clear the grid
+            StandardEngine.sharedInstance.grid = Grid(StandardEngine.sharedInstance.grid.rows,StandardEngine.sharedInstance.grid.cols, cellInitializer: {_ in .Empty})
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            
+            if let text = self.inputTextField!.text{
+                if let number = Int(text){
+                    let row = StandardEngine.sharedInstance.rows
+                    let col = StandardEngine.sharedInstance.cols
+                    //create a shuffled array
+                    var shuffled = GKRandomSource.sharedRandom().arrayByShufflingObjectsInArray([Int](0...row*col-1))
+                    
+                    for _ in 1...number{
+                        let random = shuffled[0] as! Int
+                        let xCo = random / row
+                        let yCo = random % col
+                        StandardEngine.sharedInstance.grid[xCo, yCo] = CellState.toggle(StandardEngine.sharedInstance.grid[xCo, yCo])
+                        shuffled.removeFirst()
+                    }
+                }
+            }
+            NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+            if !StandardEngine.sharedInstance.isPaused{
+                StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
+            }
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            
+        })
+        
+        //disable the save button initially unless the user enters any text
+        okAction.enabled = false
+        
+        AddAlertOkAction = okAction
+        
+        //add save button
+        alert.addAction(okAction)
+        
+        //add a text field for user to enter name for the row
+        alert.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+            textField.placeholder = "(From 1 to \(rows*cols))"
+            self.inputTextField = textField
+            //add observer
+            let sel = #selector(self.handleLivingCellsTextFieldNotification(_:))
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: sel, name: UITextFieldTextDidChangeNotification, object: textField)
+        })
+        
+        //pop up the alert view
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func handleLivingCellsTextFieldNotification(notification: NSNotification) {
+        let textField = notification.object as! UITextField
+        
+        if let text = textField.text{
+            if let number = Int(text){
+                if number <= StandardEngine.sharedInstance.rows * StandardEngine.sharedInstance.cols && number != 0{
+                    AddAlertOkAction!.enabled = true
+                }else{
+                    AddAlertOkAction!.enabled = false
+                }
+            }else{
+                AddAlertOkAction!.enabled = false
+            }
+        }
+    }
+    
     override func viewDidAppear(animated: Bool) {
         if StandardEngine.sharedInstance.isPaused{
             pauseAndContinueButoon.setImage(UIImage(named: "Play.png"), forState: UIControlState.Normal)
@@ -200,6 +304,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         
         //stop the grid from changing while still in the save view
         StandardEngine.sharedInstance.refreshTimer?.invalidate()
+        
         
         let alert = UIAlertController(title: "Save", message: "Please enter a name to save the current grid", preferredStyle: UIAlertControllerStyle.Alert)
         

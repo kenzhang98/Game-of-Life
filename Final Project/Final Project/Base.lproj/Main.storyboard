@@ -743,7 +743,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Li-Tm-5am" userLabel="Pause/Continue">
-                                <rect key="frame" x="288" y="536" width="25" height="25"/>
+                                <rect key="frame" x="238" y="536" width="25" height="25"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" image="Play">
                                     <color key="titleColor" red="0.21523028050000001" green="0.35336230229999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -770,8 +770,15 @@
                                     <action selector="undoAction:" destination="1iT-AI-waU" eventType="touchUpInside" id="r4b-MV-a7O"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XQD-SW-B6s" userLabel="Randomize">
+                                <rect key="frame" x="342" y="536" width="25" height="25"/>
+                                <state key="normal" image="Randomize"/>
+                                <connections>
+                                    <action selector="randomizeAction:" destination="1iT-AI-waU" eventType="touchUpInside" id="jny-R0-EwG"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Warning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wPz-be-a5e">
-                                <rect key="frame" x="268.5" y="44" width="64" height="21"/>
+                                <rect key="frame" x="268" y="44" width="64" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -782,9 +789,12 @@
                             <constraint firstItem="o48-xd-UkZ" firstAttribute="top" secondItem="598-aG-Yvl" secondAttribute="bottom" id="0VT-vN-NX9"/>
                             <constraint firstItem="cLv-SU-0jT" firstAttribute="leading" secondItem="o48-xd-UkZ" secondAttribute="trailing" constant="70" id="0mb-TK-eIq"/>
                             <constraint firstItem="1MS-77-3Sr" firstAttribute="top" secondItem="sOk-bP-jDF" secondAttribute="bottom" id="2VP-uE-Ciw"/>
+                            <constraint firstItem="8Li-Tm-5am" firstAttribute="centerX" secondItem="dbn-cy-J5a" secondAttribute="centerX" id="3H9-Gc-dKo"/>
                             <constraint firstItem="cro-ZU-J7n" firstAttribute="centerX" secondItem="1dU-Gb-pxS" secondAttribute="centerX" id="4cV-tp-Rig"/>
+                            <constraint firstItem="XQD-SW-B6s" firstAttribute="centerY" secondItem="8Li-Tm-5am" secondAttribute="centerY" id="6Ze-tA-1yS"/>
                             <constraint firstItem="cLv-SU-0jT" firstAttribute="centerY" secondItem="o48-xd-UkZ" secondAttribute="centerY" id="82o-M8-V3q"/>
                             <constraint firstItem="dbn-cy-J5a" firstAttribute="top" secondItem="o48-xd-UkZ" secondAttribute="bottom" constant="50" id="89k-7K-92B"/>
+                            <constraint firstItem="8Li-Tm-5am" firstAttribute="centerY" secondItem="dbn-cy-J5a" secondAttribute="centerY" id="8Pf-19-kfK"/>
                             <constraint firstItem="598-aG-Yvl" firstAttribute="height" secondItem="1MS-77-3Sr" secondAttribute="height" multiplier="0.8" priority="750" id="9YE-n0-s54"/>
                             <constraint firstItem="fgK-2t-t3z" firstAttribute="centerY" secondItem="o48-xd-UkZ" secondAttribute="centerY" id="ChN-92-1R7"/>
                             <constraint firstItem="cro-ZU-J7n" firstAttribute="top" secondItem="sOk-bP-jDF" secondAttribute="bottom" id="CjX-no-Ddt"/>
@@ -793,12 +803,15 @@
                             <constraint firstAttribute="trailingMargin" secondItem="1MS-77-3Sr" secondAttribute="trailing" constant="-20" id="ICQ-oY-P14"/>
                             <constraint firstItem="1MS-77-3Sr" firstAttribute="leading" secondItem="1dU-Gb-pxS" secondAttribute="leadingMargin" constant="-20" id="IFP-L8-L4T"/>
                             <constraint firstItem="Z1Z-LF-1mn" firstAttribute="top" secondItem="1MS-77-3Sr" secondAttribute="bottom" id="IhO-pV-ba1"/>
+                            <constraint firstItem="XQD-SW-B6s" firstAttribute="centerX" secondItem="HVr-Os-2d4" secondAttribute="centerX" id="ImR-Tv-qpg"/>
                             <constraint firstItem="o48-xd-UkZ" firstAttribute="leading" secondItem="fgK-2t-t3z" secondAttribute="trailing" constant="70" id="IvQ-kw-08c"/>
                             <constraint firstItem="HVr-Os-2d4" firstAttribute="leading" secondItem="dbn-cy-J5a" secondAttribute="trailing" constant="36" id="KHS-NM-PfF"/>
                             <constraint firstItem="598-aG-Yvl" firstAttribute="top" secondItem="cro-ZU-J7n" secondAttribute="bottom" id="OSw-bR-0jf"/>
                             <constraint firstItem="8Li-Tm-5am" firstAttribute="centerX" secondItem="o48-xd-UkZ" secondAttribute="centerX" id="Off-GI-UPj"/>
                             <constraint firstItem="8Li-Tm-5am" firstAttribute="top" secondItem="o48-xd-UkZ" secondAttribute="bottom" constant="8" id="Qt7-hz-0vX"/>
+                            <constraint firstItem="XQD-SW-B6s" firstAttribute="centerX" secondItem="8Li-Tm-5am" secondAttribute="centerX" id="R54-kT-aU8"/>
                             <constraint firstItem="wPz-be-a5e" firstAttribute="centerX" secondItem="598-aG-Yvl" secondAttribute="centerX" id="RuH-Iu-gtW"/>
+                            <constraint firstItem="o48-xd-UkZ" firstAttribute="leading" secondItem="dbn-cy-J5a" secondAttribute="trailing" id="Zlb-ch-6Gr"/>
                             <constraint firstItem="o48-xd-UkZ" firstAttribute="centerX" secondItem="598-aG-Yvl" secondAttribute="centerX" id="aci-db-RSv"/>
                             <constraint firstItem="dbn-cy-J5a" firstAttribute="top" secondItem="8Li-Tm-5am" secondAttribute="bottom" constant="-25" id="adi-T9-oYA"/>
                             <constraint firstItem="598-aG-Yvl" firstAttribute="top" secondItem="wPz-be-a5e" secondAttribute="bottom" constant="8" id="b0n-J9-VML"/>
@@ -808,11 +821,17 @@
                             <constraint firstItem="598-aG-Yvl" firstAttribute="height" relation="lessThanOrEqual" secondItem="1MS-77-3Sr" secondAttribute="height" multiplier="0.8" id="j0b-q1-6QJ"/>
                             <constraint firstItem="cro-ZU-J7n" firstAttribute="width" secondItem="598-aG-Yvl" secondAttribute="width" multiplier="0.6" id="k6D-pt-6oM"/>
                             <constraint firstItem="8Li-Tm-5am" firstAttribute="leading" secondItem="dbn-cy-J5a" secondAttribute="trailing" constant="3" id="kGt-c9-j1M"/>
+                            <constraint firstItem="XQD-SW-B6s" firstAttribute="centerY" secondItem="HVr-Os-2d4" secondAttribute="centerY" id="nrQ-ZT-nyA"/>
                             <constraint firstItem="HVr-Os-2d4" firstAttribute="centerY" secondItem="dbn-cy-J5a" secondAttribute="centerY" id="nsQ-M5-6fx"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="8Pf-19-kfK"/>
+                                <exclude reference="Off-GI-UPj"/>
+                                <exclude reference="kGt-c9-j1M"/>
                                 <exclude reference="adi-T9-oYA"/>
+                                <exclude reference="R54-kT-aU8"/>
+                                <exclude reference="nrQ-ZT-nyA"/>
                                 <exclude reference="cCr-d8-Ezi"/>
                             </mask>
                         </variation>
@@ -977,6 +996,7 @@
     <resources>
         <image name="Instrumentation" width="25" height="25"/>
         <image name="Play" width="25" height="25"/>
+        <image name="Randomize" width="25" height="25"/>
         <image name="Redo" width="25" height="25"/>
         <image name="Reload" width="25" height="25"/>
         <image name="Simulation" width="25" height="25"/>
