@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-
+var lastTouch: Position = (0,0)
 
 class GridView: UIView{
     
@@ -410,13 +410,29 @@ class GridView: UIView{
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
             self.processTouch(touch)
+            let point = touch.locationInView(self)
+            let cellWidth = Double(bounds.width) / Double(StandardEngine.sharedInstance.rows)
+            let cellHeight = Double(bounds.height) / Double(StandardEngine.sharedInstance.cols)
+            let xCo = Int(floor(Double(point.x) / cellWidth))
+            let yCo = Int(floor(Double(point.y) / cellHeight))
+            lastTouch = (xCo,yCo)
         }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let touch = touches.first {
-            self.processTouch(touch)
             
+            let point = touch.locationInView(self)
+            let cellWidth = Double(bounds.width) / Double(StandardEngine.sharedInstance.rows)
+            let cellHeight = Double(bounds.height) / Double(StandardEngine.sharedInstance.cols)
+            let xCo = Int(floor(Double(point.x) / cellWidth))
+            let yCo = Int(floor(Double(point.y) / cellHeight))
+            let newPoint: Position = (xCo,yCo)
+            
+            if newPoint != lastTouch{
+                self.processTouch(touch)
+                lastTouch = newPoint
+            }
         }
     }
     
