@@ -217,6 +217,8 @@ class InstrumentationViewController: UIViewController {
     }
     
     @IBAction func rowsCalculation(sender: AnyObject) {
+        StandardEngine.sharedInstance.undoCells = []
+        StandardEngine.sharedInstance.redoCells = []
         changesDetect = true
         StandardEngine.sharedInstance.rows = Int(rowsStepper.value)
         rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
@@ -230,6 +232,8 @@ class InstrumentationViewController: UIViewController {
         NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
     }
     @IBAction func colsCalculation(sender: AnyObject) {
+        StandardEngine.sharedInstance.undoCells = []
+        StandardEngine.sharedInstance.redoCells = []
         changesDetect = true
         StandardEngine.sharedInstance.cols = Int(colsStepper.value)
         colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
