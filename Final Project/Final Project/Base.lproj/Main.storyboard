@@ -197,7 +197,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t6I-M7-vHq">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://dl.dropboxusercontent.com/u/7544475/S65g.json" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="t6I-M7-vHq">
                                 <rect key="frame" x="20" y="308" width="420" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="505" id="E4I-Q3-e9l"/>
