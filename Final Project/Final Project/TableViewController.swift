@@ -33,8 +33,8 @@ class TableViewController: UITableViewController {
     }
     
     func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
+        print(names)
         let longPress = gestureRecognizer as! UILongPressGestureRecognizer
-        let state = longPress.state
         let locationInView = longPress.locationInView(tableView)
         let indexPath = tableView.indexPathForRowAtPoint(locationInView)
         
@@ -44,7 +44,7 @@ class TableViewController: UITableViewController {
         struct Path {
             static var initialIndexPath : NSIndexPath? = nil
         }
-        switch state {
+        switch longPress.state {
         case UIGestureRecognizerState.Began:
             if indexPath != nil {
                 Path.initialIndexPath = indexPath
@@ -74,7 +74,7 @@ class TableViewController: UITableViewController {
             center.y = locationInView.y
             My.cellSnapshot!.center = center
             if ((indexPath != nil) && (indexPath != Path.initialIndexPath)) {
-                swap(&names[indexPath!.row], &names[Path.initialIndexPath!.row])
+                swap(&TableViewController.sharedTable.names[indexPath!.row], &TableViewController.sharedTable.names[Path.initialIndexPath!.row])
                 tableView.moveRowAtIndexPath(Path.initialIndexPath!, toIndexPath: indexPath!)
                 Path.initialIndexPath = indexPath
             }
@@ -123,6 +123,7 @@ class TableViewController: UITableViewController {
     }
     
     @IBAction func addName(sender: AnyObject) {
+        
         TableViewController.sharedTable.names.append("Add new name...")
         TableViewController.sharedTable.gridContent.append([])
         TableViewController.sharedTable.comments.append("")
