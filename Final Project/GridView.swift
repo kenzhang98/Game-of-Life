@@ -42,10 +42,10 @@ class GridView: UIView{
         
     }
     
-    var livingColor: UIColor = UIColor.greenColor()
+    var livingColor: UIColor = UIColor(red: 0/255, green: 239/255, blue:22/255, alpha: 1)
     var emptyColor: UIColor = UIColor.grayColor()
-    var bornColor: UIColor = UIColor.greenColor().colorWithAlphaComponent(0.3)
-    var diedColor: UIColor = UIColor.grayColor().colorWithAlphaComponent(0.3)
+    var bornColor: UIColor = UIColor.whiteColor().colorWithAlphaComponent(0.6)
+    var diedColor: UIColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.7)
     var gridColor: UIColor = UIColor.blackColor()
     var gridWidth: CGFloat = 2.0
     //instead of taking rows and cols as variables, replace them with StandardEngine.sharedInstance.rows and StandardEngine.sharedInstance.cols
@@ -102,10 +102,18 @@ class GridView: UIView{
                 let path = UIBezierPath(ovalInRect: rectangle)
                 
                 switch StandardEngine.sharedInstance.grid[(x,y)]{
-                case .Alive: livingColor.setFill()
-                case .Born: bornColor.setFill()
-                case .Died: diedColor.setFill()
-                case .Empty: emptyColor.setFill()
+                case .Alive:
+                    livingColor.setFill()
+                case .Born:
+                    livingColor.setFill()
+                    path.fill()
+                    bornColor.setFill()
+                case .Died:
+                    livingColor.setFill()
+                    path.fill()
+                    diedColor.setFill()
+                case .Empty:
+                    emptyColor.setFill()
                 }
                 
                 path.fill()

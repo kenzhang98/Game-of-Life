@@ -9,11 +9,43 @@
 import UIKit
 
 class SimulationViewController: UIViewController, EngineDelegateProtocol {
-    
     private var inputTextField: UITextField?
     weak var AddAlertSaveAction: UIAlertAction?
-    @IBOutlet weak var pauseAndContinueButoon: UIButton!
     
+    //set up button to change the style of the cells
+    @IBAction func red(sender: AnyObject)
+    {
+        grid.livingColor = UIColor(red: 231/255, green: 0, blue:0, alpha: 1)
+        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+    }
+    @IBAction func orange(sender: AnyObject)
+    {
+        grid.livingColor = UIColor(red: 255/255, green: 150/255, blue:0, alpha: 1)
+        grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.3)
+        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+    }
+    @IBAction func green(sender: AnyObject)
+    {
+        grid.livingColor = UIColor(red: 0/255, green: 239/255, blue:22/255, alpha: 1)
+        grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+        grid.bornColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
+        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+    }
+    @IBAction func cyan(sender: AnyObject)
+    {
+        grid.livingColor = UIColor(red: 0/255, green: 222/255, blue:255/255, alpha: 1)
+        grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.5)
+        grid.bornColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
+        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+    }
+    @IBAction func blue(sender: AnyObject)
+    {
+        grid.livingColor = UIColor(red: 0/255, green: 125/255, blue:222.255, alpha: 1)
+        grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.6)
+        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+    }
+    
+    @IBOutlet weak var pauseAndContinueButoon: UIButton!
     @IBAction func pauseAndContinue(sender: AnyObject) {
         StandardEngine.sharedInstance.isPaused = !StandardEngine.sharedInstance.isPaused
         if StandardEngine.sharedInstance.isPaused{

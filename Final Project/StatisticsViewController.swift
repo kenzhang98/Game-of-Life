@@ -8,7 +8,8 @@
 
 import UIKit
 
-class StatisticsViewController: UIViewController {
+class StatisticsViewController: UIViewController
+{
     
     var livingCellCounter = 0
     var diedCellCounter = 0
