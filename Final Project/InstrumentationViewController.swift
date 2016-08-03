@@ -36,6 +36,7 @@ class InstrumentationViewController: UIViewController {
                 TableViewController.sharedTable.gridContent = []
                 TableViewController.sharedTable.comments = []
                 TableViewController.sharedTable.color = []
+                TableViewController.sharedTable.shape = []
                 NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                 
                 return
@@ -61,6 +62,7 @@ class InstrumentationViewController: UIViewController {
                             }
                             TableViewController.sharedTable.comments = TableViewController.sharedTable.names.map{_ in return ""}
                             TableViewController.sharedTable.color = TableViewController.sharedTable.names.map{_ in return "green"}
+                            TableViewController.sharedTable.shape = TableViewController.sharedTable.names.map{_ in return "Circle"}
                         }catch {
                             print("Error with Json: \(error)")
                             //clear date
@@ -68,6 +70,7 @@ class InstrumentationViewController: UIViewController {
                             TableViewController.sharedTable.gridContent = []
                             TableViewController.sharedTable.comments = []
                             TableViewController.sharedTable.color = []
+                            TableViewController.sharedTable.shape = []
                             NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                         }
                         
@@ -91,6 +94,7 @@ class InstrumentationViewController: UIViewController {
                             TableViewController.sharedTable.gridContent = []
                             TableViewController.sharedTable.comments = []
                             TableViewController.sharedTable.color = []
+                            TableViewController.sharedTable.shape = []
                             NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                         }
                         NSOperationQueue.mainQueue().addOperation(op)
@@ -109,6 +113,7 @@ class InstrumentationViewController: UIViewController {
                         TableViewController.sharedTable.gridContent = []
                         TableViewController.sharedTable.comments = []
                         TableViewController.sharedTable.color = []
+                        TableViewController.sharedTable.shape = []
                         NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                     }
                     NSOperationQueue.mainQueue().addOperation(op)

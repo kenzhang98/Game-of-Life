@@ -301,6 +301,39 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
             xCyan.hidden = true
             xBlue.hidden = true
         }
+        
+        switch(StandardEngine.sharedInstance.shape){
+            case "Triangle":
+                shapeLabel.text = "Triangle"
+                shapeValue.value = 0.5
+        case "Square":
+            shapeLabel.text = "Square"
+            shapeValue.value = 1.5
+        case "Pentagon":
+            shapeLabel.text = "Pentagon"
+            shapeValue.value = 2.5
+        case "Hexagon":
+            shapeLabel.text = "Hexagon"
+            shapeValue.value = 3.5
+        case "Heptagon":
+            shapeLabel.text = "Heptagon"
+            shapeValue.value = 4.5
+        case "Octagon":
+            shapeLabel.text = "Octagon"
+            shapeValue.value = 5.5
+        case "Nanogon":
+            shapeLabel.text = "Nanogon"
+            shapeValue.value = 6.5
+        case "Decagon":
+            shapeLabel.text = "Decagon"
+            shapeValue.value = 7.5
+        case "Circle":
+            shapeLabel.text = "Circle"
+            shapeValue.value = 8.5
+        default:
+            shapeLabel.text = "Circle"
+            shapeValue.value = 8.5
+        }
     }
     
     @IBAction func Save(sender: AnyObject) {
@@ -335,6 +368,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
                 TableViewController.sharedTable.names.append(text)
                 TableViewController.sharedTable.comments.append("")
                 TableViewController.sharedTable.color.append(StandardEngine.sharedInstance.color)
+                TableViewController.sharedTable.shape.append(StandardEngine.sharedInstance.shape)
                 
                 
                 if let point = GridView().points{
@@ -391,6 +425,8 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     }
     
     @IBAction func Reset(sender: AnyObject) {
+        StandardEngine.sharedInstance.undoCells = []
+        StandardEngine.sharedInstance.redoCells = []
         let rows = StandardEngine.sharedInstance.grid.rows
         let cols = StandardEngine.sharedInstance.grid.cols
         StandardEngine.sharedInstance.grid = Grid(rows,cols, cellInitializer: {_ in .Empty})
@@ -489,6 +525,61 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         }
     }
     
+    @IBOutlet weak var shapeLabel: UILabel!
+    @IBOutlet weak var shapeValue: UISlider!
+    @IBAction func shapeAction(sender: AnyObject) {
+        StandardEngine.sharedInstance.changesDetect = true
+        switch (Int(floor(shapeValue.value))){
+        case 0:
+            shapeLabel.text = "Triangle"
+            StandardEngine.sharedInstance.shape = "Triangle"
+            if let delegate = StandardEngine.sharedInstance.delegate {
+                delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+            }
+            grid.setNeedsDisplay()
+            
+            let op = NSBlockOperation {
+                
+            }
+            NSOperationQueue.mainQueue().addOperation(op)
+        case 1:
+            shapeLabel.text = "Square"
+            StandardEngine.sharedInstance.shape = "Square"
+            grid.setNeedsDisplay()
+        case 2:
+            shapeLabel.text = "Pentagon"
+            StandardEngine.sharedInstance.shape = "Pentagon"
+            grid.setNeedsDisplay()
+        case 3:
+            shapeLabel.text = "Hexagon"
+            StandardEngine.sharedInstance.shape = "Hexagon"
+            grid.setNeedsDisplay()
+        case 4:
+            shapeLabel.text = "Heptagon"
+            StandardEngine.sharedInstance.shape = "Heptagon"
+            grid.setNeedsDisplay()
+        case 5:
+            shapeLabel.text = "Octagon"
+            StandardEngine.sharedInstance.shape = "Octagon"
+            grid.setNeedsDisplay()
+        case 6:
+            shapeLabel.text = "Nanogon"
+            StandardEngine.sharedInstance.shape = "Nanogon"
+            grid.setNeedsDisplay()
+        case 7:
+            shapeLabel.text = "Decagon"
+            StandardEngine.sharedInstance.shape = "Decagon"
+            grid.setNeedsDisplay()
+        case 8:
+            shapeLabel.text = "Circle"
+            StandardEngine.sharedInstance.shape = "Circle"
+            grid.setNeedsDisplay()
+        default:
+            shapeLabel.text = "Circle"
+            StandardEngine.sharedInstance.shape = "Circle"
+            grid.setNeedsDisplay()
+        }
+    }
     
     func engineDidUpdate(withGrid: GridProtocol) {
         grid.setNeedsDisplay()

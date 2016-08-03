@@ -92,34 +92,315 @@ class GridView: UIView{
         //draw the stroke
         verPath.stroke()
         horPath.stroke()
+
         
-        //set up the tiny rectangles and then draw the circles
-        for x in 0..<StandardEngine.sharedInstance.rows{
-            for y in 0..<StandardEngine.sharedInstance.cols{
-                
-                let rectangle = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
-                
-                let path = UIBezierPath(ovalInRect: rectangle)
-                
-                switch StandardEngine.sharedInstance.grid[(x,y)]{
-                case .Alive:
-                    livingColor.setFill()
-                case .Born:
-                    livingColor.setFill()
-                    path.fill()
-                    bornColor.setFill()
-                case .Died:
-                    livingColor.setFill()
-                    path.fill()
-                    diedColor.setFill()
-                case .Empty:
-                    emptyColor.setFill()
+        switch (StandardEngine.sharedInstance.shape){
+        case "Circle":
+                //set up the tiny rectangles and then draw the circles
+                for x in 0..<StandardEngine.sharedInstance.rows{
+                    for y in 0..<StandardEngine.sharedInstance.cols{
+                        let rectangle = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                        let path = UIBezierPath(ovalInRect: rectangle)
+                        switch StandardEngine.sharedInstance.grid[(x,y)]{
+                        case .Alive:
+                            livingColor.setFill()
+                        case .Born:
+                            livingColor.setFill()
+                            path.fill()
+                            bornColor.setFill()
+                        case .Died:
+                            livingColor.setFill()
+                            path.fill()
+                            diedColor.setFill()
+                        case .Empty:
+                            emptyColor.setFill()
+                        }
+                        path.fill()
+                    }
+            }
+        case "Triangle":
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    //define the container
+                    let container = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let w = container.width
+                    let triPath = UIBezierPath()
+                    triPath.moveToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    triPath.addLineToPoint(CGPoint(x: container.maxX, y: container.maxY))
+                    triPath.addLineToPoint(CGPoint(x: container.minX, y: container.maxY))
+                    triPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        triPath.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        triPath.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    triPath.fill()
                 }
-                
-                path.fill()
+            }
+        case "Square":
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    //define the container
+                    let container = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let w = container.width
+                    let h = container.height
+                    let squPath = UIBezierPath()
+                    squPath.moveToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    squPath.addLineToPoint(CGPoint(x: container.maxX, y: container.minY + h/2))
+                    squPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.maxY))
+                    squPath.addLineToPoint(CGPoint(x: container.minX, y: container.minY + h*0.5))
+                    squPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        squPath.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        squPath.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    squPath.fill()
+                }
+            }
+        case "Pentagon":
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    //define the container
+                    let container = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let w = container.width
+                    let h = container.height
+                    let penPath = UIBezierPath()
+                    penPath.moveToPoint(CGPoint(x: container.minX, y: container.minY + h*0.381966))
+                    penPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    penPath.addLineToPoint(CGPoint(x: container.maxX, y: container.minY + h*0.381966))
+                    penPath.addLineToPoint(CGPoint(x: container.maxX - w*0.200811, y: container.maxY))
+                    penPath.addLineToPoint(CGPoint(x: container.minX + w*0.200811, y: container.maxY))
+                    penPath.addLineToPoint(CGPoint(x: container.minX, y: container.minY + h*0.381966))
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        penPath.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        penPath.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    penPath.fill()
+                }
+            }
+        case "Hexagon":
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    //define the container
+                    let container = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let w = container.width
+                    let h = container.height
+                    let hexPath = UIBezierPath()
+                    hexPath.moveToPoint(CGPoint(x: container.minX, y: container.minY + h*0.250))
+                    hexPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    hexPath.addLineToPoint(CGPoint(x: container.maxX, y: container.minY + h*0.250))
+                    hexPath.addLineToPoint(CGPoint(x: container.maxX, y: container.maxY - h*0.250))
+                    hexPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.maxY))
+                    hexPath.addLineToPoint(CGPoint(x: container.minX, y: container.maxY  - h*0.250))
+                    hexPath.addLineToPoint(CGPoint(x: container.minX, y: container.minY + h*0.250))
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        hexPath.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        hexPath.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    hexPath.fill()
+                }
+            }
+        case "Heptagon":
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    //define the container
+                    let container = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let w = container.width
+                    let h = container.height
+                    let hepPath = UIBezierPath()
+                    hepPath.moveToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    hepPath.addLineToPoint(CGPoint(x: container.minX + w/2 + w * 0.41128, y: container.minY + container.height * 0.198064))
+                    hepPath.addLineToPoint(CGPoint(x: container.maxX, y: container.maxY - h*0.32))
+                    hepPath.addLineToPoint(CGPoint(x: container.maxX - w*0.32, y: container.maxY))
+                    hepPath.addLineToPoint(CGPoint(x: container.minX + w*0.32, y: container.maxY))
+                    hepPath.addLineToPoint(CGPoint(x: container.minX, y: container.maxY - h*0.32))
+                    hepPath.addLineToPoint(CGPoint(x: container.minX + w/2 - w * 0.41128, y: container.minY + container.height * 0.198064))
+                    hepPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        hepPath.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        hepPath.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    hepPath.fill()
+                }
+            }
+        case "Octagon":
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    //define the container
+                    let container = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let w = container.width
+                    let h = container.height
+                    let octPath = UIBezierPath()
+                    octPath.moveToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    octPath.addLineToPoint(CGPoint(x: container.maxX - w*0.146447, y: container.minY + h*0.146447))
+                    octPath.addLineToPoint(CGPoint(x: container.maxX, y: container.minY + h*0.5))
+                    octPath.addLineToPoint(CGPoint(x: container.maxX - w*0.146447, y: container.maxY - h*0.146447))
+                    octPath.addLineToPoint(CGPoint(x: container.minX + w*0.5, y: container.maxY))
+                    octPath.addLineToPoint(CGPoint(x: container.minX + w*0.146447, y: container.maxY - h*0.146447))
+                    octPath.addLineToPoint(CGPoint(x: container.minX, y: container.minY + h * 0.5))
+                    octPath.addLineToPoint(CGPoint(x: container.minX + w*0.146447, y: container.minY + h*0.146447))
+                    octPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        octPath.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        octPath.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    octPath.fill()
+                }
+            }
+        case "Nanogon":
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    //define the container
+                    let container = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let w = container.width
+                    let h = container.height
+                    let nonPath = UIBezierPath()
+                    nonPath.moveToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    nonPath.addLineToPoint(CGPoint(x: container.minX + w/2 + w*0.331386, y: container.minY + h*0.120615))
+                    nonPath.addLineToPoint(CGPoint(x: container.maxX, y: container.minY + h*0.5))
+                    nonPath.addLineToPoint(CGPoint(x: container.minX + w/2 + w*0.4, y: container.maxY - h*0.2))
+                    nonPath.addLineToPoint(CGPoint(x: container.minX + w*0.5 + w*0.176327, y: container.maxY))
+                    nonPath.addLineToPoint(CGPoint(x: container.minX + w*0.5 - w*0.176327, y: container.maxY))
+                    nonPath.addLineToPoint(CGPoint(x: container.minX + w/2 - w*0.4, y: container.maxY - h*0.2))
+                    nonPath.addLineToPoint(CGPoint(x: container.minX, y: container.minY + h*0.5))
+                    nonPath.addLineToPoint(CGPoint(x: container.minX + w/2 - w*0.331386, y: container.minY + h*0.120615))
+                    nonPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        nonPath.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        nonPath.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    nonPath.fill()
+                }
+            }
+        case "Decagon":
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    //define the container
+                    let container = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let w = container.width
+                    let h = container.height
+                    let decPath = UIBezierPath()
+                    decPath.moveToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    decPath.addLineToPoint(CGPoint(x: container.minX + w/2 + w*0.2938926, y: container.minY + h*0.095492))
+                    decPath.addLineToPoint(CGPoint(x: container.maxX, y: container.minY + h*0.345492))
+                    decPath.addLineToPoint(CGPoint(x: container.maxX, y: container.maxY - h*0.345492))
+                    decPath.addLineToPoint(CGPoint(x: container.minX + w/2 + w*0.2938926, y: container.maxY - h*0.095492))
+                    decPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.maxY))
+                    decPath.addLineToPoint(CGPoint(x: container.minX + w/2 - w*0.2938926, y: container.maxY - h*0.095492))
+                    decPath.addLineToPoint(CGPoint(x: container.minX, y: container.maxY - h*0.345492))
+                    decPath.addLineToPoint(CGPoint(x: container.minX, y: container.minY + h*0.345492))
+                    decPath.addLineToPoint(CGPoint(x: container.minX + w/2 - w*0.2938926, y: container.minY + h*0.095492))
+                    decPath.addLineToPoint(CGPoint(x: container.minX + w/2, y: container.minY))
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        decPath.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        decPath.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    decPath.fill()
+                }
+            }
+        default:
+            //set up the tiny rectangles and then draw the circles
+            for x in 0..<StandardEngine.sharedInstance.rows{
+                for y in 0..<StandardEngine.sharedInstance.cols{
+                    let rectangle = CGRect(x: CGFloat(x) * (bounds.width - gridWidth) / CGFloat(StandardEngine.sharedInstance.rows) + CGFloat(gridWidth), y: CGFloat(y) * (bounds.height - gridWidth) / CGFloat(StandardEngine.sharedInstance.cols) + CGFloat(gridWidth), width: bounds.width / CGFloat(StandardEngine.sharedInstance.rows) - CGFloat(gridWidth), height: bounds.height / CGFloat(StandardEngine.sharedInstance.cols) - CGFloat(gridWidth))
+                    let path = UIBezierPath(ovalInRect: rectangle)
+                    switch StandardEngine.sharedInstance.grid[(x,y)]{
+                    case .Alive:
+                        livingColor.setFill()
+                    case .Born:
+                        livingColor.setFill()
+                        path.fill()
+                        bornColor.setFill()
+                    case .Died:
+                        livingColor.setFill()
+                        path.fill()
+                        diedColor.setFill()
+                    case .Empty:
+                        emptyColor.setFill()
+                    }
+                    path.fill()
+                }
             }
         }
-        
     }
     //drawRec function finishes here
     
