@@ -19,6 +19,7 @@ class StatisticsViewController: UIViewController
     var cols = 0
     var rows = 0
     
+    @IBOutlet weak var generation: UITextField!
     @IBOutlet weak var diedCells: UITextField!
     @IBOutlet weak var livingCells: UITextField!
     @IBOutlet weak var bornCells: UITextField!
@@ -38,16 +39,13 @@ class StatisticsViewController: UIViewController
         
         let s = #selector(StatisticsViewController.watchForNotifications(_:))
         let c = NSNotificationCenter.defaultCenter()
-        c.addObserver(self, selector: s, name: "setEngineStaticsNotification", object: nil)
+        c.addObserver(self, selector: s, name: "setEngineStatisticsNotification", object: nil)
         
         diedCells.text = String(diedCellCounter)
         livingCells.text = String(livingCellCounter)
         bornCells.text = String(bornCellCounter)
         emptyCells.text = String(emptyCellCounter)
-        
-        
-        
-        
+        generation.text = String(StandardEngine.sharedInstance.generation)
     }
     
     override func didReceiveMemoryWarning() {
@@ -70,6 +68,7 @@ class StatisticsViewController: UIViewController
         livingCells.text = String(livingCellCounter)
         bornCells.text = String(bornCellCounter)
         emptyCells.text = String(emptyCellCounter)
+        generation.text = String(StandardEngine.sharedInstance.generation)
         
         
     }

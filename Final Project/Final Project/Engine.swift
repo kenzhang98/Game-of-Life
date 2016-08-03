@@ -81,6 +81,8 @@ class StandardEngine: EngineProtocol {
     var undoCells: [Position] = []
     var redoCells: [Position] = []
     
+    var generation: Int = 0
+    
     //used to detect the changes made by user at the embed grid view
     var changesDetect: Bool = false
     
@@ -132,7 +134,7 @@ class StandardEngine: EngineProtocol {
     
     @objc func timerDidFire(timer:NSTimer) {
         StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
     }
     
     subscript (i:Int, j:Int) -> CellState {
@@ -165,7 +167,10 @@ class StandardEngine: EngineProtocol {
         }
         grid = newGrid
         if let delegate = delegate { delegate.engineDidUpdate(grid) }
+        StandardEngine.sharedInstance.generation += 1
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
         return grid
+        
     }
 }
 

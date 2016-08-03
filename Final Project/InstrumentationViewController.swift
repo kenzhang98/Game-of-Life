@@ -217,6 +217,8 @@ class InstrumentationViewController: UIViewController {
         
         //post notification to update the grid in the embed view
         NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
+        StandardEngine.sharedInstance.generation = 0
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
     }
     @IBAction func colsCalculation(sender: AnyObject) {
         StandardEngine.sharedInstance.changesDetect = true
@@ -228,6 +230,8 @@ class InstrumentationViewController: UIViewController {
         
         //post notification to update the grid in the embed view
         NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
+        StandardEngine.sharedInstance.generation = 0
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
     }
     
     
@@ -270,7 +274,7 @@ class InstrumentationViewController: UIViewController {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
         
     }
     
@@ -334,7 +338,7 @@ class InstrumentationViewController: UIViewController {
         StandardEngine.sharedInstance.refreshRate = 5.0
         StandardEngine.sharedInstance.isPaused = false
         hzLabel.text = String(format: "%.2f", refreshRateSlider.value) + "Hz"
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
     }
 
 }

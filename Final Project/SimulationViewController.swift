@@ -153,7 +153,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         
         let rows = StandardEngine.sharedInstance.grid.rows
         let cols = StandardEngine.sharedInstance.grid.cols
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
         
         //pop up an uialertview
         let alert = UIAlertController(title: "Randomization", message: "Please enter the numer of living cells to randomize the grid", preferredStyle: UIAlertControllerStyle.Alert)
@@ -178,6 +178,9 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         //set up save button actino to use later
         let okAction = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
             
+            StandardEngine.sharedInstance.generation = 0
+            NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
+            
             //clear the grid
             StandardEngine.sharedInstance.grid = Grid(StandardEngine.sharedInstance.grid.rows,StandardEngine.sharedInstance.grid.cols, cellInitializer: {_ in .Empty})
             if let delegate = StandardEngine.sharedInstance.delegate {
@@ -200,7 +203,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
                     }
                 }
             }
-            NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
             if !StandardEngine.sharedInstance.isPaused{
                 StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             }
@@ -394,13 +397,15 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         if let delegate = StandardEngine.sharedInstance.delegate {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+        
+        StandardEngine.sharedInstance.generation = 0
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
     }
     @IBOutlet weak var grid: GridView!
     
     @IBAction func run(sender: AnyObject) {
         StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
   
     }
     

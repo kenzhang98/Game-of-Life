@@ -87,6 +87,8 @@ class TableViewController: UITableViewController {
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        StandardEngine.sharedInstance.generation = 0
+        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStatisticsNotification", object: nil, userInfo: nil)
         StandardEngine.sharedInstance.changesDetect = false
         let editingRow = (sender as! UITableViewCell).tag
         let editingString = TableViewController.sharedTable.names[editingRow]
@@ -117,6 +119,7 @@ class TableViewController: UITableViewController {
         }
         editingVC.commitForColor = {
             TableViewController.sharedTable.color[editingRow] = $0
+            StandardEngine.sharedInstance.colorSelected = $0
         }
         
         //set up the size of the grid according to the content of the row selected
