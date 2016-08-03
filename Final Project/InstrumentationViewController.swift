@@ -228,6 +228,9 @@ class InstrumentationViewController: UIViewController {
         let selct = #selector(InstrumentationViewController.changeRreshRateSliderValue(_:))
         c.addObserver(self, selector: selct, name: "changeRefreshRateSliderValue", object: nil)
         
+        
+        
+        
         //set up hzLabel as the view loads
         hzLabel.text = "0 Hz"
         

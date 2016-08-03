@@ -11,6 +11,7 @@ import UIKit
 class GridEditterViewController: UIViewController{
     var name:String?
     var comment:String?
+    var color:String?
     var commit: (String -> Void)?
     var anotherCommit: ([[Int]] -> Void)?
     var commitForComment: (String -> Void)?
@@ -20,7 +21,6 @@ class GridEditterViewController: UIViewController{
     @IBAction func cancelButton(sender: AnyObject) {
         //if the user changes the grid and hits cancel button, an alert will pop up to confirm the action
         if StandardEngine.sharedInstance.changesDetect{
-            
             let alert = UIAlertController(title: "Quit Without Saving", message: "Are you sure you want to quit without saving?", preferredStyle: UIAlertControllerStyle.Alert)
             //add cancel button action
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: nil))
@@ -74,21 +74,92 @@ class GridEditterViewController: UIViewController{
         let s = #selector(GridEditterViewController.watchForNotifications(_:))
         let c = NSNotificationCenter.defaultCenter()
         c.addObserver(self, selector: s, name: "updateGridInEmbedView", object: nil)
+        
+        let red = #selector(GridEditterViewController.red(_:))
+        c.addObserver(self, selector: red, name: "red", object: nil)
+        
+        let orange = #selector(GridEditterViewController.orange(_:))
+        c.addObserver(self, selector: orange, name: "orange", object: nil)
+        
+        let green = #selector(GridEditterViewController.green(_:))
+        c.addObserver(self, selector: green, name: "green", object: nil)
+        
+        let cyan = #selector(GridEditterViewController.cyan(_:))
+        c.addObserver(self, selector: cyan, name: "cyan", object: nil)
+        
+        let blue = #selector(GridEditterViewController.blue(_:))
+        c.addObserver(self, selector: blue, name: "blue", object: nil)
+        
+        switch color!{
+        case "red":
+            redChangeColor()
+        case "orange":
+            orangeChangeColor()
+        case "green":
+            greenChangeColor()
+        case "cyan":
+            cyanChangeColor()
+        case "blue":
+            blueChangeColor()
+        default:
+            greenChangeColor()
+        }
     }
     
     func watchForNotifications(notification:NSNotification){
         editterGrid.setNeedsDisplay()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func red(notification:NSNotification){
+        redChangeColor()
+        
+    }
+    func redChangeColor(){
+        editterGrid.livingColor = UIColor(red: 231/255, green: 0, blue:0, alpha: 1)
+        editterGrid.setNeedsDisplay()
+    }
+    
+    func orange(notification:NSNotification){
+        orangeChangeColor()
+    }
+    func orangeChangeColor(){
+        editterGrid.livingColor = UIColor(red: 255/255, green: 150/255, blue:0, alpha: 1)
+        editterGrid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.3)
+        
+        editterGrid.setNeedsDisplay()
+    }
+    
+    func green(notification:NSNotification){
+        greenChangeColor()
+    }
+    func greenChangeColor(){
+        editterGrid.livingColor = UIColor(red: 0/255, green: 239/255, blue:22/255, alpha: 1)
+        editterGrid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+        editterGrid.bornColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
+        editterGrid.setNeedsDisplay()
+    }
+    
+    func cyan(notification:NSNotification){
+        cyanChangeColor()
+    }
+    func cyanChangeColor(){
+        editterGrid.livingColor = UIColor(red: 0/255, green: 222/255, blue:255/255, alpha: 1)
+        editterGrid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.5)
+        editterGrid.bornColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
+        editterGrid.setNeedsDisplay()
+    }
+    
+    func blue(notification:NSNotification){
+        blueChangeColor()
+    }
+    func blueChangeColor(){
+        editterGrid.livingColor = UIColor(red: 0/255, green: 125/255, blue:222.255, alpha: 1)
+        editterGrid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.6)
+        editterGrid.setNeedsDisplay()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
         view.endEditing(true)
         super.touchesBegan(touches, withEvent: event)
     }
-
-    
 }

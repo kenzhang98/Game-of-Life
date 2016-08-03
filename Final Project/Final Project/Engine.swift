@@ -81,6 +81,8 @@ class StandardEngine: EngineProtocol {
     //used to detect the changes made by user at the embed grid view
     var changesDetect: Bool = false
     
+    var color: String = ""
+    var colorSelected: String = ""
     
     var isPaused: Bool = true
     var refreshRate: Float = 0.0

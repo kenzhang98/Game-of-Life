@@ -12,37 +12,109 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     private var inputTextField: UITextField?
     weak var AddAlertSaveAction: UIAlertAction?
     
+    //set up the labels to show which style is selected
+    @IBOutlet weak var xRed: UILabel!
+    @IBOutlet weak var xOrange: UILabel!
+    @IBOutlet weak var xGreen: UILabel!
+    @IBOutlet weak var xCyan: UILabel!
+    @IBOutlet weak var xBlue: UILabel!
+    
     //set up button to change the style of the cells
     @IBAction func red(sender: AnyObject)
     {
         grid.livingColor = UIColor(red: 231/255, green: 0, blue:0, alpha: 1)
-        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        if let delegate = StandardEngine.sharedInstance.delegate {
+            delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        }
+        
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("red", object: nil, userInfo: nil)
+        xRed.hidden = false
+        xOrange.hidden = true
+        xGreen.hidden = true
+        xCyan.hidden = true
+        xBlue.hidden = true
+        
+        StandardEngine.sharedInstance.color = "red"
+        
     }
     @IBAction func orange(sender: AnyObject)
     {
         grid.livingColor = UIColor(red: 255/255, green: 150/255, blue:0, alpha: 1)
         grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.3)
-        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        if let delegate = StandardEngine.sharedInstance.delegate {
+            delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        }
+        
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("orange", object: nil, userInfo: nil)
+        
+        xRed.hidden = true
+        xOrange.hidden = false
+        xGreen.hidden = true
+        xCyan.hidden = true
+        xBlue.hidden = true
+        
+        StandardEngine.sharedInstance.color = "orange"
     }
     @IBAction func green(sender: AnyObject)
     {
         grid.livingColor = UIColor(red: 0/255, green: 239/255, blue:22/255, alpha: 1)
         grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
         grid.bornColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
-        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        if let delegate = StandardEngine.sharedInstance.delegate {
+            delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        }
+        
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("green", object: nil, userInfo: nil)
+        
+        xRed.hidden = true
+        xOrange.hidden = true
+        xGreen.hidden = false
+        xCyan.hidden = true
+        xBlue.hidden = true
+        
+        StandardEngine.sharedInstance.color = "green"
     }
     @IBAction func cyan(sender: AnyObject)
     {
         grid.livingColor = UIColor(red: 0/255, green: 222/255, blue:255/255, alpha: 1)
         grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.5)
         grid.bornColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
-        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        if let delegate = StandardEngine.sharedInstance.delegate {
+            delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        }
+        
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("cyan", object: nil, userInfo: nil)
+        
+        xRed.hidden = true
+        xOrange.hidden = true
+        xGreen.hidden = true
+        xCyan.hidden = false
+        xBlue.hidden = true
+        
+        StandardEngine.sharedInstance.color = "cyan"
     }
     @IBAction func blue(sender: AnyObject)
     {
         grid.livingColor = UIColor(red: 0/255, green: 125/255, blue:222.255, alpha: 1)
         grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.6)
-        StandardEngine.sharedInstance.delegate?.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        if let delegate = StandardEngine.sharedInstance.delegate {
+            delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        }
+        
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("blue", object: nil, userInfo: nil)
+        
+        xRed.hidden = true
+        xOrange.hidden = true
+        xGreen.hidden = true
+        xCyan.hidden = true
+        xBlue.hidden = false
+        
+        StandardEngine.sharedInstance.color = "blue"
     }
     
     @IBOutlet weak var pauseAndContinueButoon: UIButton!
@@ -62,10 +134,6 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
             
             if StandardEngine.sharedInstance.refreshInterval == 0{
                 NSNotificationCenter.defaultCenter().postNotificationName("changeRefreshRateSliderValue", object: nil, userInfo: nil)
-                
-                
-                
-
             }
         }
     }
@@ -75,6 +143,21 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
             pauseAndContinueButoon.setImage(UIImage(named: "Play.png"), forState: UIControlState.Normal)
         }else{
             pauseAndContinueButoon.setImage(UIImage(named: "Pause.png"), forState: UIControlState.Normal)
+        }
+        
+        switch StandardEngine.sharedInstance.colorSelected{
+        case "red":
+            redChangeColor()
+        case "orange":
+            orangeChangeColor()
+        case "green":
+            greenChangeColor()
+        case "cyan":
+            cyanChangeColor()
+        case "blue":
+            blueChangeColor()
+        default:
+            greenChangeColor()
         }
     }
     
@@ -93,6 +176,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         //add cancel button action
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
             removeTextFieldObserver()
+            
             if !StandardEngine.sharedInstance.isPaused{
                 StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             }
@@ -107,6 +191,8 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
             if let text = self.inputTextField!.text{
                 TableViewController.sharedTable.names.append(text)
                 TableViewController.sharedTable.comments.append("")
+                TableViewController.sharedTable.color.append(StandardEngine.sharedInstance.color)
+                
                 
                 if let point = GridView().points{
                     var medium:[[Int]] = []
@@ -187,8 +273,45 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         StandardEngine.sharedInstance.delegate = self
+        xGreen.hidden = false
     }
+    
 
+    func redChangeColor(){
+        grid.livingColor = UIColor(red: 231/255, green: 0, blue:0, alpha: 1)
+        grid.setNeedsDisplay()
+    }
+    
+
+    func orangeChangeColor(){
+        grid.livingColor = UIColor(red: 255/255, green: 150/255, blue:0, alpha: 1)
+        grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.3)
+        grid.setNeedsDisplay()
+    }
+    
+
+    func greenChangeColor(){
+        grid.livingColor = UIColor(red: 0/255, green: 239/255, blue:22/255, alpha: 1)
+        grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.4)
+        grid.bornColor = UIColor.whiteColor().colorWithAlphaComponent(0.7)
+        grid.setNeedsDisplay()
+    }
+    
+
+    func cyanChangeColor(){
+        grid.livingColor = UIColor(red: 0/255, green: 222/255, blue:255/255, alpha: 1)
+        grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.5)
+        grid.bornColor = UIColor.whiteColor().colorWithAlphaComponent(0.8)
+        grid.setNeedsDisplay()
+    }
+    
+
+    func blueChangeColor(){
+        grid.livingColor = UIColor(red: 0/255, green: 125/255, blue:222.255, alpha: 1)
+        grid.diedColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.6)
+        grid.setNeedsDisplay()
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
