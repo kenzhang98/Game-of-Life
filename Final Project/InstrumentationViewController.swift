@@ -16,8 +16,11 @@ class InstrumentationViewController: UIViewController {
     @IBAction func reloadButton(sender: AnyObject) {
         
         //download and parse the JSON file and then update the table view
+        //clear date
         TableViewController.sharedTable.names = []
         TableViewController.sharedTable.gridContent = []
+        TableViewController.sharedTable.comments = []
+        TableViewController.sharedTable.color = []
         
         //if the user enters an invalid url, pop up an alert view
         if let url = urlTextField.text{
@@ -27,6 +30,14 @@ class InstrumentationViewController: UIViewController {
                 alertController.addAction(UIAlertAction(title: "Dismiss", style: .Default,handler: nil))
                 
                 self.presentViewController(alertController, animated: true, completion: nil)
+                
+                //clear date
+                TableViewController.sharedTable.names = []
+                TableViewController.sharedTable.gridContent = []
+                TableViewController.sharedTable.comments = []
+                TableViewController.sharedTable.color = []
+                NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
+                
                 return
             }
             let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
@@ -49,11 +60,14 @@ class InstrumentationViewController: UIViewController {
                                 TableViewController.sharedTable.gridContent.append(arr!)
                             }
                             TableViewController.sharedTable.comments = TableViewController.sharedTable.names.map{_ in return ""}
+                            TableViewController.sharedTable.color = TableViewController.sharedTable.names.map{_ in return "green"}
                         }catch {
                             print("Error with Json: \(error)")
+                            //clear date
                             TableViewController.sharedTable.names = []
                             TableViewController.sharedTable.gridContent = []
                             TableViewController.sharedTable.comments = []
+                            TableViewController.sharedTable.color = []
                             NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                         }
                         
@@ -72,9 +86,11 @@ class InstrumentationViewController: UIViewController {
                             alertController.addAction(UIAlertAction(title: "OK", style: .Default,handler: nil))
                             
                             self.presentViewController(alertController, animated: true, completion: nil)
+                            //clear date
                             TableViewController.sharedTable.names = []
                             TableViewController.sharedTable.gridContent = []
                             TableViewController.sharedTable.comments = []
+                            TableViewController.sharedTable.color = []
                             NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                         }
                         NSOperationQueue.mainQueue().addOperation(op)
@@ -88,10 +104,11 @@ class InstrumentationViewController: UIViewController {
                         
                         self.presentViewController(alertController, animated: true, completion: nil)
                         
-                        //clear the embed table view so that the app will not crash
+                        //clear date
                         TableViewController.sharedTable.names = []
                         TableViewController.sharedTable.gridContent = []
                         TableViewController.sharedTable.comments = []
+                        TableViewController.sharedTable.color = []
                         NSNotificationCenter.defaultCenter().postNotificationName("TableViewReloadData", object: nil, userInfo: nil)
                     }
                     NSOperationQueue.mainQueue().addOperation(op)
@@ -125,6 +142,7 @@ class InstrumentationViewController: UIViewController {
     @IBOutlet weak var timedRefreshSwitch: UISwitch!
     
     @IBAction func rowsTextFieldAction(sender: AnyObject) {
+        StandardEngine.sharedInstance.changesDetect = true
         if let changeToRow = Int(rowsTextField.text!){
             if changeToRow > 0{
                 StandardEngine.sharedInstance.rows = changeToRow
@@ -152,9 +170,12 @@ class InstrumentationViewController: UIViewController {
             
             self.presentViewController(alertControllerRow, animated: true, completion: nil)
         }
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
     }
 
     @IBAction func colsTextFieldAction(sender: AnyObject) {
+        StandardEngine.sharedInstance.changesDetect = true
         if let changeToCol = Int(colsTextField.text!){
             if changeToCol > 0{
                 StandardEngine.sharedInstance.cols = changeToCol
@@ -182,10 +203,12 @@ class InstrumentationViewController: UIViewController {
             
             self.presentViewController(alertControllerCol, animated: true, completion: nil)
         }
+        //post notification to update the grid in the embed view
+        NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
     }
     
     @IBAction func rowsCalculation(sender: AnyObject) {
-        
+        StandardEngine.sharedInstance.changesDetect = true
         StandardEngine.sharedInstance.rows = Int(rowsStepper.value)
         rowsTextField.text = String(Int(StandardEngine.sharedInstance.rows))
         
@@ -196,6 +219,7 @@ class InstrumentationViewController: UIViewController {
         NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
     }
     @IBAction func colsCalculation(sender: AnyObject) {
+        StandardEngine.sharedInstance.changesDetect = true
         StandardEngine.sharedInstance.cols = Int(colsStepper.value)
         colsTextField.text = String(Int(StandardEngine.sharedInstance.cols))
         

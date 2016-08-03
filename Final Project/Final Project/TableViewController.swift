@@ -43,6 +43,7 @@ class TableViewController: UITableViewController {
         TableViewController.sharedTable.names.append("Add new name...")
         TableViewController.sharedTable.gridContent.append([])
         TableViewController.sharedTable.comments.append("")
+        TableViewController.sharedTable.color.append("green")
         
         let itemRow = TableViewController.sharedTable.names.count - 1
         let itemPath = NSIndexPath(forRow:itemRow, inSection: 0)
@@ -52,9 +53,6 @@ class TableViewController: UITableViewController {
         
     }
     
-    @IBAction func refresh(sender: AnyObject) {
-        self.tableView.reloadData()
-    }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return TableViewController.sharedTable.names.count
     }
@@ -80,6 +78,8 @@ class TableViewController: UITableViewController {
             
             TableViewController.sharedTable.names.removeAtIndex(indexPath.row)
              TableViewController.sharedTable.gridContent.removeAtIndex(indexPath.row)
+            TableViewController.sharedTable.comments.removeAtIndex(indexPath.row)
+            TableViewController.sharedTable.color.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath],
                                              withRowAnimation: .Automatic)
         }

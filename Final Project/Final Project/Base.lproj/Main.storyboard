@@ -210,21 +210,21 @@
                                     </mask>
                                 </variation>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YI9-21-8Q3">
-                                <rect key="frame" x="448" y="310" width="25" height="25"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YI9-21-8Q3">
+                                <rect key="frame" x="448" y="310" width="81" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="YI9-21-8Q3" secondAttribute="height" multiplier="1:1" id="yIh-1d-YAs"/>
                                 </constraints>
-                                <state key="normal" backgroundImage="Reload"/>
+                                <state key="normal" title="Reload" image="Reload">
+                                    <color key="titleColor" red="0.18948675209999999" green="0.63515863780000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="yIh-1d-YAs"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="reloadButton:" destination="CeQ-Bp-zAC" eventType="touchUpInside" id="03j-Dy-Gca"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ia-as-c0f">
-                                <rect key="frame" x="473" y="307" width="47" height="30"/>
-                                <state key="normal" title="Reload"/>
-                                <connections>
-                                    <action selector="reloadButton:" destination="CeQ-Bp-zAC" eventType="touchUpInside" id="tpt-ed-gWi"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -237,18 +237,12 @@
                             <constraint firstItem="sO6-hH-R6r" firstAttribute="height" secondItem="KKa-rJ-jDK" secondAttribute="height" multiplier="0.5" id="9U2-4u-UTq"/>
                             <constraint firstItem="YI9-21-8Q3" firstAttribute="centerY" secondItem="t6I-M7-vHq" secondAttribute="centerY" id="AB7-FU-cRk"/>
                             <constraint firstItem="QvD-4e-5TA" firstAttribute="leading" secondItem="KKa-rJ-jDK" secondAttribute="leadingMargin" constant="-20" id="B8m-sR-hZj"/>
-                            <constraint firstItem="YI9-21-8Q3" firstAttribute="leading" secondItem="4Ia-as-c0f" secondAttribute="trailing" constant="-100" id="ChS-07-DrR"/>
                             <constraint firstItem="t6I-M7-vHq" firstAttribute="leading" secondItem="KKa-rJ-jDK" secondAttribute="leadingMargin" id="NQH-Iw-Nbx"/>
                             <constraint firstItem="sO6-hH-R6r" firstAttribute="top" secondItem="QvD-4e-5TA" secondAttribute="top" id="Ppn-F3-wf1"/>
                             <constraint firstItem="3zh-LE-AH1" firstAttribute="top" secondItem="GVD-bV-euB" secondAttribute="bottom" constant="-25" id="QFP-M9-d1i"/>
-                            <constraint firstItem="4Ia-as-c0f" firstAttribute="leading" secondItem="YI9-21-8Q3" secondAttribute="trailing" id="Tlf-Pg-TZC"/>
                             <constraint firstItem="GVD-bV-euB" firstAttribute="width" secondItem="KKa-rJ-jDK" secondAttribute="width" id="VMF-ca-nqi"/>
-                            <constraint firstItem="4Ia-as-c0f" firstAttribute="trailing" secondItem="YI9-21-8Q3" secondAttribute="trailing" id="Vpp-eR-PJk"/>
-                            <constraint firstItem="4Ia-as-c0f" firstAttribute="leading" secondItem="YI9-21-8Q3" secondAttribute="leading" id="ZK1-mk-Gpx"/>
-                            <constraint firstItem="4Ia-as-c0f" firstAttribute="centerY" secondItem="YI9-21-8Q3" secondAttribute="centerY" id="ZdQ-5f-L6x"/>
                             <constraint firstItem="QvD-4e-5TA" firstAttribute="top" secondItem="UBB-QF-nkz" secondAttribute="bottom" id="aDj-EN-Mf3"/>
                             <constraint firstItem="sO6-hH-R6r" firstAttribute="top" secondItem="UBB-QF-nkz" secondAttribute="bottom" id="bqz-W9-UGk"/>
-                            <constraint firstItem="YI9-21-8Q3" firstAttribute="leading" secondItem="4Ia-as-c0f" secondAttribute="trailing" constant="105" id="d6G-qL-dne"/>
                             <constraint firstItem="sO6-hH-R6r" firstAttribute="height" secondItem="QvD-4e-5TA" secondAttribute="height" multiplier="0.54" id="fa0-Au-k5W"/>
                             <constraint firstItem="t6I-M7-vHq" firstAttribute="width" secondItem="KKa-rJ-jDK" secondAttribute="width" multiplier="0.7" id="hIs-zD-cL6"/>
                             <constraint firstItem="3zh-LE-AH1" firstAttribute="top" secondItem="QvD-4e-5TA" secondAttribute="bottom" id="har-uv-EJx"/>
@@ -265,10 +259,6 @@
                                 <exclude reference="bqz-W9-UGk"/>
                                 <exclude reference="3oT-AN-MHD"/>
                                 <exclude reference="4AN-cc-m5O"/>
-                                <exclude reference="ChS-07-DrR"/>
-                                <exclude reference="d6G-qL-dne"/>
-                                <exclude reference="Vpp-eR-PJk"/>
-                                <exclude reference="ZK1-mk-Gpx"/>
                                 <exclude reference="QFP-M9-d1i"/>
                             </mask>
                         </variation>

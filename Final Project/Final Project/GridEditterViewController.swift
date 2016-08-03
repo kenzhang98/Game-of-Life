@@ -34,9 +34,9 @@ class GridEditterViewController: UIViewController{
             NSOperationQueue.mainQueue().addOperation(op)
         }else{
             navigationController!.popViewControllerAnimated(true)
+            //clear the changes detecter
+            StandardEngine.sharedInstance.changesDetect = false
         }
-        //clear the changes detecter
-        StandardEngine.sharedInstance.changesDetect = false
     }
     @IBOutlet weak var editterGrid: GridView!
     
