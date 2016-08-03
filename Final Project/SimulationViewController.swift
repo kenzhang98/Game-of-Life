@@ -537,11 +537,6 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
                 delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
             }
             grid.setNeedsDisplay()
-            
-            let op = NSBlockOperation {
-                
-            }
-            NSOperationQueue.mainQueue().addOperation(op)
         case 1:
             shapeLabel.text = "Square"
             StandardEngine.sharedInstance.shape = "Square"
